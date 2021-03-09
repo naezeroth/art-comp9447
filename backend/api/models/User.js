@@ -10,7 +10,6 @@ module.exports = {
       required: true,
       maxLength: 200,
       unique: true,
-      example: 'mary.sue@example.com'
     },
 
     password: {
