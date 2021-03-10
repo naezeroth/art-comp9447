@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React,{Component} from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter,Route,Switch } from 'react-router-dom';
+import Home from './components/Home';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import Error404 from './components/Error404';
+// import Button from 'react-bootstrap/Button';
+// import { Col, Container, Row } from 'react-bootstrap';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+class App extends Component {
+
+  render(){
+    return (
+    <BrowserRouter>
+    <Switch>
+      <Route path="/" component={Home} exact/>
+      <Route path="/login" component={Login} exact/>
+      <Route path="/signup" component={SignUp} exact/>
+      <Route path="/" component={Error404} />
+    </Switch>
+    </BrowserRouter>
   );
+}
 }
 
 export default App;
