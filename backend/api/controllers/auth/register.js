@@ -62,7 +62,7 @@ module.exports = {
       username: inputs.username,
       password: await sails.helpers.passwords.hashPassword(inputs.password),
     }))
-    .intercept({ code: 'E_UNIQUE' }, () => {return {'usernameAlreadyInUse': {message: 'Username is already in use'} };})
+    .intercept({ code: 'E_UNIQUE' }, () => {return {'invalid': {message: 'Username is already in use'} };})
     .intercept({name: 'UsageError'}, 'invalid')
     .fetch();
 
