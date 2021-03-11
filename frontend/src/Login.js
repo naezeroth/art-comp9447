@@ -48,6 +48,7 @@ export default class Login extends React.Component {
 
                 <label htmlFor="password">Enter your password</label>
                 <input id="password" name="password" type="password" />
+                sd
 
                 <button>Login!</button>
               </form>
