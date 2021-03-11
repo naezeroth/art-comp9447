@@ -62,24 +62,25 @@ const styles = {
 
   background: {
     margin: '0',
-    height: '100vh',
+    height: '100vh',  // "100%"
+    width: 'auto',
     backgroundImage: `url(${bgImg})`,
-    backgroundPosition: 'centre',
+    backgroundPosition: 'left',
     backgroundRepeat: 'no-repeat',
   },
 
   container: {
     display: 'flex',
     flexFlow: 'column',
-    height: '100vh',
-    width: '500px',
+    height: 'auto',
+    width: 'auto',
     float: 'right',
     padding: '10px',
     backgroundColor: 'white',
   },
 
   loginContent: {
-    margin: '0',
+    marginRight: '45px',
     textAlign: 'center',
     position: 'relative',
   },
@@ -88,7 +89,7 @@ const styles = {
     margin: '0',
     textAlign: 'center',
     position: 'relative',
-    top: '15%',
+    top: '5%',
   },
 
   logoDim: {

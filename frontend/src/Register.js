@@ -21,7 +21,7 @@ export default class Register extends React.Component {
                     <Form onSubmit={this.handleSubmit}>
                     <Form.Group>
                           <Form.Label>Email Address  : </Form.Label>
-                              <Form.Control type="password" placeholder="Enter your email" />
+                              <Form.Control type="email" placeholder="Enter your email" />
                       </Form.Group>
                       &nbsp; 
                       <Form.Group>
@@ -57,23 +57,24 @@ const styles = {
   background: {
     margin: '0',
     height: '100vh',
+    width: 'auto', // "100%"
     backgroundImage: `url(${bgImg})`,
-    backgroundPosition: 'centre',
+    backgroundPosition: 'left',
     backgroundRepeat: 'no-repeat',
   },
 
   container: {
     display: 'flex',
     flexFlow: 'column',
-    height: '100vh',
-    width: '500px',
+    height: 'auto',
+    width: 'auto',
     float: 'right',
     padding: '10px',
     backgroundColor: 'white',
   },
 
   registerContent: {
-    margin: '0',
+    marginRight: '45px',
     textAlign: 'center',
     position: 'relative',
   },
@@ -82,7 +83,7 @@ const styles = {
     margin: '0',
     textAlign: 'center',
     position: 'relative',
-    top: '15%',
+    top: '5%',
   },
 
   logoDim: {
