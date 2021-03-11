@@ -1,4 +1,6 @@
-import React,{Component} from 'react';
+import React from 'react';
+import Login from './Login';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter,Route,Switch } from 'react-router-dom';
@@ -10,22 +12,14 @@ import Overview from './components/Overview'
 // import Button from 'react-bootstrap/Button';
 // import { Col, Container, Row } from 'react-bootstrap';
 
-
-class App extends Component {
-
-  render(){
-    return (
-    <BrowserRouter>
-    <Switch>
-      <Route path="/" component={Home} exact/>
-      <Route path="/login" component={Login} exact/>
-      <Route path="/signup" component={SignUp} exact/>
-      <Route path="/overview" component={Overview} exact/>
-      <Route path="/" component={Error404} />
-    </Switch>
-    </BrowserRouter>
-  );
-}
-}
+const App = () => (
+  <BrowserRouter>
+    <div className="App">
+      <Switch>
+        <Route path="/" exact component={Login} />
+      </Switch>
+    </div>
+  </BrowserRouter>
+);
 
 export default App;
