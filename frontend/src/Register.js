@@ -4,52 +4,46 @@ import bgImg from './assets/bg.jpg';
 import logo from './assets/Logo.png';
 import Form from 'react-bootstrap/Form';
 
-export default class Login extends React.Component {
-
-  constructor(){
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-}
-
-  handleSubmit(event){
-      event.preventDefault();
-      console.log(event.target[0].value);
-}
+export default class Register extends React.Component {
 
   render() {
     return (
-          <div className="login" style={styles.background}>
+          <div className="register" style={styles.background}>
             <div className="container" style={styles.container}>
 
-              <div className="loginContent" style={styles.loginContent}>
+              <div className="registerContent" style={styles.registerContent}>
                   <img src={logo} style={styles.logoDim} alt="logo"/>
                   <h1>A.R.T.</h1>
                   <h5> Automated Remediation Tool </h5>
 
-                <div className="loginContent" style={styles.FormSection}>
-                  <h2> Login </h2>
+                <div className="registerContent" style={styles.FormSection}>
+                  <h2> Register </h2>
                     <Form onSubmit={this.handleSubmit}>
-                      <Form.Group >
-                          <Form.Label>AWS Account No : </Form.Label>
-                          <Form.Control type="number" placeholder="Enter Acc No." />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                          <Form.Label>IAM Username : </Form.Label>
-                          <Form.Control type="text" placeholder="Your IAM Username" />
+                    <Form.Group>
+                          <Form.Label>Email Address  : </Form.Label>
+                              <Form.Control type="password" placeholder="Enter your email" />
                       </Form.Group>
                       &nbsp; 
                       <Form.Group>
                           <Form.Label>Password  : </Form.Label>
-                              <Form.Control type="password" placeholder="Your IAM Password" />
+                              <Form.Control type="password" placeholder="Your Password" />
                       </Form.Group>
                       &nbsp; 
                       <Form.Group>
-                        <Form.Check type="checkbox" label="Remember Me" />
+                          <Form.Label> Confirm Password  : </Form.Label>
+                              <Form.Control type="password" placeholder="Re-enter Your Password" />
                       </Form.Group>
-                      <Button variant="primary" type="submit">Submit</Button>
+                      &nbsp; 
+                      <Form.Group>
+                          <Form.Label>Create Username : </Form.Label>
+                          <Form.Control type="text" placeholder="Enter a Username" />
+                      </Form.Group>
+                      
+                      <Button>
+                        Submit
+                      </Button>
                     </Form>
-                    <h5> New User? <a href="./Register"> Register </a></h5>
+                    <h5> Already a User? <a href="./"> Login </a></h5>
                 </div>
               </div>
             </div>
@@ -78,7 +72,7 @@ const styles = {
     backgroundColor: 'white',
   },
 
-  loginContent: {
+  registerContent: {
     margin: '0',
     textAlign: 'center',
     position: 'relative',
