@@ -6,51 +6,62 @@ import Form from 'react-bootstrap/Form';
 
 export default class Register extends React.Component {
 
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    fetch('http://localhost:1337/api/auth/register', {
+      method: 'POST',
+      body: data,
+    }).then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        console.log(response);
+        window.location.reload();
+        console.log("Success");
+      } else {
+        console.log(response);
+      }
+    }).catch(err => err);
+    console.log(data);
+  }
+
   render() {
     return (
-          <div className="register" style={styles.background}>
-            <div className="container" style={styles.container}>
+      <div className="register" style={styles.background}>
+        <div className="container" style={styles.container}>
 
-              <div className="registerContent" style={styles.registerContent}>
-                  <img src={logo} style={styles.logoDim} alt="logo"/>
-                  <h1>A.R.T.</h1>
-                  <h5> Automated Remediation Tool </h5>
+          <div className="registerContent" style={styles.registerContent}>
+            <img src={logo} style={styles.logoDim} alt="logo" />
+            <h1>A.R.T.</h1>
+            <h5> Automated Remediation Tool </h5>
 
-                <div className="registerContent" style={styles.FormSection}>
-                  <h2> Register </h2>
-                    <Form onSubmit={this.handleSubmit}>
-                    <Form.Group>
-                          <Form.Label>Email Address  : </Form.Label>
-                              <Form.Control type="password" placeholder="Enter your email" />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                          <Form.Label>Password  : </Form.Label>
-                              <Form.Control type="password" placeholder="Your Password" />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                          <Form.Label> Confirm Password  : </Form.Label>
-                              <Form.Control type="password" placeholder="Re-enter Your Password" />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                          <Form.Label>Create Username : </Form.Label>
-                          <Form.Control type="text" placeholder="Enter a Username" />
-                      </Form.Group>
-                      
-                      <Button>
-                        Submit
-                      </Button>
-                    </Form>
-                    <h5> Already a User? <a href="./"> Login </a></h5>
-                </div>
-              </div>
+            <div className="registerContent" style={styles.FormSection}>
+              <h2> Register </h2>
+              <form onSubmit={this.handleSubmit}>
+                <label htmlFor="username">Enter username</label>
+                <input id="username" name="username" type="text" />
+
+                <label htmlFor="email">Enter your email</label>
+                <input id="email" name="email" type="email" />
+
+                <label htmlFor="password">Enter your password</label>
+                <input id="password" name="password" type="password" />
+
+                <button>Register!</button>
+              </form>
+              <h5> Already a User? <a href="./"> Login </a></h5>
             </div>
           </div>
-        );
-      }
-    }
+        </div>
+      </div>
+    );
+  }
+}
 
 const styles = {
 

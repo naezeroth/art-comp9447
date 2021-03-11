@@ -6,57 +6,59 @@ import Form from 'react-bootstrap/Form';
 
 export default class Login extends React.Component {
 
-  constructor(){
+  constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
-}
+  }
 
-  handleSubmit(event){
-      event.preventDefault();
-      console.log(event.target[0].value);
-}
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+
+    fetch('http://localhost:1337/api/auth/login', {
+      method: 'POST',
+      body: data,
+    }).then(response => {
+      if (response.status >= 200 && response.status < 300) {
+        console.log(response);
+        window.location.reload();
+        console.log("Success");
+      } else {
+        console.log(response);
+      }
+    }).catch(err => err);
+    console.log(data);
+  }
 
   render() {
     return (
-          <div className="login" style={styles.background}>
-            <div className="container" style={styles.container}>
+      <div className="login" style={styles.background}>
+        <div className="container" style={styles.container}>
 
-              <div className="loginContent" style={styles.loginContent}>
-                  <img src={logo} style={styles.logoDim} alt="logo"/>
-                  <h1>A.R.T.</h1>
-                  <h5> Automated Remediation Tool </h5>
+          <div className="loginContent" style={styles.loginContent}>
+            <img src={logo} style={styles.logoDim} alt="logo" />
+            <h1>A.R.T.</h1>
+            <h5> Automated Remediation Tool </h5>
 
-                <div className="loginContent" style={styles.FormSection}>
-                  <h2> Login </h2>
-                    <Form onSubmit={this.handleSubmit}>
-                      <Form.Group >
-                          <Form.Label>AWS Account No : </Form.Label>
-                          <Form.Control type="number" placeholder="Enter Acc No." />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                          <Form.Label>IAM Username : </Form.Label>
-                          <Form.Control type="text" placeholder="Your IAM Username" />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                          <Form.Label>Password  : </Form.Label>
-                              <Form.Control type="password" placeholder="Your IAM Password" />
-                      </Form.Group>
-                      &nbsp; 
-                      <Form.Group>
-                        <Form.Check type="checkbox" label="Remember Me" />
-                      </Form.Group>
-                      <Button variant="primary" type="submit">Submit</Button>
-                    </Form>
-                    <h5> New User? <a href="./Register"> Register </a></h5>
-                </div>
-              </div>
+            <div className="loginContent" style={styles.FormSection}>
+              <h2> Login </h2>
+              <form onSubmit={this.handleSubmit}>
+                <label htmlFor="username">Enter username</label>
+                <input id="username" name="username" type="text" />
+
+                <label htmlFor="password">Enter your password</label>
+                <input id="password" name="password" type="password" />
+
+                <button>Login!</button>
+              </form>
+              <h5> New User? <a href="./Register"> Register </a></h5>
             </div>
           </div>
-        );
-      }
-    }
+        </div>
+      </div>
+    );
+  }
+}
 
 const styles = {
 
