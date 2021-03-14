@@ -37,6 +37,9 @@ module.exports.routes = {
   'POST /api/auth/register':                    {action: 'auth/register'},
   'POST /api/auth/login':                       {action: 'auth/login'},
 
+  //Alert endpoints
+  '/api/alert':                                 {action: 'alert/index'},
+
   //Sample endpoints
   'GET /public':                                {action: 'public'},
   'GET /private':                               {action: 'private'},
