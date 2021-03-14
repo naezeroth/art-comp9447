@@ -6,34 +6,30 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import CloudQueueIcon from '@material-ui/icons/CloudQueue';
+import "./Overview.css";
+import ButtonAppBar from "./buttonAppBar"
+import CSSGrid from "./mainGrid"
 
 class Overview extends Component {
 	render(){
 		return(
 			<div>
 				<div>
-					<AppBar style={styles.title}>
-						<Toolbar>
-							<div style={styles.headerBar}>
-								<div style={styles.leftBlock}> <CloudQueueIcon /></div>
-								<div style={styles.leftBlock}><Typography variant="h6">ART</Typography></div>
-								<div align="right"><Button style={styles.acName}>AccountName</Button></div>
-							</div>
-						</Toolbar>
-					</AppBar>
+					<ButtonAppBar/>
 				</div>
-				<div>
-					<AppBar style={styles.dropDown}>
-						<Toolbar>
-						</Toolbar>
-					</AppBar>
+				<div style={styles.dropDown}>
+					<ul class="navBar">
+						<li><a href="./">Home</a></li>
+						<li><a href="./">Services</a></li>
+						<li><a href="./Overview">Overview</a></li>
+						<li><a href="./">History</a></li>
+					</ul>
 				</div>
 				<Container disableGutters="true" maxWidth="false">
         	<Typography component="div" style={{ backgroundColor: '#C4C4C4', height: '100vh' }}>
 						<Container maxWidth="xl">
 							<Typography component="div" style={{ backgroundColor: '#F1FAFF', height: '100vh' }}>
-								data
+								<CSSGrid/>
 							</Typography>
 						</Container>
 					</Typography>
@@ -56,31 +52,31 @@ const styles =  {
 
 	headerBar:{
 		display:"flex",
-		justifyContent: "space-between",
-		flexFlow: "row wrap",
+		// justifyContent: "space-between",
+		// flexFlow: "row wrap",
 	},
 
 	leftBlock: {
 		paddingRight: 10,
-		flexGrow: 1,
+		// flexGrow: 1,
 	},
 
 	rightBlock :{
-		flex : 2,
+		// flex : 2,
 	},
 
 	acName: {
 		color:"inherit",
-	},
-
-	dropDown: {
-		backgroundColor: '#567DA5',
-		position:"static",
+		float:"right",
 	},
 
 	mainBody: {
 		backgroundColor: '#C4C4C4',
-	}
+	},
+
+	menuList:{
+		float: "right",
+	},
 
 };
 
