@@ -4,6 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import Demo from "./ec2Table"
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -12,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     gridGap: theme.spacing(3),
   },
   paperL: {
-    padding: theme.spacing(20),
+    padding: theme.spacing(5),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     whiteSpace: 'nowrap',
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(0),
   },
   paperR: {
-    padding: theme.spacing(20),
+    padding: theme.spacing(5),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     whiteSpace: 'nowrap',
@@ -48,7 +50,8 @@ export default function CSSGrid() {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={8}>
-          <Paper className={classes.paperL}>Visual representations of protections</Paper>
+          <Paper className={classes.paperL}>
+            <p>EC2 Instances</p>Priority<Demo/>All Instances<Demo/></Paper>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.paperR}>Remediations</Paper>
