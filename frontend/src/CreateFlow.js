@@ -20,7 +20,8 @@ import { NativeSelect } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 400,
+    margin: 'dense',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -65,8 +66,8 @@ export default function CreateFlow1() {
       <Container style={styles.container}>
           <h1>Select resource</h1>
           <div style={{ alignItems: "center", marginTop: "20vh" }}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="resourcename-native-helper">
+          <FormControl className={classes.formControl} >
+            <InputLabel htmlFor="resourcename-native-helper" style={{fontSize: '20px'}}>
               Resource
             </InputLabel>
             <NativeSelect
@@ -85,7 +86,7 @@ export default function CreateFlow1() {
             <FormHelperText>Select the resource name</FormHelperText>
           </FormControl>
         </div>
-        <Button style={{marginBottom:'50vh'}}>Continue </Button>
+        <Button style={{marginTop:'20vh', backgroundColor:"#FF9900"}}>Continue </Button>
       </Container>
     </div>
   );
