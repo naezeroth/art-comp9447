@@ -20,7 +20,7 @@ class Overview extends Component {
 				</div>
 				<div>
 					<ul class="navBar">
-						<li><a href="./">Home</a></li>
+						<li><a href="./Home">Home</a></li>
 						<li><a href="./">Services</a></li>
 						<li><a href="./Overview">Overview</a></li>
 						<li><a href="./">History</a></li>
