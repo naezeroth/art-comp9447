@@ -1,22 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import "./Overview.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import ButtonAppBar from "./buttonAppBar";
-
-import { alignPropType } from "react-bootstrap/esm/DropdownMenu";
 import { NativeSelect } from "@material-ui/core";
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -50,7 +42,7 @@ export default function CreateFlow2() {
       <div style={styles.dropDown}>
         <ul class="navBar">
           <li>
-            <a href="./">Home</a>
+            <a href="./Home">Home</a>
           </li>
           <li>
             <a href="./">Services</a>
@@ -105,7 +97,7 @@ export default function CreateFlow2() {
           </FormControl>
 
         </div>
-        <Button style={{marginTop:'20vh', backgroundColor:"#FF9900"}}>Continue </Button>
+        <Button onClick={event =>  window.location.href='./CreateFlow3'} style={{marginTop:'20vh', backgroundColor:"#F9B15D"}}>Continue </Button>
       </Container>
     </div>
   );

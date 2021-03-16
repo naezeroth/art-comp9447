@@ -1,23 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import "./Overview.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import ButtonAppBar from "./buttonAppBar";
 import BuildIcon from '@material-ui/icons/Build';
-import { alignPropType } from "react-bootstrap/esm/DropdownMenu";
 import { NativeSelect } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -88,7 +82,7 @@ export default function CreateFlow2() {
           </div>
           <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>
           <Button style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'25px',marginTop:'9vh'}}>Add more ?<AddIcon></AddIcon></Button>
-        <div><Button style={{marginTop:'10vh', backgroundColor:"#FF9900"}}>Continue</Button></div>
+        <div><Button style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
       </Container>
     </div>
   );
