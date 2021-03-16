@@ -18,7 +18,7 @@ class Overview extends Component {
 				<div>
 					<ButtonAppBar/>
 				</div>
-				<div style={styles.dropDown}>
+				<div>
 					<ul class="navBar">
 						<li><a href="./Home">Home</a></li>
 						<li><a href="./">Services</a></li>
