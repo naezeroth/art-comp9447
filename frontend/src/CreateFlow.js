@@ -63,9 +63,10 @@ export default function CreateFlow1() {
           </li>
         </ul>
       </div>
+      <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'25px',marginLeft:'18vh',marginTop:'4vh'}}>Create a Flow:</Typography>
       <Container style={styles.container}>
-          <h1>Select resource</h1>
-          <div style={{ alignItems: "center", marginTop: "20vh" }}>
+          <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>Select resource</Typography>
+          <div style={{ alignItems: "center", marginTop: "15vh" }}>
           <FormControl className={classes.formControl} >
             <InputLabel htmlFor="resourcename-native-helper" style={{fontSize: '20px'}}>
               Resource
@@ -130,6 +131,6 @@ const styles = {
     backgroundColor: "#C4C4C4",
     height: "70vh",
     width: "200vh",
-    marginTop: "10vh",
+
   },
 };
