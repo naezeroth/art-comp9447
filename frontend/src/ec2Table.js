@@ -6,6 +6,14 @@ import TableCell from '@material-ui/core/TableCell';
 import Paper from '@material-ui/core/Paper';
 import { AutoSizer, Column, Table } from 'react-virtualized';
 
+const cellColors = {
+    "Critical" : "#F04242", 
+    "Requires Attention" : "#FAB15C", 
+    "Offline" : "#D9D9D9",
+    "Normal" : "white",
+    "Remediated" : "white",
+};
+
 const styles = (theme) => ({
   flexContainer: {
     display: 'flex',
@@ -30,6 +38,7 @@ const styles = (theme) => ({
   },
   tableCell: {
     flex: 1,
+    backgroundColor: "white",
   },
   noClick: {
     cursor: 'initial',
@@ -52,6 +61,7 @@ class MuiVirtualizedTable extends React.PureComponent {
 
   cellRenderer = ({ cellData, columnIndex }) => {
     const { columns, classes, rowHeight, onRowClick } = this.props;
+    // console.log(cellData);
     return (
       <TableCell
         component="div"
@@ -59,7 +69,7 @@ class MuiVirtualizedTable extends React.PureComponent {
           [classes.noClick]: onRowClick == null,
         })}
         variant="body"
-        style={{ height: rowHeight }}
+        style={{ height: rowHeight, backgroundColor : cellColors[cellData]}}
         align={(columnIndex != null && columns[columnIndex].numeric) || false ? 'right' : 'left'}
       >
         {cellData}
@@ -85,6 +95,7 @@ class MuiVirtualizedTable extends React.PureComponent {
 
   render() {
     const { classes, columns, rowHeight, headerHeight, ...tableProps } = this.props;
+    // console.log("test------");
     return (
       <AutoSizer>
         {({ height, width }) => (
@@ -146,7 +157,7 @@ const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 const sample = [
   ['ec2-12213-23232', "12-2-21", "North-America", 0, "Offline"],
   ['definitelyNotInfected', "22-3-15", "Your-Home-PC", 37, "Normal"],
-  ['CryptoMiner', "30-2-12", "West-Europe", 2, "Critcial"],
+  ['CryptoMiner', "30-2-12", "West-Europe", 2, "Critical"],
   ['KGBHideout', "6-9-76", "Washington-DC", 13, "Remediated"],
   ['the"Dark"Web', "2-3-04", "Sweden", 666, "Requires Attention"],
 ];
