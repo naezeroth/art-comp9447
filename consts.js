@@ -3,7 +3,6 @@ const { EC2Client, DescribeInstancesCommand, StopInstancesCommand } = require("@
 
 const AWSClientService = () => {
     const ec2Client = new EC2Client({ region: "ap-southeast-2" });
-    const newClient = new AWS.EC2({ region: "ap-southeast-2" });
     const run = async () => {
         try {
             sails.log("First command");
