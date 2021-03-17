@@ -1,14 +1,15 @@
 {
-    "name": "art-comp9447",
-    "version": "1.0.0",
-    "dependencies": {
-    },
-    "scripts": {
-      "start": "run-p start:*",
-      "start:frontend": "cd frontend && npm start",
-      "start:backend": "cd backend && npm start",
-      "postinstall": "(cd backend && npm install); (cd frontend && npm install);"
-    },
-    "author": "",
-    "license": "ISC"
-  }
+  "name": "art-comp9447",
+  "version": "1.0.0",
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.8.1"
+  },
+  "scripts": {
+    "start": "run-p start:*",
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm start",
+    "postinstall": "(cd backend && npm install); (cd frontend && npm install);"
+  },
+  "author": "",
+  "license": "ISC"
+}
