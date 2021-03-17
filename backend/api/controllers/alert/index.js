@@ -38,10 +38,13 @@ const { AWSClientService } = require('../../../../consts.js');
     sails.log(AWSClientService, typeof(AWSClientService));
     const service = AWSClientService();
     sails.log(Object.keys(service));
-    const func1 = service["Describe Instances"]
-    const func2 = service[2]
-    await func1();
-    func2("test", "test2");
+    const describeInstances = service["Describe Instances"]
+    const stopInstance = service["Stop Instances"]
+    // const func3 = service[2]
+    await describeInstances();
+    await stopInstance(['i-008bac734782a55de']);
+    await describeInstances();
+    // func3("test", "test2");
     
     sails.log("this.req.body", this.req.body);
 
