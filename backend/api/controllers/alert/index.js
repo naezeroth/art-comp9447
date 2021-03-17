@@ -37,8 +37,8 @@ const { AWSClientService } = require('../../../../consts.js');
    fn: async function (inputs, exits) {
     sails.log(AWSClientService, typeof(AWSClientService));
     const service = AWSClientService();
-
-    const func1 = service[1]
+    sails.log(Object.keys(service));
+    const func1 = service["Describe Instances"]
     const func2 = service[2]
     await func1();
     func2("test", "test2");
