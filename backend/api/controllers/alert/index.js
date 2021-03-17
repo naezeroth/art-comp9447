@@ -6,6 +6,7 @@
  */
 
 const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
+const { AWSClientService } = require('../../../../consts.js');
 
  module.exports = {
  
@@ -34,23 +35,29 @@ const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
  
  
    fn: async function (inputs, exits) {
+    sails.log(AWSClientService, typeof(AWSClientService));
+    const service = AWSClientService();
 
-
+    const func1 = service[1]
+    const func2 = service[2]
+    await func1();
+    func2("test", "test2");
+    
     sails.log("this.req.body", this.req.body);
 
     // Set the AWS Region
-    const REGION = "ap-southeast-2"; 
+    // const REGION = "ap-southeast-2"; 
 
-    // Create SNS service object
-    const sns = new SNSClient({ region: REGION });
+    // // Create SNS service object
+    // const sns = new SNSClient({ region: REGION });
 
-    // const run = async () => {
-    try {
-      const data = await sns.send(new ListTopicsCommand({}));
-      sails.log(data.Topics);
-    } catch (err) {
-      console.error(err, err.stack);
-    }
+    // // const run = async () => {
+    // try {
+    //   const data = await sns.send(new ListTopicsCommand({}));
+    //   sails.log(data.Topics);
+    // } catch (err) {
+    //   console.error(err, err.stack);
+    // }
     // };
     // run();
 
