@@ -1,9 +1,6 @@
 {
   "name": "art-comp9447",
   "version": "1.0.0",
-  "dependencies": {
-    "@aws-sdk/client-ec2": "^3.8.1"
-  },
   "scripts": {
     "start": "run-p start:*",
     "start:frontend": "cd frontend && npm start",

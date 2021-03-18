@@ -4,10 +4,6 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-
- const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
- const { AWSClientService } = require('../../../../consts.js');
-// const Flow = require("../../models/Flow.js");
  
   module.exports = {
   

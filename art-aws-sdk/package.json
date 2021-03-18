@@ -1,0 +1,14 @@
+{
+  "name": "art-aws-sdk",
+  "version": "1.0.0",
+  "description": "ART-COMP9447 AWS SDK wrapper",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-ec2": "^3.8.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
