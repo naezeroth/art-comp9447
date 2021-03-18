@@ -35,13 +35,11 @@ module.exports = {
     const getInstInfo = service["Get information on the specified instance(s)"]
     const stopInstance = service["Stop Instances"]
     const sendMsg = service["Send Message to Slack"]
-    const testSlack = service["Test Slack"]
     // const func3 = service[2]
     await getInstInfo([]);
     await stopInstance(['i-008bac734782a55de']);
     await getInstInfo([]);
     await sendMsg("this.req.body: \n" + JSON.stringify(this.req.body));
-    await testSlack();
     // func3("test", "test2");
 
     const flowFromDB = await Flow.find({});
@@ -53,11 +51,11 @@ module.exports = {
     const obj = JSON.parse(json);
 
     var findEvent = await flow.findOne({
-      findingType : obj.details.type
+      findingType: obj.details.type
 
     });
 
-    if(!findEvent){
+    if (!findEvent) {
       return exits.badCombo({
         message: 'Event not found'
         //set remediation to false
