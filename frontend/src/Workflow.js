@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import CreateFlow1 from './CreateFlow';
 import CreateFlow2 from './CreateFlow2';
 import CreateFlow3 from './CreateFlow3';
+// const { AWSClientService } = require('./consts');
 
 export default function Workflow() {
 
     const [flowState, setFlowState] = useState("CreateFlow1");
     const [valueState, setValueState] = useState({});
+    
 
     const onChange = (newState) => {
         console.log("Valuestate", valueState, typeof(valueState), Object.keys(valueState).length , newState, typeof(newState));

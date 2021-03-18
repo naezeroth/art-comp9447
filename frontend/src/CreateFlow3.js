@@ -74,7 +74,7 @@ export default function CreateFlow3(props) {
       </div>
       <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'25px',marginLeft:'18vh',marginTop:'4vh'}}>Add a new Flow:</Typography>
       <Container style={styles.container}>
-          <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>List of Actions so far</Typography>
+          <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>List of Actions</Typography>
           <div style={{ alignItems: "center", marginTop: "15vh" }}>
           <FormControl className={classes.formControl} >
             <InputLabel htmlFor="findingtype-native-helper" style={{fontSize: '20px'}}>
@@ -93,6 +93,8 @@ export default function CreateFlow3(props) {
               <option value={3}>Option3</option>
             </NativeSelect>
           </FormControl>
+          <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'20px',marginLeft:'18vh',marginTop:'4vh'}}>Selected Actions :</Typography>
+
           {state.actions.map((name) => (
             <div key={name} value={name}>
               {name}
