@@ -43,15 +43,17 @@ export default function Workflow() {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: {data:valueState}
+        body: JSON.stringify({data:valueState})
     };
-    console.log(valueState)
+
+    console.log(requestOptions);
+
     fetch("http://localhost:1337/api/create-flow",requestOptions)
     .then(response => response.json())
     .then(response =>{
         console.log(response)
     })
-    console.log("FINAL state", valueState);
+
     return (
         <div>
             hello

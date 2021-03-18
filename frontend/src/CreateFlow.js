@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow1(props) {
   const classes = useStyles();
-  const [state, setState] = useState({name: '', resourcename: '',});
+  const [state, setState] = useState({name: '', resourceName: '',});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -40,7 +40,7 @@ export default function CreateFlow1(props) {
       console.log("inside useEffect createFlow1", state);
       props.onChange(state)
     }
-  }, [state.name, state.resourcename])
+  }, [state.name, state.resourceName])
 
   return (
     <div>
@@ -82,14 +82,14 @@ export default function CreateFlow1(props) {
         />
         <div style={{ alignItems: "center", marginTop: "10vh" }}>
           <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="resourcename-native-helper" style={{fontSize: '20px'}}>
+            <InputLabel htmlFor="resourceName-native-helper" style={{fontSize: '20px'}}>
               Resource
             </InputLabel>
             <NativeSelect
-              value={state.resourcename}
+              value={state.resourceName}
               onChange={handleChange}
               inputProps={{
-                name: "resourcename",
+                name: "resourceName",
               }}
             >
               <option aria-label="None" value="" />

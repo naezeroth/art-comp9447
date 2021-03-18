@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow2(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({findingtype: '', confidence: ''});
+  const [state, setState] = React.useState({findingType: '', confidence: ''});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -37,7 +37,7 @@ export default function CreateFlow2(props) {
     if (props.onChange) {
       props.onChange(state)
     }
-  }, [state.findingtype, state.confidence])
+  }, [state.findingType, state.confidence])
 
   return (
     <div>
@@ -65,14 +65,14 @@ export default function CreateFlow2(props) {
           <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>Finding Type</Typography>
           <div style={{ alignItems: "center", marginTop: "15vh" }}>
           <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="findingtype-native-helper" style={{fontSize: '20px'}}>
+            <InputLabel htmlFor="findingType-native-helper" style={{fontSize: '20px'}}>
               Finding Type
             </InputLabel>
             <NativeSelect
-              value={state.findingtype}
+              value={state.findingType}
               onChange={handleChange}
               inputProps={{
-                name: "findingtype",
+                name: "findingType",
               }}
             >
               <option aria-label="None" value="" />
@@ -87,7 +87,7 @@ export default function CreateFlow2(props) {
           </div>
           <div style={{ alignItems: "center", marginTop: "10vh" }}>
           <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="findingtype-native-helper" style={{fontSize: '20px'}}>
+            <InputLabel htmlFor="findingType-native-helper" style={{fontSize: '20px'}}>
               Only after 'X' confidence?
             </InputLabel>
             <NativeSelect
