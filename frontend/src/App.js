@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from './Login';
-import Register from './Register';
-import Overview from './Overview';
-import Home from './Home';
-import Workflow from './Workflow';
+import Login from './Authentication/Login';
+import Register from './Authentication/Register';
+import Overview from './Overview/Overview';
+import Home from './Home/Home';
+import Workflow from './Flow/Workflow';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 

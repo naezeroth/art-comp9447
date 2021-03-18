@@ -2,12 +2,16 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import "./Overview.css";
+import IconButton from "@material-ui/core/IconButton";
+import "../Overview.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import ButtonAppBar from "./buttonAppBar";
+import ButtonAppBar from "../buttonAppBar";
+import BuildIcon from '@material-ui/icons/Build';
 import { NativeSelect } from "@material-ui/core";
+import Select from '@material-ui/core/Select';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -20,24 +24,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateFlow2(props) {
+export default function CreateFlow3(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({findingType: '', confidence: ''});
+  const [state, setState] = React.useState({actions: [],});
 
+  console.log("inside creatflow3", props);
+  
   const handleChange = (event) => {
     const name = event.target.name;
+    const currentState = state.actions
+    currentState.push(event.target.value)
     setState({
-      ...state,
-      [name]: event.target.value,
+      actions: currentState
     });
+  console.log("checking state of list",{
+    actions: currentState
+  });
   };
 
-// used to pass state to parent component
+
+  // used to pass state to parent component
   React.useEffect(() => {
+    console.log("state.actions", state.actions);
     if (props.onChange) {
       props.onChange(state)
     }
-  }, [state.findingType, state.confidence])
+  }, [state.actions])
 
   return (
     <div>
@@ -47,7 +59,7 @@ export default function CreateFlow2(props) {
       <div style={styles.dropDown}>
         <ul class="navBar">
           <li>
-            <a href="./Home">Home</a>
+            <a href="./">Home</a>
           </li>
           <li>
             <a href="./">Services</a>
@@ -62,52 +74,40 @@ export default function CreateFlow2(props) {
       </div>
       <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'25px',marginLeft:'18vh',marginTop:'4vh'}}>Add a new Flow:</Typography>
       <Container style={styles.container}>
-          <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>Finding Type</Typography>
+          <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>List of Actions</Typography>
           <div style={{ alignItems: "center", marginTop: "15vh" }}>
           <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="findingType-native-helper" style={{fontSize: '20px'}}>
-              Finding Type
+            <InputLabel htmlFor="findingtype-native-helper" style={{fontSize: '20px'}}>
+              Selected Action
             </InputLabel>
             <NativeSelect
-              value={state.findingType}
+              value={state.actions}
               onChange={handleChange}
               inputProps={{
-                name: "findingType",
+                name: 'actions',
               }}
             >
               <option aria-label="None" value="" />
-              <option value={1}>Backdoor:EC2/C&CActivity.B</option>
-              <option value={2}>Backdoor:EC2/DenialOfService.Udp</option>
-              <option value={3}>Recon:EC2/PortProbeEMRUnprotectedPort</option>
-              <option value={4}>Trojan:EC2/PhishingDomainRequest!DNS</option>
-              <option value={5}>CryptoCurrency:EC2/BitcoinTool.B</option>
+              {props.commands.map((command) => (
+            <option key={command} value={command}>
+              {command}
+            </option>
+          ))
+          }
 
             </NativeSelect>
           </FormControl>
+          <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'20px',marginLeft:'18vh',marginTop:'4vh'}}>Selected Actions :</Typography>
+
+          {state.actions.map((name) => (
+            <div key={name} value={name}>
+              {name}
+            </div>
+          ))
+          }
           </div>
-          <div style={{ alignItems: "center", marginTop: "10vh" }}>
-          <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="findingType-native-helper" style={{fontSize: '20px'}}>
-              Only after 'X' confidence?
-            </InputLabel>
-            <NativeSelect
-              value={state.confidence}
-              onChange={handleChange}
-              inputProps={{
-                name: "confidence",
-              }}
-            >
-              <option aria-label="None" value="" />
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-            </NativeSelect>
-          </FormControl>
-
-        </div>
-        <Button onClick={event =>  props.setState("CreateFlow3")} style={{marginTop:'20vh', backgroundColor:"#F9B15D"}}>Continue </Button>
+          <div>
+          <IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div> <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
       </Container>
     </div>
   );

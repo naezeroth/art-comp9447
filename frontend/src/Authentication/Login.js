@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import bgImg from './assets/bg.jpg';
-import logo from './assets/Logo.png';
+import bgImg from '../assets/bg.jpg';
+import logo from '../assets/Logo.png';
 import Form from 'react-bootstrap/Form';
 
 export default class Login extends React.Component {
