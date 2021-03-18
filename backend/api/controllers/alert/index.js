@@ -51,7 +51,7 @@ module.exports = {
             findingType: obj.detail.type,
         });
 
-        findEvent[0].actions; // actions: [ 'Stop Instances' ],
+        //findEvent[0].actions; // actions: [ 'Stop Instances' ],
 
         sails.log("Findevent??", findEvent, !findEvent);
 
