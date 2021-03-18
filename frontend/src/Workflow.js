@@ -39,9 +39,14 @@ export default function Workflow() {
     else if (flowState==="CreateFlow3"){
         return <CreateFlow3 setState={setFlowState} onChange={onChange} commands={Object.keys(service)}/>;
     }
-    const data_create_flow= {data:valueState}
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: {data:valueState}
+    };
     console.log(valueState)
-    fetch("http://localhost:1337/api/alert",data_create_flow)
+    fetch("http://localhost:1337/api/create-flow",requestOptions)
     .then(response => response.json())
     .then(response =>{
         console.log(response)
