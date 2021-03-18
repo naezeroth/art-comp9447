@@ -38,42 +38,6 @@ const AWSClientService = () => {
             sails.log("Error", err);
         }
     };
-    const applySecurityGroupToTarget = async (args) => {
-        try {
-            sails.log("Applying Security Groups");
-            const data = await ec2Client.send(new ApplySecurityGroupsToClientVpnTargetNetworkCommand(args));
-            sails.log("Success", JSON.stringify(data));
-        } catch (err) {
-            sails.log("Error", err);
-        }
-    };
-    const createFleet = async (arguments) => {
-        try {
-            sails.log("Creating EC2 fleet instance(s)");
-            const data = await ec2Client.send(new CreateFleetCommand(arguments));
-            sails.log("Success", JSON.stringify(data));
-        }
-        catch (err) {
-            sails.log("Error", err);
-        }
-    };
-    const exportInstance = async (arguments) => {
-        try {
-            sails.log("Exporting EC2 instance");
-            const data = await ec2Client.send(new CreateInstanceExportTaskCommand(arguments));
-            sails.log("Success", JSON.stringify(data));
-        }
-        catch (err) {
-            sails.log("Error", err);
-        }
-    };
-    const deleteSecurityGroup = async (arguments) => {
-        try {
-            sails.log("Deleting Security Group");
-            const data = await ec2Client.send(new DeleteSecurityGroupCommand(arguments));
-            sails.log("Success", JSON.stringify(data));
-        }
-        catch (err) {
             sails.log("Error", err);
         }
     };
@@ -250,7 +214,7 @@ const AWSClientService = () => {
         "Stop a given EBS instance": stopEBSInst,
         "Terminate given EBS instance(s)": terminateEBSInst,
         "Set the security group descriptions": setSecurityGroupDesc,
-        2: (var1, var2) => sails.log('hello', var1, var2),
+        "Debug": (var1, var2) => sails.log('hello', var1, var2),
         "Send Message to Slack": sendMessage,
         "Test Slack": testSlack,
     };
