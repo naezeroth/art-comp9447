@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 400,
     margin: 'dense',
+    display: "inline-flex",
+    flexDirection: "Row",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -96,8 +98,9 @@ export default function CreateFlow3(props) {
           }
 
             </NativeSelect>
+            <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>
           </FormControl>
-          <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'20px',marginLeft:'18vh',marginTop:'4vh'}}>Selected Actions :</Typography>
+          <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'20px',marginLeft:'18vh',marginTop:'10vh'}}>Selected Actions :</Typography>
 
           {state.actions.map((name) => (
             <div key={name} value={name}>
@@ -106,7 +109,7 @@ export default function CreateFlow3(props) {
           ))
           }
           </div>
-          <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>        <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
+            <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
       </Container>
     </div>
   );
