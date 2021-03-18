@@ -29,7 +29,7 @@ const AWSClientService = () => {
         const web = new WebClient(process.env.SLACK_TOKEN);
         try {
             await web.chat.postMessage({
-                channel: "#bot-log",
+                channel: "bot-log",
                 text: msg,
             });
         } catch (err) {
