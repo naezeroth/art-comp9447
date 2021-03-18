@@ -38,14 +38,14 @@ module.exports = {
     sails.log(AWSClientService, typeof (AWSClientService));
     const service = AWSClientService();
     sails.log(Object.keys(service));
-    const describeInstances = service["Describe Instances"]
+    const getInstInfo = service["Get information on the specified instance(s)"]
     const stopInstance = service["Stop Instances"]
     const sendMsg = service["Send Message to Slack"]
     const testSlack = service["Test Slack"]
     // const func3 = service[2]
-    await describeInstances();
+    await getInstInfo([]);
     await stopInstance(['i-008bac734782a55de']);
-    await describeInstances();
+    await getInstInfo([]);
     await sendMsg("this.req.body: \n" + JSON.stringify(this.req.body));
     await testSlack();
     // func3("test", "test2");

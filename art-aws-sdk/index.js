@@ -7,7 +7,7 @@ const { EC2Client, DescribeInstancesCommand, StopInstancesCommand,
     DescribeSecurityGroupsCommand, ModifyInstanceAttributeCommand,
     ModifyInstanceMetadataOptionsCommand, MonitorInstancesCommand,
     RebootInstancesCommand, RunInstancesCommand, StartInstancesCommand,
-    StopInstancesCommand, TerminateInstancesCommand,
+    TerminateInstancesCommand,
     UpdateSecurityGroupRuleDescriptionsEgressCommand } = require("@aws-sdk/client-ec2");
 
 const { WebClient } = require("@slack/web-api");
@@ -37,6 +37,15 @@ const AWSClientService = () => {
         } catch (err) {
             sails.log("Error", err);
         }
+    };
+    const testSlack = async () => {
+        sails.log(process.env.SLACK_TOKEN)
+        const web = new WebClient(process.env.SLACK_TOKEN);
+        (async () => {
+            const test = await web.auth.test();
+
+            console.log('Done!' + JSON.stringify(test));
+        })();
     };
     const applySecurityGroupToTarget = async (args) => {
         try {
