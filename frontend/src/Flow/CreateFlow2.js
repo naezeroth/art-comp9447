@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 400,
-    margin: 'dense',
+    margin: "dense",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow2(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({findingType: '', confidence: ''});
+  const [state, setState] = React.useState({ findingType: "", confidence: "" });
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -32,12 +32,12 @@ export default function CreateFlow2(props) {
     });
   };
 
-// used to pass state to parent component
+  // used to pass state to parent component
   React.useEffect(() => {
     if (props.onChange) {
-      props.onChange(state)
+      props.onChange(state);
     }
-  }, [state.findingType, state.confidence])
+  }, [state.findingType, state.confidence]);
 
   return (
     <div>
@@ -60,12 +60,33 @@ export default function CreateFlow2(props) {
           </li>
         </ul>
       </div>
-      <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'25px',marginLeft:'18vh',marginTop:'4vh'}}>Add a new Flow:</Typography>
+      <Typography
+        style={{
+          textAlign: "left",
+          fontFamily: "sans-serif",
+          fontSize: "25px",
+          marginLeft: "18vh",
+          marginTop: "4vh",
+        }}
+      >
+        Add a new Flow:
+      </Typography>
       <Container style={styles.container}>
-          <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>Finding Type</Typography>
-          <div style={{ alignItems: "center", marginTop: "15vh" }}>
-          <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="findingType-native-helper" style={{fontSize: '20px'}}>
+        <Typography
+          style={{
+            textAlign: "center",
+            fontFamily: "sans-serif",
+            fontSize: "35px",
+          }}
+        >
+          Finding Type
+        </Typography>
+        <div style={{ alignItems: "center", marginTop: "15vh" }}>
+          <FormControl className={classes.formControl}>
+            <InputLabel
+              htmlFor="findingType-native-helper"
+              style={{ fontSize: "20px" }}
+            >
               Finding Type
             </InputLabel>
             <NativeSelect
@@ -81,13 +102,15 @@ export default function CreateFlow2(props) {
               <option value={3}>Recon:EC2/PortProbeEMRUnprotectedPort</option>
               <option value={4}>Trojan:EC2/PhishingDomainRequest!DNS</option>
               <option value={5}>CryptoCurrency:EC2/BitcoinTool.B</option>
-
             </NativeSelect>
           </FormControl>
-          </div>
-          <div style={{ alignItems: "center", marginTop: "10vh" }}>
-          <FormControl className={classes.formControl} >
-            <InputLabel htmlFor="findingType-native-helper" style={{fontSize: '20px'}}>
+        </div>
+        <div style={{ alignItems: "center", marginTop: "10vh" }}>
+          <FormControl className={classes.formControl}>
+            <InputLabel
+              htmlFor="findingType-native-helper"
+              style={{ fontSize: "20px" }}
+            >
               Only after 'X' confidence?
             </InputLabel>
             <NativeSelect
@@ -105,9 +128,13 @@ export default function CreateFlow2(props) {
               <option value={5}>5</option>
             </NativeSelect>
           </FormControl>
-
         </div>
-        <Button onClick={event =>  props.setState("CreateFlow3")} style={{marginTop:'20vh', backgroundColor:"#F9B15D"}}>Continue </Button>
+        <Button
+          onClick={(event) => props.setState("CreateFlow3")}
+          style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
+        >
+          Continue{" "}
+        </Button>
       </Container>
     </div>
   );
@@ -151,6 +178,5 @@ const styles = {
     backgroundColor: "#C4C4C4",
     height: "70vh",
     width: "200vh",
-
   },
 };
