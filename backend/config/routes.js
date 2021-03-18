@@ -40,6 +40,9 @@ module.exports.routes = {
   //Alert endpoints
   '/api/alert':                                 {action: 'alert/index'},
 
+  //Flow endpoints
+  '/api/create-flow':                           {action: 'flow/create-flow'},
+
   //Sample endpoints
   'GET /public':                                {action: 'public'},
   'GET /private':                               {action: 'private'},
