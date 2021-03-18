@@ -34,6 +34,13 @@ export default function Workflow() {
     else if (flowState==="CreateFlow3"){
         return <CreateFlow3 setState={setFlowState} onChange={onChange}/>;
     }
+    const data_create_flow= {data:valueState}
+    console.log(valueState)
+    fetch("http://localhost:1337/api/alert",data_create_flow)
+    .then(response => response.json())
+    .then(response =>{
+        console.log(response)
+    })
     console.log("FINAL state", valueState);
     return (
         <div>
