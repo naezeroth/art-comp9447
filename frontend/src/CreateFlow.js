@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "./buttonAppBar";
 
 import { NativeSelect } from "@material-ui/core";
+import TextField from '@material-ui/core/TextField';
 import CreateFlow2 from "./CreateFlow2";
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow1(props) {
   const classes = useStyles();
-  const [state, setState] = useState({ resourcename: ''});
+  const [state, setState] = useState({name: '', resourcename: '',});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -39,7 +40,7 @@ export default function CreateFlow1(props) {
       console.log("inside useEffect createFlow1", state);
       props.onChange(state)
     }
-  }, [state.resourcename])
+  }, [state.name, state.resourcename])
 
   return (
     <div>
@@ -65,7 +66,21 @@ export default function CreateFlow1(props) {
       <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'25px',marginLeft:'18vh',marginTop:'4vh'}}>Create a Flow:</Typography>
       <Container style={styles.container}>
           <Typography style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'35px'}}>Select resource</Typography>
-          <div style={{ alignItems: "center", marginTop: "15vh" }}>
+
+        <TextField 
+        value={state.name} 
+        onChange={handleChange} 
+        inputProps={{
+          name: "name",
+        }}
+
+        style={{minWidth: 400, margin: 'dense', marginTop: "10vh"}}
+
+          id="standard-helperText"
+          label="Name"
+          helperText="Enter a name for your flow"
+        />
+        <div style={{ alignItems: "center", marginTop: "10vh" }}>
           <FormControl className={classes.formControl} >
             <InputLabel htmlFor="resourcename-native-helper" style={{fontSize: '20px'}}>
               Resource
@@ -78,9 +93,9 @@ export default function CreateFlow1(props) {
               }}
             >
               <option aria-label="None" value="" />
-              <option value={10}>EC2</option>
-              <option value={20}>IAM</option>
-              <option value={30}>S3</option>
+              <option value={"EC2"}>EC2</option>
+              <option value={"IAM"}>IAM</option>
+              <option value={"S3"}>S3</option>
             </NativeSelect>
 
             <FormHelperText>Select the resource name</FormHelperText>

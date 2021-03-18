@@ -80,6 +80,8 @@ export default function CreateFlow2(props) {
               <option value={2}>Backdoor:EC2/DenialOfService.Udp</option>
               <option value={3}>Recon:EC2/PortProbeEMRUnprotectedPort</option>
               <option value={4}>Trojan:EC2/PhishingDomainRequest!DNS</option>
+              <option value={5}>CryptoCurrency:EC2/BitcoinTool.B</option>
+
             </NativeSelect>
           </FormControl>
           </div>
@@ -96,9 +98,11 @@ export default function CreateFlow2(props) {
               }}
             >
               <option aria-label="None" value="" />
-              <option value={1}>Option1</option>
-              <option value={2}>Option2</option>
-              <option value={3}>Option3</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
             </NativeSelect>
           </FormControl>
 
