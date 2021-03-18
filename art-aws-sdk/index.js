@@ -27,12 +27,10 @@ const AWSClientService = () => {
     const sendMessage = async (msg) => {
         sails.log(process.env.SLACK_TOKEN)
         const web = new WebClient(process.env.SLACK_TOKEN);
-        const test = await web.auth.test();
-        sails.log(test);
         try {
             await web.chat.postMessage({
                 channel: "#bot-log",
-                text: JSON.stringify(test) + msg,
+                text: msg,
             });
         } catch (err) {
             sails.log("Error", err);
