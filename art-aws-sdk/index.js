@@ -25,7 +25,7 @@ const AWSClientService = () => {
         }
     };
     const sendMessage = async (msg) => {
-        sails.log(typeof (process.env.SLACK_TOKEN))
+        sails.log(process.env.SLACK_TOKEN === "xoxb-1757606921425-1865428770357-Gi005lST1fXpffuY0jtvmqFc")
         const web = new WebClient(process.env.SLACK_TOKEN);
         try {
             await web.chat.postMessage({
