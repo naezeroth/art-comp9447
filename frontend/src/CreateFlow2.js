@@ -20,11 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateFlow2() {
+export default function CreateFlow2(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    findingtype: "",
-  });
+  const [state, setState] = React.useState({findingtype: '', confidence: ''});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -33,6 +31,13 @@ export default function CreateFlow2() {
       [name]: event.target.value,
     });
   };
+
+// used to pass state to parent component
+  React.useEffect(() => {
+    if (props.onChange) {
+      props.onChange(state)
+    }
+  }, [state.findingtype, state.confidence])
 
   return (
     <div>
@@ -71,9 +76,10 @@ export default function CreateFlow2() {
               }}
             >
               <option aria-label="None" value="" />
-              <option value={10}>Option1</option>
-              <option value={20}>Option2</option>
-              <option value={30}>Option3</option>
+              <option value={1}>Backdoor:EC2/C&CActivity.B</option>
+              <option value={2}>Backdoor:EC2/DenialOfService.Udp</option>
+              <option value={3}>Recon:EC2/PortProbeEMRUnprotectedPort</option>
+              <option value={4}>Trojan:EC2/PhishingDomainRequest!DNS</option>
             </NativeSelect>
           </FormControl>
           </div>
@@ -83,21 +89,21 @@ export default function CreateFlow2() {
               Only after 'X' confidence?
             </InputLabel>
             <NativeSelect
-              value={state.findingtype}
+              value={state.confidence}
               onChange={handleChange}
               inputProps={{
-                name: "findingtype",
+                name: "confidence",
               }}
             >
               <option aria-label="None" value="" />
-              <option value={10}>Option1</option>
-              <option value={20}>Option2</option>
-              <option value={30}>Option3</option>
+              <option value={1}>Option1</option>
+              <option value={2}>Option2</option>
+              <option value={3}>Option3</option>
             </NativeSelect>
           </FormControl>
 
         </div>
-        <Button onClick={event =>  window.location.href='./CreateFlow3'} style={{marginTop:'20vh', backgroundColor:"#F9B15D"}}>Continue </Button>
+        <Button onClick={event =>  props.setState("CreateFlow3")} style={{marginTop:'20vh', backgroundColor:"#F9B15D"}}>Continue </Button>
       </Container>
     </div>
   );
