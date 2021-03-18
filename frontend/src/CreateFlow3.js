@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "./buttonAppBar";
 import BuildIcon from '@material-ui/icons/Build';
 import { NativeSelect } from "@material-ui/core";
+import Select from '@material-ui/core/Select';
 import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,15 +26,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow3(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({actions: ''});
+  const [state, setState] = React.useState({actions: [],});
+
   console.log("inside creatflow3", props);
+  
   const handleChange = (event) => {
     const name = event.target.name;
+    const currentState = state.actions
+    currentState.push(event.target.value)
     setState({
-      ...state,
-      [name]: event.target.value,
+      actions: currentState
     });
+  console.log("checking state of list",{
+    actions: currentState
+  });
   };
+
 
   // used to pass state to parent component
   React.useEffect(() => {
@@ -85,6 +93,12 @@ export default function CreateFlow3(props) {
               <option value={3}>Option3</option>
             </NativeSelect>
           </FormControl>
+          {state.actions.map((name) => (
+            <div key={name} value={name}>
+              {name}
+            </div>
+          ))
+          }
           </div>
           <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>        <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
       </Container>
