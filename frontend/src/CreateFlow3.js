@@ -86,9 +86,7 @@ export default function CreateFlow3(props) {
             </NativeSelect>
           </FormControl>
           </div>
-          <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>
-          <Button style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'25px',marginTop:'9vh'}}>Add more ?<AddIcon></AddIcon></Button>
-        <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
+          <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>        <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
       </Container>
     </div>
   );
