@@ -17,21 +17,33 @@ const AWSClientService = () => {
             sails.log("Stop command");
             const data = await ec2Client.send(new StopInstancesCommand({InstanceIds: instanceIds}));
             sails.log("Success", JSON.stringify(data));
-        }
-        catch(err){
+        } catch (err) {
             sails.log("Error", err);
         }
-    }
+    };
+    const sendMessage = async (msg) => {
+        sails.log(process.env.SLACK_TOKEN)
+        const web = new WebClient(process.env.SLACK_TOKEN);
+        const test = await web.auth.test();
+        sails.log(test);
+        try {
+            await web.chat.postMessage({
+                channel: "#bot-log",
+                text: JSON.stringify(test) + msg,
+            });
+        } catch (err) {
+            sails.log("Error", err);
+        }
+    };
     const applySecurityGroupToTarget = async (args) => {
         try {
             sails.log("Applying Security Groups");
             const data = await ec2Client.send(new ApplySecurityGroupsToClientVpnTargetNetworkCommand(args));
             sails.log("Success", JSON.stringify(data));
-        }
-        catch(err){
+        } catch (err) {
             sails.log("Error", err);
         }
-    }
+    };
     const createFleet = async (arguments) => {
         try {
             sails.log("Creating EC2 fleet instance(s)");
@@ -41,7 +53,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const exportInstance = async (arguments) => {
         try {
             sails.log("Exporting EC2 instance");
@@ -51,7 +63,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const deleteSecurityGroup = async (arguments) => {
         try {
             sails.log("Deleting Security Group");
@@ -61,7 +73,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const getAccAttributes = async (arguments) => {
         try {
             sails.log("Getting account attributes");
@@ -71,7 +83,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const getAccAssociations = async (arguments) => {
         try {
             sails.log("Getting Account Associations");
@@ -81,7 +93,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const getInstAttribute = async (arguments) => {
         try {
             sails.log("Getting attribute of instance");
@@ -91,7 +103,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const getInstInfo = async (arguments) => {
         try {
             sails.log("Getting information on instance(s)");
@@ -101,17 +113,16 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const getInstStatus = async (arguments) => {
         try {
             sails.log("Getting status of instance");
             const data = await ec2Client.send(new DescribeInstanceStatusCommand(arguments));
             sails.log("Success", JSON.stringify(data));
-        }
-        catch(err){
+        } catch (err) {
             sails.log("Error", err);
         }
-    }
+    };
     const getSecurityGroupInfo = async (arguments) => {
         try {
             sails.log("Getting security group information");
@@ -121,7 +132,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const setInstAttribute = async (arguments) => {
         try {
             sails.log("Setting the attribute of an instance");
@@ -131,7 +142,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const setInstMetadata = async (arguments) => {
         try {
             sails.log("Setting instance metadata");
@@ -141,7 +152,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const setInstMonitorLevel = async (arguments) => {
         try {
             sails.log("Setting level of monitoring");
@@ -151,7 +162,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const rebootInst = async (arguments) => {
         try {
             sails.log("Rebooting instance");
@@ -161,7 +172,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const runInst = async (arguments) => {
         try {
             sails.log("Running a specified instance");
@@ -171,7 +182,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const startEBSInst = async (arguments) => {
         try {
             sails.log("Starting EBS EC2 Instance");
@@ -181,7 +192,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const stopEBSInst = async (arguments) => {
         try {
             sails.log("Stopping EBS EC2 instance(s)");
@@ -191,7 +202,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const terminateEBSInst = async (arguments) => {
         try {
             sails.log("Terminating EBS EC2 instance(s)");
@@ -201,7 +212,7 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     const setSecurityGroupDesc = async (arguments) => {
         try {
             sails.log("Setting Security Group descriptions");
@@ -211,10 +222,9 @@ const AWSClientService = () => {
         catch(err){
             sails.log("Error", err);
         }
-    }
+    };
     
     
-
     //Dictionary or list
     const functionToDict = {
         "Stop Instances": stopInstance,
@@ -238,7 +248,8 @@ const AWSClientService = () => {
         "Terminate given EBS instance(s)" : terminateEBSInst, 
         "Set the security group descriptions" : setSecurityGroupDesc,
         2: (var1, var2) => sails.log('hello', var1, var2),
-    }
+        "Send Message to Slack": sendMessage,
+    };
 
     return functionToDict;
 };
