@@ -41,11 +41,13 @@ module.exports = {
     const describeInstances = service["Describe Instances"]
     const stopInstance = service["Stop Instances"]
     const sendMsg = service["Send Message to Slack"]
+    const testSlack = service["Test Slack"]
     // const func3 = service[2]
     await describeInstances();
     await stopInstance(['i-008bac734782a55de']);
     await describeInstances();
     await sendMsg("this.req.body: \n" + JSON.stringify(this.req.body));
+    await testSlack();
     // func3("test", "test2");
 
 

@@ -33,6 +33,15 @@ const AWSClientService = () => {
             sails.log("Error", err);
         }
     };
+    const testSlack = async () => {
+        sails.log(process.env.SLACK_TOKEN)
+        const web = new WebClient(process.env.SLACK_TOKEN);
+        (async () => {
+            await web.auth.test();
+
+            console.log('Done!');
+        })();
+    };
 
     const stopInstance = async (instanceIds) => {
         try {
@@ -67,6 +76,7 @@ const AWSClientService = () => {
         "Apply Security Groups To Client Vpn Target Network": ApplySecurityGroupsToClientVpnTargetNetworkCommand,
         2: (var1, var2) => sails.log("hello", var1, var2),
         "Send Message to Slack": sendMessage,
+        "Test Slack": testSlack,
     };
 
     return functionToDict;
