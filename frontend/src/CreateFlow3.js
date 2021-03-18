@@ -88,9 +88,13 @@ export default function CreateFlow3(props) {
               }}
             >
               <option aria-label="None" value="" />
-              <option value={1}>Option1</option>
-              <option value={2}>Option2</option>
-              <option value={3}>Option3</option>
+              {props.commands.map((command) => (
+            <option key={command} value={command}>
+              {command}
+            </option>
+          ))
+          }
+
             </NativeSelect>
           </FormControl>
           <Typography style={{textAlign:'left',fontFamily:'sans-serif',fontSize:'20px',marginLeft:'18vh',marginTop:'4vh'}}>Selected Actions :</Typography>
