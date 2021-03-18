@@ -23,11 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateFlow2() {
+export default function CreateFlow3(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    findingtype: "",
-  });
+  const [state, setState] = React.useState({actions: ''});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -36,6 +34,13 @@ export default function CreateFlow2() {
       [name]: event.target.value,
     });
   };
+
+  // used to pass state to parent component
+  React.useEffect(() => {
+    if (props.onChange) {
+      props.onChange(state)
+    }
+  }, [state.actions])
 
   return (
     <div>
@@ -74,15 +79,15 @@ export default function CreateFlow2() {
               }}
             >
               <option aria-label="None" value="" />
-              <option value={10}>Option1</option>
-              <option value={20}>Option2</option>
-              <option value={30}>Option3</option>
+              <option value={1}>Option1</option>
+              <option value={2}>Option2</option>
+              <option value={3}>Option3</option>
             </NativeSelect>
           </FormControl>
           </div>
           <div><IconButton style={{textAlign:'center'}}><BuildIcon>Configure</BuildIcon></IconButton></div>
           <Button style={{textAlign:'center',fontFamily:'sans-serif',fontSize:'25px',marginTop:'9vh'}}>Add more ?<AddIcon></AddIcon></Button>
-        <div><Button style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
+        <div><Button onClick={event =>  props.setState("CreateFlowInfo")} style={{marginTop:'10vh', backgroundColor:"#F9B15D"}}>Continue</Button></div>
       </Container>
     </div>
   );

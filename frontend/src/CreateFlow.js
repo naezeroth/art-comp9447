@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "./buttonAppBar";
 
 import { NativeSelect } from "@material-ui/core";
+import CreateFlow2 from "./CreateFlow2";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -21,11 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateFlow1() {
+export default function CreateFlow1(props) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    resourcename: "",
-  });
+  const [state, setState] = useState({ resourcename: ''});
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -34,6 +33,12 @@ export default function CreateFlow1() {
       [name]: event.target.value,
     });
   };
+
+  React.useEffect(() => {
+    if (props.onChange) {
+      props.onChange(state)
+    }
+  }, [state.resourcename])
 
   return (
     <div>
@@ -80,7 +85,7 @@ export default function CreateFlow1() {
             <FormHelperText>Select the resource name</FormHelperText>
           </FormControl>
         </div>
-        <Button onClick={event =>  window.location.href='./CreateFlow2'}
+        <Button onClick={event =>  props.setState("CreateFlow2")}
      style={{marginTop:'20vh', backgroundColor:"#F9B15D"}}> Continue </Button>
       </Container>
     </div>

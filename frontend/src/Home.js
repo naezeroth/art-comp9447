@@ -41,7 +41,7 @@ class Home extends Component {
 										<Grid item xs={5}>
 											<Typography style={{textAlign: 'left', "font-size":"25px", marginLeft: "10vh" }}> Flows </Typography>	
 											<Container style={styles.Flows}>
-											<a href="./CreateFlow1"><AddCircleIcon style={{ color: "#0A4A74", fontSize: 85, marginRight: "12vh", marginTop:60, }}/></a>	
+											<a href="./WorkFlow"><AddCircleIcon style={{ color: "#0A4A74", fontSize: 85, marginRight: "12vh", marginTop:60, }}/></a>	
 											<a href="./EditFlow"><EditIcon style={{ color: "#0A4A74", fontSize: 85, marginTop:60, }}/></a>
 											<div style={styles.IconText}>
 											<Typography style={{textAlign: 'left', "font-size":"20px", marginTop: "5vh"}}> Create Flow </Typography>
