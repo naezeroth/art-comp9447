@@ -259,7 +259,7 @@ const AWSClientService = () => {
         "Stop a given EBS instance": stopEBSInst,
         "Terminate given EBS instance(s)": terminateEBSInst,
         "Set the security group descriptions": setSecurityGroupDesc,
-        2: (var1, var2) => sails.log('hello', var1, var2),
+        "Debug": (var1, var2) => sails.log('hello', var1, var2),
         "Send Message to Slack": sendMessage,
         "Test Slack": testSlack,
     };

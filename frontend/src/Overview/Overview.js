@@ -11,81 +11,84 @@ import ButtonAppBar from "../buttonAppBar";
 import CSSGrid from "../mainGrid";
 
 class Overview extends Component {
-  render() {
-    return (
-      <div>
-        <div>
-          <ButtonAppBar />
-        </div>
-        <div>
-          <ul class="navBar">
-            <li>
-              <a href="./Home">Home</a>
-            </li>
-            <li>
-              <a href="./">Services</a>
-            </li>
-            <li>
-              <a href="./Overview">Overview</a>
-            </li>
-            <li>
-              <a href="./">History</a>
-            </li>
-          </ul>
-        </div>
-        <Container disableGutters="true" maxWidth="false">
-          <Typography
-            component="div"
-            style={{ backgroundColor: "#C4C4C4", height: "100vh" }}
-          >
-            <Container maxWidth="xl">
-              <Typography
-                component="div"
-                style={{ backgroundColor: "#F1FAFF", height: "100vh" }}
-              >
-                <CSSGrid />
-              </Typography>
-            </Container>
-          </Typography>
-        </Container>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <div>
+                    <ButtonAppBar />
+                </div>
+                <div>
+                    <ul class="navBar">
+                        <li>
+                            <a href="./Home">Home</a>
+                        </li>
+                        <li>
+                            <a href="./">Services</a>
+                        </li>
+                        <li>
+                            <a href="./Overview">Overview</a>
+                        </li>
+                        <li>
+                            <a href="./">History</a>
+                        </li>
+                    </ul>
+                </div>
+                <Container disableGutters="true" maxWidth="false">
+                    <Typography
+                        component="div"
+                        style={{ backgroundColor: "#C4C4C4", height: "100vh" }}
+                    >
+                        <Container maxWidth="xl">
+                            <Typography
+                                component="div"
+                                style={{
+                                    backgroundColor: "#F1FAFF",
+                                    height: "100vh",
+                                }}
+                            >
+                                <CSSGrid />
+                            </Typography>
+                        </Container>
+                    </Typography>
+                </Container>
+            </div>
+        );
+    }
 }
 
 const styles = {
-  title: {
-    backgroundColor: "#12293B",
-    position: "static",
-  },
+    title: {
+        backgroundColor: "#12293B",
+        position: "static",
+    },
 
-  headerBar: {
-    display: "flex",
-    // justifyContent: "space-between",
-    // flexFlow: "row wrap",
-  },
+    headerBar: {
+        display: "flex",
+        // justifyContent: "space-between",
+        // flexFlow: "row wrap",
+    },
 
-  leftBlock: {
-    paddingRight: 10,
-    // flexGrow: 1,
-  },
+    leftBlock: {
+        paddingRight: 10,
+        // flexGrow: 1,
+    },
 
-  rightBlock: {
-    // flex : 2,
-  },
+    rightBlock: {
+        // flex : 2,
+    },
 
-  acName: {
-    color: "inherit",
-    float: "right",
-  },
+    acName: {
+        color: "inherit",
+        float: "right",
+    },
 
-  mainBody: {
-    backgroundColor: "#C4C4C4",
-  },
+    mainBody: {
+        backgroundColor: "#C4C4C4",
+    },
 
-  menuList: {
-    float: "right",
-  },
+    menuList: {
+        float: "right",
+    },
 };
 
 export default Overview;

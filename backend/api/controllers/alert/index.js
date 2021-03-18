@@ -6,33 +6,27 @@
  */
 
 const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
-const { AWSClientService } = require('art-aws-sdk');
+const { AWSClientService } = require("art-aws-sdk");
 
 module.exports = {
+  friendlyName: "Alert from SNS",
 
-  friendlyName: 'Alert from SNS',
+  description:
+    "An alert has been sent from SNS relating to a GuardDuty Finding",
 
-
-  description: 'An alert has been sent from SNS relating to a GuardDuty Finding',
-
-
-  inputs: {
-  },
-
+  inputs: {},
 
   exits: {
-
     success: {
-      description: 'The requesting user agent has been successfully logged in.',
+      description:
+        "The requesting user agent has been successfully logged in.",
     },
 
     badCombo: {
       description: `Something went wrong`,
-      responseType: 'unauthorized',
-    }
-
+      responseType: "unauthorized",
+    },
   },
-
 
   fn: async function (inputs, exits) {
     sails.log(AWSClientService, typeof (AWSClientService));
@@ -49,6 +43,8 @@ module.exports = {
     await sendMsg("this.req.body: \n" + JSON.stringify(this.req.body));
     await testSlack();
     // func3("test", "test2");
+
+    const flowFromDB = await Flow.find({});
 
 
     sails.log("this.req.body", this.req.body);
@@ -67,5 +63,4 @@ module.exports = {
       message: 'SNS Received Sucessfully',
     });
   }
-
 };

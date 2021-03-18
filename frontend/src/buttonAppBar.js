@@ -11,46 +11,46 @@ import CloudQueueIcon from "@material-ui/icons/CloudQueue";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  backG: {
-    backgroundColor: "#12293B",
-    position: "static",
-  },
-  title: {
-    flexGrow: 1,
-  },
+    root: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+    },
+    backG: {
+        backgroundColor: "#12293B",
+        position: "static",
+    },
+    title: {
+        flexGrow: 1,
+    },
 }));
 
 export default function ButtonAppBar() {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  return (
-    <div className={classes.root}>
-      <AppBar className={classes.backG}>
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <CloudQueueIcon />
-          </IconButton>
-          <Typography variant="h6">ART</Typography>
-          <Typography variant="h6" className={classes.title}>
-            {/* Here to make sure that the flexing works properly */}
-          </Typography>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <Button color="inherit">AccountName</Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+    return (
+        <div className={classes.root}>
+            <AppBar className={classes.backG}>
+                <Toolbar>
+                    <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="menu"
+                    >
+                        <CloudQueueIcon />
+                    </IconButton>
+                    <Typography variant="h6">ART</Typography>
+                    <Typography variant="h6" className={classes.title}>
+                        {/* Here to make sure that the flexing works properly */}
+                    </Typography>
+                    <IconButton color="inherit">
+                        <AccountCircle />
+                    </IconButton>
+                    <Button color="inherit">AccountName</Button>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 }
