@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import CreateFlow1 from './CreateFlow';
 import CreateFlow2 from './CreateFlow2';
 import CreateFlow3 from './CreateFlow3';
-// const { AWSClientService } = require('./consts');
+const { AWSClientService } = require('art-aws-sdk');
 
 export default function Workflow() {
 

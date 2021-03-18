@@ -6,8 +6,8 @@
  */
 
 const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
-const { AWSClientService } = require('../../../../consts.js');
-
+const { AWSClientService } = require('art-aws-sdk');
+ 
  module.exports = {
  
    friendlyName: 'Alert from SNS',
@@ -48,24 +48,7 @@ const { AWSClientService } = require('../../../../consts.js');
     
     sails.log("this.req.body", this.req.body);
 
-    // Set the AWS Region
-    // const REGION = "ap-southeast-2"; 
-
-    // // Create SNS service object
-    // const sns = new SNSClient({ region: REGION });
-
-    // // const run = async () => {
-    // try {
-    //   const data = await sns.send(new ListTopicsCommand({}));
-    //   sails.log(data.Topics);
-    // } catch (err) {
-    //   console.error(err, err.stack);
-    // }
-    // };
-    // run();
-
     //Parse this.req.body JSON
-
     //Do logic based on event type 
         // Check if event type exists in DB
         // If it doesn't
