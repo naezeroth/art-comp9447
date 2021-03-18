@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateFlow3(props) {
   const classes = useStyles();
   const [state, setState] = React.useState({actions: ''});
-
+  console.log("inside creatflow3", props);
   const handleChange = (event) => {
     const name = event.target.name;
     setState({
@@ -37,6 +37,7 @@ export default function CreateFlow3(props) {
 
   // used to pass state to parent component
   React.useEffect(() => {
+    console.log("state.actions", state.actions);
     if (props.onChange) {
       props.onChange(state)
     }
@@ -72,10 +73,10 @@ export default function CreateFlow3(props) {
               Selected Action
             </InputLabel>
             <NativeSelect
-              value={state.findingtype}
+              value={state.actions}
               onChange={handleChange}
               inputProps={{
-                name: "findingtype",
+                name: 'actions',
               }}
             >
               <option aria-label="None" value="" />

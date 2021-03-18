@@ -36,6 +36,7 @@ export default function CreateFlow1(props) {
 
   React.useEffect(() => {
     if (props.onChange) {
+      console.log("inside useEffect createFlow1", state);
       props.onChange(state)
     }
   }, [state.resourcename])
