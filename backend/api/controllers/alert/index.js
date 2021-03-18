@@ -49,6 +49,21 @@ module.exports = {
 
     sails.log("this.req.body", this.req.body);
 
+    const json = this.req.body;
+    const obj = JSON.parse(json);
+
+    var findEvent = await flow.findOne({
+      findingType : obj.details.type
+
+    });
+
+    if(!findEvent){
+      return exits.badCombo({
+        message: 'Event not found'
+        //set remediation to false
+      });
+    }
+
     //Parse this.req.body JSON
     //Do logic based on event type 
     // Check if event type exists in DB
