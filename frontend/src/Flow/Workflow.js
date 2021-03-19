@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CreateFlow1 from "./CreateFlow";
 import CreateFlow2 from "./CreateFlow2";
 import CreateFlow3 from "./CreateFlow3";
+import {Redirect} from "react-router-dom";
 const { AWSClientService } = require("art-aws-sdk");
 
 export default function Workflow() {
@@ -49,5 +50,5 @@ export default function Workflow() {
             console.log(response);
         });
 
-    return <div>hello</div>;
+    return <Redirect to="/Home"/>;
 }
