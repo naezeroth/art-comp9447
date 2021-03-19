@@ -74,8 +74,7 @@ class Home extends Component {
                                             <Container
                                                 style={styles.currentAlerts}
                                             >
-                                                [Current Alerts List - Hard
-                                                Coded]
+                                                
                                             </Container>
                                         </Grid>
 
