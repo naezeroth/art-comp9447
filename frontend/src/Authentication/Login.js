@@ -60,7 +60,7 @@ export default class Login extends React.Component {
                                         label="Remember Me"
                                     />
                                 </Form.Group>
-                                <Button variant="primary" type="submit">
+                                <Button onClick={event =>  window.location.href='../Home'} variant="primary" type="submit">
                                     Submit
                                 </Button>
                             </Form>
