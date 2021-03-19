@@ -31,27 +31,12 @@ module.exports = {
     fn: async function (inputs, exits) {
         sails.log(AWSClientService, typeof AWSClientService);
         const service = AWSClientService();
-        sails.log(Object.keys(service));
-        const getInstInfo =
-            service["Get information on the specified instance(s)"];
-        const stopInstance = service["Stop Instances"];
-        const sendMsg = service["Send Message to Slack"];
-        // const func3 = service[2]
-        await getInstInfo([]);
-        await stopInstance(["i-008bac734782a55de"]);
-        await getInstInfo([]);
-        await sendMsg("this.req.body: \n" + JSON.stringify(this.req.body));
-        // func3("test", "test2");
 
         const obj = this.req.body;
 
         var findEvent = await Flow.find({
             findingType: obj.detail.type,
         });
-
-        //findEvent[0].actions; // actions: [ 'Stop Instances' ],
-
-        sails.log("Findevent??", findEvent, !findEvent);
 
         if (!findEvent) {
             return exits.badCombo({
@@ -65,14 +50,25 @@ module.exports = {
                 if (action === "Send Message to Slack") {
                     //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
                     //As part of the create-flow FE/BE
-                    service[action](
-                        "ALERT!\n",
-                        obj.updatedAt,
-                        "\n",
-                        obj.description
-                    );
-                } else {
-                    service[action]();
+
+                    const formattedString =
+                        "ALERT!" +
+                        "\n" +
+                        obj.detail.updatedAt +
+                        "\n" +
+                        obj.detail.description +
+                        "\n" +
+                        "with severity " +
+                        obj.detail.severity +
+                        "\n" +
+                        "Automatically remediating with these steps: " +
+                        findEvent[findEvent.length - 1].actions;
+                    sails.log("Sending", formattedString);
+                    service[action](formattedString);
+                } else if (action === "Stop Instances") {
+                    service[action]([
+                        obj.detail.resource.instanceDetails.instanceId,
+                    ]);
                 }
             }
         }
