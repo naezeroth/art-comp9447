@@ -90,6 +90,7 @@ class Home extends Component {
                                                 Flows{" "}
                                             </Typography>
                                             <Container style={styles.Flows}>
+                                           
                                                 <a href="./WorkFlow">
                                                     <AddCircleIcon
                                                         style={{
@@ -100,6 +101,7 @@ class Home extends Component {
                                                         }}
                                                     />
                                                 </a>
+
                                                 <a href="./EditFlow">
                                                     <EditIcon
                                                         style={{
@@ -131,6 +133,7 @@ class Home extends Component {
                                                         Edit Flow{" "}
                                                     </Typography>
                                                 </div>
+                                              
                                             </Container>
                                         </Grid>
                                     </Grid>
