@@ -13,29 +13,32 @@ class Home extends Component {
         super();
 
         this.state = {
-            paginationValue: '86',
             flow: []
         }
     }
         componentDidMount() {
-
-            if(this.state.data){
-           
+            
             fetch(' http://localhost:1337/api/display-flows') //the api to hit request
-                .then((response) => {
-                    const flow = response.data.map((flows) => ({
-                        id: flows.id,
-                        name: flows.name,
-                        resourceName: flows.resourceName
-                    }));
-                    
-                    this.setState({
-                        flow
-                    });
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                const flow = response.flows.map((flows) => ({
+                    id: flows.id,
+                    name: flows.name,
+                    resourceName: flows.resourceName
+                }));
+                // console.log(response);
+                this.setState({
+                    flow: flow
                 });
-        }
+            })
+                
+        
     }
-    render() {
+    
+    render() 
+    {
+        console.log("this is current state",this.state)
         return (
             <div>
                 <div>
@@ -104,7 +107,7 @@ class Home extends Component {
                                             </Container>
                                         </Grid>
 
-                                        <Grid item xs={5}>
+                                        <Grid item xl={5}>
                                             <Typography
                                                 style={{
                                                     textAlign: "left",
@@ -116,11 +119,28 @@ class Home extends Component {
                                                 Flows{" "}
                                             </Typography>
                                             <Container style={styles.Flows}>
-                                             
+                                            <a href="./WorkFlow">
+                                                    <AddCircleIcon
+                                                        style={{
+                                                            color: "#0A4A74",
+                                                            fontSize: 45,
+                                                            marginLeft: "28vw",
+                                                            marginTop: 10,
+                                                        }}
+                                                    />
+                                            </a>
                                                 <ul>
                                                      {
                                                      this.state.flow.map((eachFlow) => {
-                                                     return <li key={eachFlow.id}>{eachFlow.name}</li>
+                                                     return <ul key={eachFlow.id}> {eachFlow.name}{eachFlow.resourceName} <a href="./EditFlow">
+                                                     <EditIcon
+                                                         style={{
+                                                             color: "#0A4A74",
+                                                             fontSize: 45,
+                                                             marginTop: 60,
+                                                         }}
+                                                     />
+                                                 </a></ul>
                                                      })
                                                      }
                                                  </ul>
