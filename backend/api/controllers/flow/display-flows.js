@@ -11,7 +11,9 @@
   
   
     description: 'Display all flows present in the db',
-  
+    
+
+    inputs : {},
     exits: {
   
       success: {
@@ -26,16 +28,17 @@
     },
   
   
-    fn: async function () {
+    fn: async function (inputs,exits) {
 
 
-      var FlowDisplay = await Flow.find()
+      var listOfFlows = await Flow.find()
 
-      sails.log("List of flows", FlowDisplay);
+      sails.log("List of flows", listOfFlows);
 
     
       return exits.success({
         message: 'list of flows',
+        flows: listOfFlows
       });
     }
   

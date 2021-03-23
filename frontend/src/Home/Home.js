@@ -9,6 +9,27 @@ import EditIcon from "@material-ui/icons/Edit";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 class Home extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            paginationValue: '86',
+            flows: []
+        }
+        componentDidMount() {
+            fetch(' http://localhost:1337/api/display-flows') //the api to hit request
+                .then((response) => {
+                    const course = response.data.map((flows) => ({
+                        id: flows.id,
+                        name: flow.name,
+                        resourceName: flow.resourceName
+                    }));
+    
+                    this.setState({
+                        flows
+                    });
+                });
+        }
     render() {
         return (
             <div>
@@ -90,7 +111,7 @@ class Home extends Component {
                                                 Flows{" "}
                                             </Typography>
                                             <Container style={styles.Flows}>
-                                           
+                                             
                                                 <a href="./WorkFlow">
                                                     <AddCircleIcon
                                                         style={{
@@ -101,6 +122,13 @@ class Home extends Component {
                                                         }}
                                                     />
                                                 </a>
+                                                <ul>
+                                                     {
+                                                     this.state.course.map((eachFlow) => {
+                                                     return <li key={eachFlow.id}>{eachFlow.name}</li>
+                                                     })
+                                                     }
+                                                 </ul>
 
                                                 <a href="./EditFlow">
                                                     <EditIcon
