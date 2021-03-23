@@ -23,9 +23,18 @@ export default function Workflow() {
     };
 
     if (flowState === "CreateFlow1") {
-        return <CreateFlow1 setState={setFlowState} onChange={onChange} />;
+        return (
+                <CreateFlow1 
+                    setState={setFlowState} 
+                    onChange={onChange} />
+                    );
     } else if (flowState === "CreateFlow2") {
-        return <CreateFlow2 setState={setFlowState} onChange={onChange} />;
+        return (
+                <CreateFlow2 
+                    valueState={valueState} 
+                    setState={setFlowState} 
+                    onChange={onChange} />
+                    );
     } else if (flowState === "CreateFlow3") {
         return (
             <CreateFlow3
@@ -34,21 +43,19 @@ export default function Workflow() {
                 commands={Object.keys(service)}
             />
         );
+    }else if (flowState === "CreateFlowInfo"){
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ data: valueState }),
+        };
+    
+        fetch("http://localhost:1337/api/create-flow", requestOptions)
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+            });
     }
-
-    const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: valueState }),
-    };
-
-    console.log(requestOptions);
-
-    fetch("http://localhost:1337/api/create-flow", requestOptions)
-        .then((response) => response.json())
-        .then((response) => {
-            console.log(response);
-        });
 
     return <Redirect to="/Home"/>;
 }
