@@ -14,19 +14,20 @@ class Home extends Component {
 
         this.state = {
             paginationValue: '86',
-            flows: []
+            flow: []
         }
+    }
         componentDidMount() {
             fetch(' http://localhost:1337/api/display-flows') //the api to hit request
                 .then((response) => {
-                    const course = response.data.map((flows) => ({
+                    const flow = response.data.map((flows) => ({
                         id: flows.id,
-                        name: flow.name,
-                        resourceName: flow.resourceName
+                        name: flows.name,
+                        resourceName: flows.resourceName
                     }));
     
                     this.setState({
-                        flows
+                        flow
                     });
                 });
         }
@@ -124,7 +125,7 @@ class Home extends Component {
                                                 </a>
                                                 <ul>
                                                      {
-                                                     this.state.course.map((eachFlow) => {
+                                                     this.state.flow.map((eachFlow) => {
                                                      return <li key={eachFlow.id}>{eachFlow.name}</li>
                                                      })
                                                      }
