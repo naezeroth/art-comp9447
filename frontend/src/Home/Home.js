@@ -18,6 +18,9 @@ class Home extends Component {
         }
     }
         componentDidMount() {
+
+            if(this.state.data){
+           
             fetch(' http://localhost:1337/api/display-flows') //the api to hit request
                 .then((response) => {
                     const flow = response.data.map((flows) => ({
@@ -25,12 +28,13 @@ class Home extends Component {
                         name: flows.name,
                         resourceName: flows.resourceName
                     }));
-    
+                    
                     this.setState({
                         flow
                     });
                 });
         }
+    }
     render() {
         return (
             <div>
@@ -113,16 +117,6 @@ class Home extends Component {
                                             </Typography>
                                             <Container style={styles.Flows}>
                                              
-                                                <a href="./WorkFlow">
-                                                    <AddCircleIcon
-                                                        style={{
-                                                            color: "#0A4A74",
-                                                            fontSize: 85,
-                                                            marginRight: "12vh",
-                                                            marginTop: 60,
-                                                        }}
-                                                    />
-                                                </a>
                                                 <ul>
                                                      {
                                                      this.state.flow.map((eachFlow) => {
@@ -130,39 +124,6 @@ class Home extends Component {
                                                      })
                                                      }
                                                  </ul>
-
-                                                <a href="./EditFlow">
-                                                    <EditIcon
-                                                        style={{
-                                                            color: "#0A4A74",
-                                                            fontSize: 85,
-                                                            marginTop: 60,
-                                                        }}
-                                                    />
-                                                </a>
-                                                <div style={styles.IconText}>
-                                                    <Typography
-                                                        style={{
-                                                            textAlign: "left",
-                                                            "font-size": "20px",
-                                                            marginTop: "5vh",
-                                                        }}
-                                                    >
-                                                        {" "}
-                                                        Create Flow{" "}
-                                                    </Typography>
-                                                    <Typography
-                                                        style={{
-                                                            "font-size": "20px",
-                                                            marginLeft: "10vh",
-                                                            marginTop: "5vh",
-                                                        }}
-                                                    >
-                                                        {" "}
-                                                        Edit Flow{" "}
-                                                    </Typography>
-                                                </div>
-                                              
                                             </Container>
                                         </Grid>
                                     </Grid>
