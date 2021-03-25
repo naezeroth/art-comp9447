@@ -10,6 +10,9 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
 import BuildIcon from "@material-ui/icons/Build";
 import { NativeSelect } from "@material-ui/core";
+import CloseSharpIcon from '@material-ui/icons/CloseSharp';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -22,19 +25,64 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function CreateFlow3(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({ actions: [] });
-
-    console.log("inside creatflow3", props);
+    console.log("inside createflow3", props);
 
     const handleChange = (event) => {
+        console.log(event);
         const currentState = state.actions;
-        currentState.push(event.target.value);
+
+        // Prevents doubling up of actions
+        if(!currentState.includes(event.target.value)){
+            currentState.push(event.target.value);
+        }
+        
         setState({
             actions: currentState,
         });
     };
+
+    const removeAction = (name) => {
+        const currentState = state.actions;
+        const index = currentState.indexOf(name);
+        currentState.splice(index, 1);
+
+        setState({
+            actions: currentState,
+        });
+    };
+
+    const moveUp = (name) => {
+        const currentState = state.actions;
+        const index = currentState.indexOf(name);
+        if(index > 0 && currentState.length > 1){
+            const temp = currentState[index-1];
+            currentState[index-1] = name;
+            currentState[index] = temp;
+        }
+
+        setState({
+            actions: currentState,
+        });
+    }
+
+    const moveDown = (name) => {
+        const currentState = state.actions;
+        const index = currentState.indexOf(name);
+        if(index >= 0 && currentState.length > 1 && index < (currentState.length)-1){
+            const temp = currentState[index+1];
+            currentState[index+1] = name;
+            currentState[index] = temp;
+        }
+
+        setState({
+            actions: currentState,
+        });
+    }
+
 
     // used to pass state to parent component
     React.useEffect(() => {
@@ -48,6 +96,7 @@ export default function CreateFlow3(props) {
         props.setState("Done");
         props.onSubmit();
     };
+
 
     return (
         <div>
@@ -117,7 +166,7 @@ export default function CreateFlow3(props) {
                     </FormControl>
                     <Typography
                         style={{
-                            textAlign: "left",
+                            textAlign: "center",
                             fontFamily: "sans-serif",
                             fontSize: "20px",
                             marginLeft: "18vh",
@@ -128,10 +177,20 @@ export default function CreateFlow3(props) {
                     </Typography>
 
                     {state.actions.map((name) => (
-                        <div key={name} value={name}>
-                            {name}
-                        </div>
+                    <div style={styles.selectedRem} key={name} value={name}>
+                        {name}
+                        <Button onClick={() => { removeAction(name) }}>
+                            <CloseSharpIcon/>
+                        </Button>        
+                        <Button onClick={() => { moveUp(name) }}>
+                            <ArrowUpwardIcon/>
+                        </Button>        
+                        <Button onClick={() => { moveDown(name) }}>
+                            <ArrowDownwardIcon/>
+                        </Button>        
+                    </div>
                     ))}
+
                 </div>
                 <div>
                     <IconButton style={{ textAlign: "center" }}>
@@ -192,5 +251,9 @@ const styles = {
         backgroundColor: "#C4C4C4",
         height: "70vh",
         width: "200vh",
+    },
+
+    selectedRem:{
+        textAlign: "left",
     },
 };
