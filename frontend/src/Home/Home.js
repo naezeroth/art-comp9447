@@ -25,7 +25,10 @@ class Home extends Component {
                 const flow = response.flows.map((flows) => ({
                     id: flows.id,
                     name: flows.name,
-                    resourceName: flows.resourceName
+                    resourceName: flows.resourceName,
+                    findingType: flows.findingType,
+                    createdAt: flows.createdAt
+
                 }));
                 // console.log(response);
                 this.setState({
@@ -132,7 +135,8 @@ class Home extends Component {
                                                 <ul>
                                                      {
                                                      this.state.flow.map((eachFlow) => {
-                                                     return <ul key={eachFlow.id}> {eachFlow.name}{eachFlow.resourceName} <a href="./EditFlow">
+                                                         console.log(eachFlow)
+                                                     return <ul key={eachFlow.id}>{eachFlow.name}&nbsp;{eachFlow.resourceName}&nbsp;{eachFlow.findingType}&nbsp;<a href="./EditFlow">
                                                      <EditIcon
                                                          style={{
                                                              color: "#0A4A74",
