@@ -44,6 +44,11 @@ export default function CreateFlow3(props) {
         }
     }, [state.actions]);
 
+    const handleSubmit = () => {
+        props.setState("Done");
+        props.onSubmit();
+    };
+
     return (
         <div>
             <div>
@@ -135,7 +140,7 @@ export default function CreateFlow3(props) {
                 </div>{" "}
                 <div>
                     <Button
-                        onClick={(event) => props.setState("CreateFlowInfo")}
+                        onClick={handleSubmit}
                         style={{
                             marginTop: "10vh",
                             backgroundColor: "#F9B15D",
