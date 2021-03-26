@@ -2534,6 +2534,8 @@
   "version" "1.0.0"
   dependencies:
     "@aws-sdk/client-ec2" "^3.8.1"
+    "@slack/web-api" "^6.1.0"
+    "dotenv" "^8.2.0"
 
 "asap@~2.0.3", "asap@~2.0.6":
   "integrity" "sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY="

@@ -4,6 +4,11 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
+
+const FlowIAM = require("../../models/FlowIAM");
+const FlowS3 = require("../../models/FlowS3");
+const FlowEC2 = require("../../models/FlowEC2");
+
  
   module.exports = {
   
@@ -47,18 +52,29 @@
   
     fn: async function (inputs, exits) {
       sails.log(inputs.data);
-
-      var newFlow = await Flow.create(inputs.data)
+      sails.log(inputs.data.resourceName);
+      if(inputs.data.resourceName=="EC2"){
+        var newEC2Flow = await FlowEC2.create(inputs.data)
       .intercept({name: 'UsageError'}, 'invalid')
       .fetch();
-
-      sails.log("Flow created", newFlow);
-
-      var queriedFlow = await Flow.find({
-        name: inputs.data.name
-      })
+      }else if(inputs.data.resourceName=="IAM"){
+        var newIAMFlow = await FlowIAM.create(inputs.data)
+      .intercept({name: 'UsageError'}, 'invalid')
+      .fetch();
+      }else if(inputs.data.resourceName=="S3"){
+        var newS3Flow = await FlowS3.create(inputs.data)
+      .intercept({name: 'UsageError'}, 'invalid')
+      .fetch();
+      }
       
-      sails.log("Flow queried", queriedFlow);
+
+      // sails.log("Flow created", newFlow);
+
+      // var queriedFlow = await Flow.find({
+      //   name: inputs.data.name
+      // })
+      
+      // sails.log("Flow queried", queriedFlow);
 
       return exits.success({
         message: 'Created Flow Sucessfully',
