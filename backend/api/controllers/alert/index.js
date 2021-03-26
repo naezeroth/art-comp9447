@@ -33,7 +33,7 @@ module.exports = {
         const service = AWSClientService();
 
         const obj = this.req.body;
-        console.log(obj)
+
         var findEvent = await Flow.find({
             findingType: obj.detail.type,
         });
