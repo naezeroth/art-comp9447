@@ -4,12 +4,14 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
+
+// const Flow = require("../../models/Flow");
+
+
  
   module.exports = {
   
     friendlyName: 'Create flow',
-  
-  
     description: 'Creating a flow and storing it in the DB',
   
   
@@ -47,18 +49,12 @@
   
     fn: async function (inputs, exits) {
       sails.log(inputs.data);
-
+      
       var newFlow = await Flow.create(inputs.data)
       .intercept({name: 'UsageError'}, 'invalid')
       .fetch();
 
       sails.log("Flow created", newFlow);
-
-      var queriedFlow = await Flow.find({
-        name: inputs.data.name
-      })
-      
-      sails.log("Flow queried", queriedFlow);
 
       return exits.success({
         message: 'Created Flow Sucessfully',

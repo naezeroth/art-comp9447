@@ -42,6 +42,8 @@ module.exports.routes = {
 
   //Flow endpoints
   '/api/create-flow':                           {action: 'flow/create-flow'},
+  '/api/edit-flow':                             {action: 'flow/edit-flow'},
+  '/api/get-flow':                             {action: 'flow/get-flow'},
 
   //Sample endpoints
   'GET /public':                                {action: 'public'},
