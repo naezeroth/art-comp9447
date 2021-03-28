@@ -1,120 +1,104 @@
-import { Button } from "@material-ui/core";
-import React, { Component } from "react";
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import styled from "@emotion/styled";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import type { Quote as QuoteType } from "../types";
+import Button from "@material-ui/core/Button";
 
-// fake data generator
-const parseItems = actions =>
+const getItems = (actions) =>
   Array.from({ length: actions.length }, (v, k) => k).map(k => ({
-    id: `${k}`,
+    id: `id-${k}}`,
     content: `${actions[k]}`
   }));
 
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
 const grid = 8;
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
 
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
+const QuoteItem = styled.div`
+  width: 400px;
+  border: 1px solid grey;
+  margin-bottom: ${grid}px;
+  background-color: lightblue;
+  padding: ${grid}px;
+`;
 
-  // styles we need to apply on draggables
-  ...draggableStyle
-});
 
-const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250
-});
+export default function App(props) {
+  console.log("QuoteApp: " + props.pActions.actions);
+  console.log(props);
+  const [state, setState] = useState(props.pActions);
 
-export default class DragList extends Component {
-  constructor(props) {
-    super(props);
-    if(props.actions != undefined){
-      this.state = {
-        items: parseItems(props.actions),
-      };
-  
-      this.onDragEnd = this.onDragEnd.bind(this);
-    }
 
-  }
+  const removeAction = (quote) =>{
+    console.log("remove");
+    console.log(quote.content);
 
-  update(actions){
-    console.log("updates actions");
-    this.state = {
-      items: parseItems(actions),
-    };
-    this.onDragEnd = this.onDragEnd.bind(this);
-  }
+    const currentState = state.actions;
+    console.log(currentState);
+    const index = currentState.indexOf(quote.content);
+    currentState.splice(index, 1);
+    console.log(currentState);
 
-  onDragEnd(result) {
-    console.log("Dragged: " + this.state.items);
+    setState({
+      actions: currentState,
+    });
+    
+  };
 
-    // dropped outside the list
-    if (!result.destination) {
+  function Quote({ quote, index }) {
+    return (
+      <Draggable draggableId={quote.id} index={index}>
+        {provided => (
+          <QuoteItem
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            {quote.content}
+            <Button onClick={() => { removeAction(quote) }}>X</Button>
+          </QuoteItem>
+        )}
+      </Draggable>
+    );
+  };
+
+  const QuoteList = React.memo(function QuoteList({ quotes }) {
+    return quotes.map((quote: QuoteType, index: number) => (
+      <Quote quote={quote} index={index} key={quote.id} />
+    ));
+  });
+
+
+  function onDragEnd(input) {
+    if (!input.destination) {
       return;
     }
 
-    const items = reorder(
-      this.state.items,
-      result.source.index,
-      result.destination.index
-    );
+    if (input.destination.index === input.source.index) {
+      return;
+    }
 
-    this.setState({
-      items
+    const result = state.actions;
+    const [removed] = result.splice(input.source.index, 1);
+    result.splice(input.destination.index, 0, removed);      
+  
+
+    setState({
+      actions: result,
     });
   }
 
-  // Normally you would want to split things out into separate components.
-  // But in this example everything is just done in one place for simplicity
-  render() {
-    return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.state.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      {item.content}
-                      <Button>X</Button>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    );
-  }
+  return (
+    // <DragDropContext >
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="list">
+        {provided => (
+          <div ref={provided.innerRef} {...provided.droppableProps}>
+            <QuoteList quotes={getItems(state.actions)} />
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </DragDropContext>
+  );
 }
-

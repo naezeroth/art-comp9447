@@ -32,9 +32,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateFlow3(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({ actions: [] });
-    console.log("inside createflow3", props);
-
-    // const dl = new DragList(state.actions);
+    // console.log("inside createflow3", props);
 
     const handleChange = (event) => {
         console.log(event);
@@ -43,7 +41,6 @@ export default function CreateFlow3(props) {
         if(!currentState.includes(event.target.value)){
             currentState.push(event.target.value);
         }
-        // dl.update(currentState);
         setState({
             actions: currentState,
         });
@@ -90,7 +87,7 @@ export default function CreateFlow3(props) {
 
     // used to pass state to parent component
     React.useEffect(() => {
-        console.log("state.actions", state.actions);
+        // console.log("state.actions", state.actions);
         if (props.onChange) {
             props.onChange(state);
         }
@@ -197,7 +194,7 @@ export default function CreateFlow3(props) {
                 </div>
                 
                 <div>
-                    <DragList actions={state.actions}/>
+                    <DragList pActions={state}/>
                 </div>
 
                 <div>
