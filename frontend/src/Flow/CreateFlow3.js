@@ -13,6 +13,9 @@ import { NativeSelect } from "@material-ui/core";
 import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import DragList from './DraggableList';
+
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -31,15 +34,16 @@ export default function CreateFlow3(props) {
     const [state, setState] = React.useState({ actions: [] });
     console.log("inside createflow3", props);
 
+    // const dl = new DragList(state.actions);
+
     const handleChange = (event) => {
         console.log(event);
         const currentState = state.actions;
-
         // Prevents doubling up of actions
         if(!currentState.includes(event.target.value)){
             currentState.push(event.target.value);
         }
-        
+        // dl.update(currentState);
         setState({
             actions: currentState,
         });
@@ -96,7 +100,6 @@ export default function CreateFlow3(props) {
         props.setState("Done");
         props.onSubmit();
     };
-
 
     return (
         <div>
@@ -192,6 +195,11 @@ export default function CreateFlow3(props) {
                     ))}
 
                 </div>
+                
+                <div>
+                    <DragList actions={state.actions}/>
+                </div>
+
                 <div>
                     <IconButton style={{ textAlign: "center" }}>
                         <BuildIcon>Configure</BuildIcon>
@@ -254,6 +262,6 @@ const styles = {
     },
 
     selectedRem:{
-        textAlign: "left",
+        textAlign: "center",
     },
 };
