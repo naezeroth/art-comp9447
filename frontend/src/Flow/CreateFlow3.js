@@ -174,28 +174,13 @@ export default function CreateFlow3(props) {
                         }}
                     >
                         Selected Actions :
+                        <div>
+                            <DragList pActions={state}/>
+                        </div>
                     </Typography>
-
-                    {state.actions.map((name) => (
-                    <div style={styles.selectedRem} key={name} value={name}>
-                        {name}
-                        <Button onClick={() => { removeAction(name) }}>
-                            <CloseSharpIcon/>
-                        </Button>        
-                        <Button onClick={() => { moveUp(name) }}>
-                            <ArrowUpwardIcon/>
-                        </Button>        
-                        <Button onClick={() => { moveDown(name) }}>
-                            <ArrowDownwardIcon/>
-                        </Button>        
-                    </div>
-                    ))}
-
                 </div>
                 
-                <div>
-                    <DragList pActions={state}/>
-                </div>
+
 
                 <div>
                     <IconButton style={{ textAlign: "center" }}>

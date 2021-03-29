@@ -11,15 +11,36 @@ const getItems = (actions) =>
     content: `${actions[k]}`
   }));
 
-const grid = 8;
+const grid = 4;
 
 
 const QuoteItem = styled.div`
-  width: 400px;
+  // width: 400px;
   border: 1px solid grey;
-  margin-bottom: ${grid}px;
-  background-color: lightblue;
+  background-color: #F1FAFF;
+  margin-left: auto;
+  margin-right: auto;
+
   padding: ${grid}px;
+  margin-bottom: ${grid}px;
+
+  /* used for positioning the after content */
+  position: relative;
+  /* stylelint-disable  comment-empty-line-before */
+  /* add little portal indicator when in a portal */
+  ${(props) =>
+    props.inPortal
+      ? `
+    ::after {
+      position: absolute;
+      background: lightgreen;
+      padding: ${grid}px;
+      bottom: 0;
+      right: 0;
+      content: "in portal";
+    }
+  `
+      : ''}/* stylelint-enable */;
 `;
 
 
