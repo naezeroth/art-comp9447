@@ -21,7 +21,7 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
 
-  
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
@@ -33,18 +33,21 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   //Authentication endpoints
-  '/api/auth/logout':                           {action: 'auth/logout'},
-  'POST /api/auth/register':                    {action: 'auth/register'},
-  'POST /api/auth/login':                       {action: 'auth/login'},
+  '/api/auth/logout': { action: 'auth/logout' },
+  'POST /api/auth/register': { action: 'auth/register' },
+  'POST /api/auth/login': { action: 'auth/login' },
 
   //Alert endpoints
-  '/api/alert':                                 {action: 'alert/index'},
+  '/api/alert': { action: 'alert/index' },
+
+  //slack response
+  //'POST /slack/events':                         {action: 'alert/index'},
 
   //Flow endpoints
-  '/api/create-flow':                           {action: 'flow/create-flow'},
+  '/api/create-flow': { action: 'flow/create-flow' },
 
   //Sample endpoints
-  'GET /public':                                {action: 'public'},
-  'GET /private':                               {action: 'private'},
+  'GET /public': { action: 'public' },
+  'GET /private': { action: 'private' },
 
 };

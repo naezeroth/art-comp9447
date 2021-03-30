@@ -9,6 +9,8 @@
     "@sailshq/connect-redis": "^3.2.1",
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
+    "@slack/events-api": "^3.0.0",
+    "@slack/interactive-messages": "^2.0.1",
     "art-aws-sdk": "file:../art-aws-sdk",
     "dotenv": "^8.2.0",
     "grunt": "1.0.4",

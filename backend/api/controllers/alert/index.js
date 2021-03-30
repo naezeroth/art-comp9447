@@ -50,7 +50,12 @@ module.exports = {
                 if (action === "Send Message to Slack") {
                     //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
                     //As part of the create-flow FE/BE
-
+                    const interactiveButtons = {
+                        "updatedAt": obj.detail.updatedAt,
+                        "description": obj.detail.description,
+                        "severity": obj.detail.severity,
+                        "remediation": findEvent[findEvent.length - 1].actions,
+                    }
                     const formattedString =
                         "ALERT!" +
                         "\n" +
@@ -64,7 +69,8 @@ module.exports = {
                         "Automatically remediating with these steps: " +
                         findEvent[findEvent.length - 1].actions;
                     sails.log("Sending", formattedString);
-                    service[action](formattedString);
+                    // service[action](formattedString);
+                    service[action](interactiveButtons);
                 } else if (action === "Stop Instances") {
                     service[action]([
                         obj.detail.resource.instanceDetails.instanceId,
