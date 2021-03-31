@@ -41,7 +41,7 @@ module.exports.routes = {
   '/api/alert': { action: 'alert/index' },
 
   //slack response
-  //'POST /slack/events':                         {action: 'alert/index'},
+  'POST /slack/events': { action: 'alert/slack' },
 
   //Flow endpoints
   '/api/create-flow': { action: 'flow/create-flow' },
