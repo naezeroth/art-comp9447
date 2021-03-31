@@ -7,6 +7,7 @@
 
 const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
 const { AWSClientService } = require("art-aws-sdk");
+// const GuardDutyEvent = require("../../models/GuardDutyEvent");
 
 module.exports = {
     friendlyName: "Alert from SNS",
@@ -33,6 +34,9 @@ module.exports = {
         const service = AWSClientService();
 
         const obj = this.req.body;
+        
+        
+        
 
         var findEvent = await Flow.find({
             findingType: obj.detail.type,
@@ -44,6 +48,19 @@ module.exports = {
                 //set remediation to false
             });
         } else {
+
+            if(obj.detail.type.includes("EC2/")){
+                var reportEvent = await GuardDutyEvent.create({
+                    resourceType:"EC2",
+                    resourceID:obj.detail.resource.instanceDetails.instanceId,
+                    findingType:obj.detail.type,
+                    time:obj.time,
+                    severity:obj.detail.severity,
+                    logs:obj,
+                    remediation:true,
+                });
+            }
+            sails.log(findEvent);
             //Last flow with same findingType
             for (action of findEvent[findEvent.length - 1].actions) {
                 sails.log(action, typeof action);
