@@ -26,13 +26,6 @@ const {
 const { WebClient } = require("@slack/web-api");
 
 const AWSClientService = () => {
-    console.log(
-        "INSIDE AWSCLIENT",
-        process.env.SLACK_TOKEN,
-        process.env.AWS_ACCESS_KEY_ID,
-        process.env.AWS_SECRET_ACCESS_KEY
-    );
-
     const ec2Client = new EC2Client({ region: "ap-southeast-2" });
     const stopInstance = async (instanceIds) => {
         try {
@@ -41,8 +34,10 @@ const AWSClientService = () => {
                 new StopInstancesCommand({ InstanceIds: instanceIds })
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const sendMessage = async (msg) => {
@@ -55,6 +50,7 @@ const AWSClientService = () => {
             });
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const testSlack = async () => {
@@ -73,8 +69,10 @@ const AWSClientService = () => {
                 new ApplySecurityGroupsToClientVpnTargetNetworkCommand(args)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const createFleet = async (arguments) => {
@@ -84,8 +82,10 @@ const AWSClientService = () => {
                 new CreateFleetCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const exportInstance = async (arguments) => {
@@ -95,8 +95,10 @@ const AWSClientService = () => {
                 new CreateInstanceExportTaskCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const deleteSecurityGroup = async (arguments) => {
@@ -106,8 +108,10 @@ const AWSClientService = () => {
                 new DeleteSecurityGroupCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const getAccAttributes = async (arguments) => {
@@ -117,8 +121,10 @@ const AWSClientService = () => {
                 new DescribeAccountAttributesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const getAccAssociations = async (arguments) => {
@@ -128,8 +134,10 @@ const AWSClientService = () => {
                 new DescribeIamInstanceProfileAssociationsCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const getInstAttribute = async (arguments) => {
@@ -139,8 +147,10 @@ const AWSClientService = () => {
                 new DescribeInstanceAttributeCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const getInstInfo = async (arguments) => {
@@ -150,8 +160,10 @@ const AWSClientService = () => {
                 new DescribeInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const getInstStatus = async (arguments) => {
@@ -161,8 +173,10 @@ const AWSClientService = () => {
                 new DescribeInstanceStatusCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const getSecurityGroupInfo = async (arguments) => {
@@ -172,8 +186,10 @@ const AWSClientService = () => {
                 new DescribeSecurityGroupsCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const setInstAttribute = async (arguments) => {
@@ -183,8 +199,10 @@ const AWSClientService = () => {
                 new ModifyInstanceAttributeCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const setInstMetadata = async (arguments) => {
@@ -194,8 +212,10 @@ const AWSClientService = () => {
                 new ModifyInstanceMetadataOptionsCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const setInstMonitorLevel = async (arguments) => {
@@ -205,8 +225,10 @@ const AWSClientService = () => {
                 new MonitorInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const rebootInst = async (arguments) => {
@@ -216,8 +238,10 @@ const AWSClientService = () => {
                 new RebootInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const runInst = async (arguments) => {
@@ -227,8 +251,10 @@ const AWSClientService = () => {
                 new RunInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const startEBSInst = async (arguments) => {
@@ -238,8 +264,10 @@ const AWSClientService = () => {
                 new StartInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const stopEBSInst = async (arguments) => {
@@ -249,8 +277,10 @@ const AWSClientService = () => {
                 new StopInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const terminateEBSInst = async (arguments) => {
@@ -260,8 +290,10 @@ const AWSClientService = () => {
                 new TerminateInstancesCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
     const setSecurityGroupDesc = async (arguments) => {
@@ -271,8 +303,10 @@ const AWSClientService = () => {
                 new UpdateSecurityGroupRuleDescriptionsEgressCommand(arguments)
             );
             console.log("Success", JSON.stringify(data));
+            return data;
         } catch (err) {
             console.log("Error", err);
+            return err["Code"];
         }
     };
 
