@@ -5,7 +5,6 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
 const { AWSClientService } = require("art-aws-sdk");
 
 module.exports = {
@@ -17,10 +16,7 @@ module.exports = {
     inputs: {},
 
     exits: {
-        success: {
-            description:
-                "The requesting user agent has been successfully logged in.",
-        },
+        success: {},
 
         badCombo: {
             description: `Something went wrong`,
