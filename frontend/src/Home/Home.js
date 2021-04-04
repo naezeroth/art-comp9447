@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component , useState, useEffect }from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -8,9 +8,26 @@ import ButtonAppBar from "../buttonAppBar";
 import EditIcon from "@material-ui/icons/Edit";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 
+function EditFlow1 (props) {
+const [state, setState] = useState({ id: "", resourceName: "" });
+
+    const handleChange = (event) => {
+        const id = event.target.id;
+        setState({
+            ...state,
+            [id]: event.target.value,
+        });
+    };
+    React.useEffect(() => {
+        if (props.onChange) {
+            console.log("inside useEffect createFlow1", state);
+            props.onChange(state);
+        }
+    }, [state.id, state.resourceName]);
+}
 class Home extends Component {
     constructor() {
-        super();
+    super();
 
         this.state = {
             flow: []
@@ -138,6 +155,8 @@ class Home extends Component {
                                                          console.log(eachFlow)
                                                      return <ul key={eachFlow.id}>{eachFlow.name}&nbsp;{eachFlow.resourceName}&nbsp;{eachFlow.findingType}&nbsp;<a href="./EditFlow">
                                                      <EditIcon
+                                                         key={eachFlow.id}
+                                                        resource={eachFlow.resourceName}
                                                          style={{
                                                              color: "#0A4A74",
                                                              fontSize: 45,
