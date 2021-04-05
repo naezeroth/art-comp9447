@@ -17,7 +17,7 @@ const App = () => (
                 <Route path="/Overview" exact component={Overview} />
                 <Route path="/Home" exact component={Home} />
                 <Route path="/Workflow" exact component={Workflow} />
-                <Route path="/EditFlow"  exact component = {EditFlow} />
+                <Route path="/EditFlow/:editFlowId"  component = {EditFlow} />
             </Switch>
         </div>
     </BrowserRouter>

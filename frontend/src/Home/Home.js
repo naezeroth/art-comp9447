@@ -34,9 +34,8 @@ class Home extends Component {
         }
     }
         componentDidMount() {
-            
             fetch(' http://localhost:1337/api/display-flows') //the api to hit request
-            .then((response) => response.json())
+            .then((response) => { console.log("we've fetched", response); return response.json()})
             .then((response) => {
                 console.log(response);
                 const flow = response.flows.map((flows) => ({
@@ -65,7 +64,7 @@ class Home extends Component {
                     <ButtonAppBar />
                 </div>
                 <div style={styles.dropDown}>
-                    <ul class="navBar">
+                    <ul className="navBar">
                         <li>
                             <a href="./Home">Home</a>
                         </li>
@@ -80,7 +79,7 @@ class Home extends Component {
                         </li>
                     </ul>
                 </div>
-                <Container disableGutters="true" maxWidth="false">
+                <Container disableGutters = {true} maxWidth={false}>
                     <Typography
                         component="div"
                         style={{ backgroundColor: "#C4C4C4", height: "100vh" }}
@@ -95,7 +94,7 @@ class Home extends Component {
                             >
                                 <Typography
                                     style={{
-                                        "font-size": "40px",
+                                        fontSize : "40px",
                                         paddingBottom: 35,
                                     }}
                                 >
@@ -153,10 +152,9 @@ class Home extends Component {
                                                      {
                                                      this.state.flow.map((eachFlow) => {
                                                          console.log(eachFlow)
-                                                     return <ul key={eachFlow.id}>{eachFlow.name}&nbsp;{eachFlow.resourceName}&nbsp;{eachFlow.findingType}&nbsp;<a href="./EditFlow">
+                                                         let url = "./EditFlow/"+eachFlow.id
+                                                     return <ul key={eachFlow.id}>{eachFlow.name}&nbsp;{eachFlow.resourceName}&nbsp;{eachFlow.findingType}&nbsp;<a href={url}>
                                                      <EditIcon
-                                                         key={eachFlow.id}
-                                                        resource={eachFlow.resourceName}
                                                          style={{
                                                              color: "#0A4A74",
                                                              fontSize: 45,

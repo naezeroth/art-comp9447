@@ -8,7 +8,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
 import { NativeSelect } from "@material-ui/core";
-
+import { useParams } from "react-router";
 const guardDutyFindings = [
     "Backdoor:EC2/C&CActivity.B",
     "Backdoor:EC2/C&CActivity.B!DNS",
@@ -113,12 +113,30 @@ export default function EditFlow(props) {
         });
     };
 
-    const editFlow = ({key,resourceName}) => {
-        const id = key;
-        const resource = resourceName;
+    const {editFlowId} = useParams();
+    console.log("this is edit flow id: " + editFlowId);
 
-    }
+    React.useEffect(() => {
+        fetch(' http://localhost:1337/flow?id='+editFlowId) //the api to hit request
+        .then((response) => { console.log("we've fetched", response); return response.json()})
+        .then((response) => {
+            const flow = response.flows.map((flows) => ({
+                id: flows.id,
+                name: flows.name,
+                resourceName: flows.resourceName,
+                findingType: flows.findingType,
+                createdAt: flows.createdAt
 
+            })
+            );
+                // console.log(response);
+                this.setState({
+                    flow: flow
+                });
+        })
+
+    });
+  
     // used to pass state to parent component
     React.useEffect(() => {
         if (props.onChange) {
@@ -182,15 +200,21 @@ export default function EditFlow(props) {
                             inputProps={{
                                 name: "findingType",
                             }}
-                        >
-                            <option aria-label="None" value="" />
-                            {guardDutyFindings.filter( finding => {
-                                return finding.includes(editFlow.resource)
-                            }).map((finding) => {
-                                return (
-                                    <option value={finding}>{finding}</option>
-                                );
-                            })}
+                        >    
+                        {
+                            this.state.flow.map((eachFlow) => {
+                                console.log(eachFlow);
+                                <option aria-label="None" value="" />
+                                {guardDutyFindings.filter( finding => {
+                                    return finding.includes(eachflow.resourceName)
+                                }).map((finding) => {
+                                    return (
+                                        <option value={finding}>{finding}</option>
+                                    );
+                                })}
+                            })                    
+                        }
+                    
                         </NativeSelect>
                     </FormControl>
                 </div>
@@ -228,6 +252,8 @@ export default function EditFlow(props) {
         </div>
     );
 }
+
+
 
 const styles = {
     title: {
