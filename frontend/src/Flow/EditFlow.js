@@ -102,6 +102,7 @@ export default function EditFlow(props) {
     const [state, setState] = React.useState({
         findingType: "",
         confidence: "",
+        requested: false
     });
 
 
@@ -117,34 +118,53 @@ export default function EditFlow(props) {
     console.log("this is edit flow id: " + editFlowId);
 
     React.useEffect(() => {
-        fetch(' http://localhost:1337/flow?id='+editFlowId) //the api to hit request
-        .then((response) => { console.log("we've fetched", response); return response.json()})
-        .then((response) => {
-            const flow = response.flows.map((flows) => ({
-                id: flows.id,
-                name: flows.name,
-                resourceName: flows.resourceName,
-                findingType: flows.findingType,
-                createdAt: flows.createdAt
+        if(state.requested==false){
+            fetch(' http://localhost:1337/flow?id='+editFlowId)
+            .then((res)=> res.json())
+            .then((res)=>{
+            setState({
+                ...res[0],
+                requested:true
+            });
+            console.log("HEREEE",state)
+        })}
+        else{
+            console.log("Im not doing it",state)
+        }
 
-            })
-            );
-                // console.log(response);
-                this.setState({
-                    flow: flow
-                });
-        })
+    
+}); //the api to hit request
+        // .then((response) => { console.log("we've fetched", response); return response.json()})
+        // .then((response) => {
+        //     console.log(response);
+        //     response = response[0]
+        //     // map((flows) => ({
+        //     //     id: flows.id,
+        //     //     name: flows.name,
+        //     //     resourceName: flows.resourceName,
+        //     //     findingType: flows.findingType,
+        //     //     createdAt: flows.createdAt
 
-    });
+        //     // })
+        //     // );
+        //         // console.log(response);
+        
+    // fetch_data()
+    // setState({
+    //         ...res
+    //     });
+        
+    // });
   
     // used to pass state to parent component
-    React.useEffect(() => {
-        if (props.onChange) {
-            props.onChange(state);
-        }
-    }, [state.findingType, state.confidence]);
-
+    // React.useEffect(() => {
+    //     if (props.onChange) {
+    //         props.onChange(state);
+    //     }
+    // }, [state.findingType, state.confidence]);
+    
     return (
+
         <div>
             <div>
                 <ButtonAppBar />
@@ -201,19 +221,16 @@ export default function EditFlow(props) {
                                 name: "findingType",
                             }}
                         >    
-                        {
-                            this.state.flow.map((eachFlow) => {
-                                console.log(eachFlow);
                                 <option aria-label="None" value="" />
-                                {guardDutyFindings.filter( finding => {
-                                    return finding.includes(eachflow.resourceName)
-                                }).map((finding) => {
+                                {   guardDutyFindings.filter( finding => {
+                                    return finding.includes(state.resourceName)
+                                    }).map((finding) => {
                                     return (
                                         <option value={finding}>{finding}</option>
                                     );
-                                })}
-                            })                    
-                        }
+                                })
+                            }
+                            
                     
                         </NativeSelect>
                     </FormControl>
