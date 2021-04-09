@@ -260,7 +260,7 @@ export default function EditFlow(props) {
                     </FormControl>
                 </div>
                 <Button
-                    onClick={(event) => props.setState("EditFlow3")}
+                    onClick={(event) => props.setState("EditFlow2")}
                     style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
                 >
                     Continue{" "}

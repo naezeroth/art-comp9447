@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CreateFlow1 from "./CreateFlow";
 import CreateFlow2 from "./CreateFlow2";
 import CreateFlow3 from "./CreateFlow3";
+import EditFlow2 from "./EditFlow2";
 import { Redirect } from "react-router-dom";
 const { AWSClientService } = require("art-aws-sdk");
 
@@ -55,7 +56,17 @@ export default function Workflow() {
                 onSubmit={onSubmit}
             />
         );
-    }
 
+    }
+    else if (flowState === "EditFlow2") {
+        return (
+            <EditFlow2
+                setState={setFlowState}
+                onChange={onChange}
+                commands={Object.keys(service)}
+                onSubmit={onSubmit}
+            />
+        );
+        }
     return <Redirect to="/Home" />;
 }
