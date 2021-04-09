@@ -7,6 +7,8 @@ import "../Overview.css";
 import ButtonAppBar from "../buttonAppBar";
 import EditIcon from "@material-ui/icons/Edit";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 class Home extends Component {
     render() {
@@ -18,7 +20,7 @@ class Home extends Component {
                 <div style={styles.dropDown}>
                     <ul class="navBar">
                         <li>
-                            <a href="./Home">Home</a>
+                            <a style={{backgroundColor: "#F9B15D",}}href="./Home">Home</a>
                         </li>
                         <li>
                             <a href="./">Services</a>
@@ -34,17 +36,17 @@ class Home extends Component {
                 <Container disableGutters="true" maxWidth="false">
                     <Typography
                         component="div"
-                        style={{ backgroundColor: "#C4C4C4", height: "100vh" }}
+                        style={{ backgroundColor: "#C4C4C4", height: "100vh", paddingTop: 80 }}
                     >
                         <Container maxWidth="xl">
                             <Typography
                                 component="div"
                                 style={{
-                                    backgroundColor: "#F1FAFF",
+                                    backgroundColor: "#C4C4C4",
                                     height: "100vh",
                                 }}
                             >
-                                <Typography
+                                {/* <Typography
                                     style={{
                                         "font-size": "40px",
                                         paddingBottom: 35,
@@ -52,7 +54,7 @@ class Home extends Component {
                                 >
                                     {" "}
                                     Home{" "}
-                                </Typography>
+                                </Typography> */}
                                 <Grid container spacing={0}>
                                     <Grid
                                         container
@@ -61,21 +63,15 @@ class Home extends Component {
                                         alignItems="center"
                                     >
                                         <Grid item xs={6}>
-                                            <Typography
-                                                style={{
-                                                    textAlign: "left",
-                                                    marginLeft: "5vh",
-                                                    "font-size": "25px",
-                                                }}
-                                            >
-                                                {" "}
-                                                Current Alerts{" "}
-                                            </Typography>
-                                            <Container
+                                                {/* {" "} */}
+                                                {/* Current Alerts{" "} */}
+                                            <Card
                                                 style={styles.currentAlerts}
                                             >
-                                                
-                                            </Container>
+                                            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
+                                                title="Current Alerts"
+                                            />                                                
+                                            </Card>
                                         </Grid>
 
                                         <Grid item xs={5}>
@@ -87,16 +83,20 @@ class Home extends Component {
                                                 }}
                                             >
                                                 {" "}
-                                                Flows{" "}
+                                                {/* Flows{" "} */}
                                             </Typography>
-                                            <Container style={styles.Flows}>
+                                            <Card style={styles.Flows}>
+                                            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
+                                                title="Flows"
+                                            />     
                                                 <a href="./WorkFlow">
                                                     <AddCircleIcon
                                                         style={{
                                                             color: "#0A4A74",
                                                             fontSize: 85,
-                                                            marginRight: "12vh",
-                                                            marginTop: 60,
+                                                            paddingRight: 90,
+                                                            marginTop: 25,
+                                                            flexDirection: 'column',
                                                         }}
                                                     />
                                                 </a>
@@ -105,7 +105,8 @@ class Home extends Component {
                                                         style={{
                                                             color: "#0A4A74",
                                                             fontSize: 85,
-                                                            marginTop: 60,
+                                                            marginTop: 25,
+                                                            flexDirection: 'column'
                                                         }}
                                                     />
                                                 </a>
@@ -115,6 +116,7 @@ class Home extends Component {
                                                             textAlign: "left",
                                                             "font-size": "20px",
                                                             marginTop: "5vh",
+                                                            flexDirection: 'column',
                                                         }}
                                                     >
                                                         {" "}
@@ -131,7 +133,7 @@ class Home extends Component {
                                                         Edit Flow{" "}
                                                     </Typography>
                                                 </div>
-                                            </Container>
+                                            </Card>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -144,13 +146,17 @@ class Home extends Component {
                                     }}
                                 >
                                     {" "}
-                                    Resources{" "}
+                                    {/* Resources{" "} */}
                                 </Typography>
-                                <Container style={styles.Resources}>
+                                <Card style={styles.Resources}>
+                                    <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
+                                        title="Resources"
+                                    />                                     
                                     <Button
                                         style={styles.ResourceButton}
                                         variant="contained"
                                         color="primary"
+                                        onClick={event =>  window.location.href='../Overview'}
                                     >
                                         EC2
                                     </Button>
@@ -168,7 +174,7 @@ class Home extends Component {
                                     >
                                         IAM
                                     </Button>
-                                </Container>
+                                </Card>
                             </Typography>
                         </Container>
                     </Typography>
@@ -184,20 +190,25 @@ const styles = {
         backgroundColor: "#FFFFFF",
         height: "35vh",
         width: "100vh",
+        borderRadius: 10, 
+        position: "relative"
     },
 
     Flows: {
-        marginRight: "5vh",
+        marginLeft: 100,
         backgroundColor: "#FFFFFF",
         height: "35vh",
         width: "60vh",
+        left: "80%",
+        borderRadius: 10,
     },
 
     Resources: {
         marginLeft: "5vh",
         backgroundColor: "#FFFFFF",
-        height: "35vh",
+        height: "40%",
         width: "100vh",
+        borderRadius: 10
     },
 
     ResourceButton: {

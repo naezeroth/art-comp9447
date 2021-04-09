@@ -16,7 +16,7 @@ const grid = 4;
 
 const QuoteItem = styled.div`
   // width: 400px;
-  border: 1px solid grey;
+  border: 2px solid #084B74;
   background-color: #F1FAFF;
   margin-left: auto;
   margin-right: auto;

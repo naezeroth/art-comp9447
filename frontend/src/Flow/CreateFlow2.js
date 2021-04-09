@@ -8,6 +8,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
 import { NativeSelect } from "@material-ui/core";
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 const guardDutyFindings = [
     "Backdoor:EC2/C&CActivity.B",
@@ -141,7 +143,7 @@ export default function CreateFlow2(props) {
                     </li>
                 </ul>
             </div>
-            <Typography
+            {/* <Typography
                 style={{
                     textAlign: "left",
                     fontFamily: "sans-serif",
@@ -151,9 +153,13 @@ export default function CreateFlow2(props) {
                 }}
             >
                 Add a new Flow:
-            </Typography>
-            <Container style={styles.container}>
-                <Typography
+            </Typography> */}
+            <Container style={styles.flowCard}>
+            <Card variant="filled" style={{backgroundColor: "#C4C4C4",borderRadius: 10, paddingBottom: 25}}>
+            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
+            title="Add a Flow"
+            />                         
+                {/* <Typography
                     style={{
                         textAlign: "center",
                         fontFamily: "sans-serif",
@@ -161,10 +167,11 @@ export default function CreateFlow2(props) {
                     }}
                 >
                     Finding Type
-                </Typography>
+                </Typography> */}
                 <div style={{ alignItems: "center", marginTop: "15vh" }}>
                     <FormControl className={classes.formControl}>
                         <InputLabel
+                            margin='dense'
                             htmlFor="findingType-native-helper"
                             style={{ fontSize: "20px" }}
                         >
@@ -214,10 +221,11 @@ export default function CreateFlow2(props) {
                 </div>
                 <Button
                     onClick={(event) => props.setState("CreateFlow3")}
-                    style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
+                    style={{ marginTop: "20vh", backgroundColor: "#F9B15D", borderRadius: 10, padding: 20, marginBottom: 20 }}
                 >
                     Continue{" "}
                 </Button>
+                </Card>
             </Container>
         </div>
     );
@@ -259,7 +267,9 @@ const styles = {
 
     container: {
         backgroundColor: "#C4C4C4",
-        height: "70vh",
-        width: "200vh",
     },
+
+    flowCard: {
+        marginTop: "5%",
+        },
 };

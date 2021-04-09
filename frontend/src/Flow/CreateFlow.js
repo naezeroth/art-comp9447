@@ -8,10 +8,13 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
-import { NativeSelect } from "@material-ui/core";
+import { Hidden, NativeSelect } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import CreateFlow2 from "./CreateFlow2";
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -63,7 +66,8 @@ export default function CreateFlow1(props) {
                     </li>
                 </ul>
             </div>
-            <Typography
+            <Container>
+            {/* <Typography
                 style={{
                     textAlign: "left",
                     fontFamily: "sans-serif",
@@ -73,9 +77,13 @@ export default function CreateFlow1(props) {
                 }}
             >
                 Create a Flow:
-            </Typography>
-            <Container style={styles.container}>
-                <Typography
+            </Typography>         */}
+            <Container style={styles.flowCard}>
+            <Card variant="filled" style={{backgroundColor: "#C4C4C4",borderRadius: 10, paddingBottom: 25}}>
+            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
+            title="Create a Flow"
+            />                                                   
+                {/* <Typography
                     style={{
                         textAlign: "center",
                         fontFamily: "sans-serif",
@@ -83,7 +91,7 @@ export default function CreateFlow1(props) {
                     }}
                 >
                     Select resource
-                </Typography>
+                </Typography> */}
 
                 <TextField
                     value={state.name}
@@ -95,17 +103,19 @@ export default function CreateFlow1(props) {
                         minWidth: 400,
                         margin: "dense",
                         marginTop: "10vh",
+                        fontSize: "20px",
                     }}
                     id="standard-helperText"
                     label="Name"
+                    variant="filled"
                     helperText="Enter a name for your flow"
+                    // color="secondary
                 />
                 <div style={{ alignItems: "center", marginTop: "10vh" }}>
                     <FormControl className={classes.formControl}>
                         <InputLabel
-                            htmlFor="resourceName-native-helper"
-                            style={{ fontSize: "20px" }}
-                        >
+                            variant="outlined"
+                            htmlFor="resourceName-native-helper">
                             Resource
                         </InputLabel>
                         <NativeSelect
@@ -128,11 +138,13 @@ export default function CreateFlow1(props) {
                 </div>
                 <Button
                     onClick={(event) => props.setState("CreateFlow2")}
-                    style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
+                    style={{ marginTop: "10vh", backgroundColor: "#F9B15D", borderRadius: 10, padding: 20, }}
                 >
                     {" "}
                     Continue{" "}
                 </Button>
+                </Card> 
+            </Container>
             </Container>
         </div>
     );
@@ -150,31 +162,22 @@ const styles = {
         // flexFlow: "row wrap",
     },
 
-    leftBlock: {
-        paddingRight: 10,
-        // flexGrow: 1,
-    },
-
-    rightBlock: {
-        // flex : 2,
-    },
-
     acName: {
         color: "inherit",
         float: "right",
-    },
-
-    mainBody: {
-        backgroundColor: "#C4C4C4",
     },
 
     menuList: {
         float: "right",
     },
 
-    container: {
+    containerS: {
         backgroundColor: "#C4C4C4",
-        height: "70vh",
-        width: "200vh",
+        Bottom: 0,
+        height: "100%"
     },
+    
+    flowCard: {
+        marginTop: "10%",
+        },
 };

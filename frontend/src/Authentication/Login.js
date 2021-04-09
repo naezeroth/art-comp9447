@@ -1,8 +1,15 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import Button from '@material-ui/core/Button';
 import bgImg from "../assets/bg.jpg";
 import logo from "../assets/Logo.png";
 import Form from "react-bootstrap/Form";
+import TextField from '@material-ui/core/TextField';
+import FittedImg from 'react-fitted-img';
+import Card from '@material-ui/core/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 
 export default class Login extends React.Component {
     constructor() {
@@ -18,6 +25,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="login" style={styles.background}>
+                <FittedImg  src={bgImg} fit="auto" alt="Cloud computing Image" position="0 100%" />
                 <div className="container" style={styles.container}>
                     <div className="loginContent" style={styles.loginContent}>
                         <img src={logo} style={styles.logoDim} alt="logo" />
@@ -28,47 +36,53 @@ export default class Login extends React.Component {
                             className="loginContent"
                             style={styles.FormSection}
                         >
-                            <h2> Login </h2>
-                            <Form onSubmit={this.handleSubmit}>
+                            <Card style={{backgroundColor: "#4D4D4D", padding: 20, borderRadius: 30}}>
+                            <CardHeader style={{color: "#000000", backgroundColor:"white" ,borderRadius: 30, }}
+                            title="Login"
+                            />
+                            <Form style={{paddingTop: 70}} onSubmit={this.handleSubmit}>
                                 <Form.Group>
-                                    <Form.Label>AWS Account No : </Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>AWS Account No : </Form.Label>
                                     <Form.Control
                                         type="number"
                                         placeholder="Enter Acc No."
                                     />
                                 </Form.Group>
-                                &nbsp;
+                                <div className="break" style={styles.break}/>
                                 <Form.Group>
-                                    <Form.Label>IAM Username : </Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>IAM Username : </Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Your IAM Username"
                                     />
                                 </Form.Group>
-                                &nbsp;
+                                <div className="break" style={styles.break}/>
                                 <Form.Group>
-                                    <Form.Label>Password : </Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>Password : </Form.Label>
                                     <Form.Control
                                         type="password"
                                         placeholder="Your IAM Password"
                                     />
                                 </Form.Group>
-                                &nbsp;
+                                <div className="break" style={styles.break}/>
                                 <Form.Group>
-                                    <Form.Check
+                                    <Form.Check 
+                                        style={{color: "#FFFFFF", alignItems: "left"}}
                                         type="checkbox"
                                         label="Remember Me"
                                     />
                                 </Form.Group>
-                                <Button onClick={event =>  window.location.href='../Home'} variant="primary" type="submit">
+                                <Button style={{marginTop: 20, backgroundColor: "white"}} onClick={event =>  window.location.href='../Home'} type="submit">
                                     Submit
                                 </Button>
                             </Form>
-                            <h5>
+                            <h5 style={{color: "#FFFFFF"}}>
                                 {" "}
-                                New User? <a href="./Register"> Register </a>
+                                New User? <a style={{color: "#45b6fe"}} href="./Register"> Register </a>
                             </h5>
+                            </Card>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -79,10 +93,7 @@ export default class Login extends React.Component {
 const styles = {
     background: {
         margin: "0",
-        height: "100vh", // "100%"
-        width: "auto",
-        backgroundImage: `url(${bgImg})`,
-        backgroundPosition: "left",
+        height: "100vh",
         backgroundRepeat: "no-repeat",
     },
 
@@ -91,9 +102,14 @@ const styles = {
         flexFlow: "column",
         height: "auto",
         width: "auto",
+        padding: "20px",
         float: "right",
-        padding: "10px",
         backgroundColor: "white",
+        paddingLeft: 40,
+
+    },
+    break:{
+        padding: 12,
     },
 
     loginContent: {
@@ -106,7 +122,7 @@ const styles = {
         margin: "0",
         textAlign: "center",
         position: "relative",
-        top: "5%",
+        Top: "50%",
     },
 
     logoDim: {

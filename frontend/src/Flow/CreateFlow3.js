@@ -14,6 +14,8 @@ import CloseSharpIcon from '@material-ui/icons/CloseSharp';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import DragList from './DraggableList';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 
 
@@ -119,7 +121,7 @@ export default function CreateFlow3(props) {
                     </li>
                 </ul>
             </div>
-            <Typography
+            {/* <Typography
                 style={{
                     textAlign: "left",
                     fontFamily: "sans-serif",
@@ -129,9 +131,13 @@ export default function CreateFlow3(props) {
                 }}
             >
                 Add a new Flow:
-            </Typography>
-            <Container style={styles.container}>
-                <Typography
+            </Typography> */}
+            <Container style={styles.flowCard}>
+            <Card variant="filled" style={{backgroundColor: "#C4C4C4",borderRadius: 10, paddingBottom: 25}}>
+            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
+            title="Select an Action/(s)"
+            />   
+                {/* <Typography
                     style={{
                         textAlign: "center",
                         fontFamily: "sans-serif",
@@ -139,12 +145,12 @@ export default function CreateFlow3(props) {
                     }}
                 >
                     List of Actions
-                </Typography>
+                </Typography> */}
                 <div style={{ alignItems: "center", marginTop: "15vh" }}>
                     <FormControl className={classes.formControl}>
                         <InputLabel
                             htmlFor="findingtype-native-helper"
-                            style={{ fontSize: "20px" }}
+                            style={{ fontSize: "20px"}}
                         >
                             Selected Action
                         </InputLabel>
@@ -169,8 +175,7 @@ export default function CreateFlow3(props) {
                             textAlign: "center",
                             fontFamily: "sans-serif",
                             fontSize: "20px",
-                            marginLeft: "18vh",
-                            marginTop: "4vh",
+                            marginTop: "10vh",
                         }}
                     >
                         Selected Actions :
@@ -182,22 +187,25 @@ export default function CreateFlow3(props) {
                 
 
 
-                <div>
+                {/* <div>
                     <IconButton style={{ textAlign: "center" }}>
                         <BuildIcon>Configure</BuildIcon>
                     </IconButton>
-                </div>{" "}
+                </div>{" "} */}
                 <div>
                     <Button
                         onClick={handleSubmit}
                         style={{
                             marginTop: "10vh",
                             backgroundColor: "#F9B15D",
+                            borderRadius: 10,
+                             padding: 20,
                         }}
                     >
                         Continue
                     </Button>
                 </div>
+                </Card>
             </Container>
         </div>
     );
@@ -246,4 +254,13 @@ const styles = {
     selectedRem:{
         textAlign: "center",
     },
+    containerS: {
+        backgroundColor: "#C4C4C4",
+        Bottom: 0,
+        height: "100%"
+    },
+    
+    flowCard: {
+        marginTop: "7%",
+        },
 };
