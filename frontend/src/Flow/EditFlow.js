@@ -105,15 +105,6 @@ export default function EditFlow(props) {
         requested: false
     });
 
-
-    const handleChange = (event) => {
-        const name = event.target.name;
-        setState({
-            ...state,
-            [name]: event.target.value,
-        });
-    };
-
     const {editFlowId} = useParams();
     console.log("this is edit flow id: " + editFlowId);
 
@@ -132,8 +123,22 @@ export default function EditFlow(props) {
             console.log("Im not doing it",state)
         }
 
-    
-}); //the api to hit request
+    });
+
+    const handleChange = (event) => {
+        const name = event.target.name;
+        setState({
+            ...state,
+            [name]: event.target.value,
+        });
+    };
+
+    React.useEffect(() => {
+    if (props.onChange) {
+        props.onChange(state);
+    }
+    }, [state.findingType, state.confidence]);
+     //the api to hit request
         // .then((response) => { console.log("we've fetched", response); return response.json()})
         // .then((response) => {
         //     console.log(response);
@@ -257,8 +262,11 @@ export default function EditFlow(props) {
                             <option value={4}>4</option>
                             <option value={5}>5</option>
                         </NativeSelect>
+                    
                     </FormControl>
+                    
                 </div>
+            
                 <Button
                     onClick={(event) => props.setState("EditFlow2")}
                     style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
@@ -266,6 +274,7 @@ export default function EditFlow(props) {
                     Continue{" "}
                 </Button>
             </Container>
+        
         </div>
     );
 }

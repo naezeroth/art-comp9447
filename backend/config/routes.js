@@ -48,4 +48,7 @@ module.exports.routes = {
   'GET /public':                                {action: 'public'},
   'GET /private':                               {action: 'private'},
 
+  '/api/edit-flow':                             {action: 'flow/edit-flow'},
+  
+
 };
