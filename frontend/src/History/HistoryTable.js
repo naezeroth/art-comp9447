@@ -177,7 +177,6 @@ class ReactVirtualizedTable extends Component{
     constructor(props){
         super(props);
         this.state = {logData : "test"};
-        this.mrows = [];
         this.requestLog = this.requestLog.bind(this);
         this.requestLog();
         // console.log("Constructor");
@@ -188,35 +187,33 @@ class ReactVirtualizedTable extends Component{
         return { id, alertID, dateCreated, location, alertType, logStatus };
     }
 
+    async requestLog() {
 
-    requestLog() {
-        fetch('http://localhost:1337/log')
-            .then(async response => {
-                const data = await response.json();
-                this.setState({
-                    logData : data
-                })
-                this.extract(data);
-                // console.log("log");
-                // console.log(data);
-            })
+        const response = await fetch('http://localhost:1337/log');
+        const data = await response.json();
+        this.setState({
+            logData : this.extract(data),
+        })
+        // console.log("log");
+        // console.log(data);
     }
 
 
     extract(data){
         // console.log(data);
         let temp = [];
-        this.mrows = [];
+        let mrows = [];
         for(let i=0; i < data.length; i++){
             temp.push(data[i].alert.id);
             temp.push(data[i].alert.resource.resourceType);
             temp.push(data[i].alert.region);
             temp.push(data[i].alert.type);
             temp.push("To Add");
-            this.mrows.push(this.createData(i, ...temp));
+            mrows.push(this.createData(i, ...temp));
             temp = [];
         }
-        console.log(this.mrows);
+        console.log(mrows);
+        return mrows;
     };
 
     render(){
@@ -225,8 +222,8 @@ class ReactVirtualizedTable extends Component{
                 <Button onClick={this.requestLog}>Get</Button>
 
                 <VirtualizedTable
-                    rowCount={this.mrows.length}
-                    rowGetter={({ index }) => this.mrows[index]}
+                    rowCount={this.state.logData.length}
+                    rowGetter={({ index }) => this.state.logData[index]}
                     columns={[
                         {
                             width: 150,
