@@ -38,7 +38,7 @@ module.exports = {
         });
 
         const checkContextWithTag = () => {
-            for (tag of obj.detail.resource.tags) {
+            for (tag of obj.detail.resource.instanceDetails.tags) {
                 if (
                     tag.key === findEvent.context ||
                     tag.value === findEvent.context
