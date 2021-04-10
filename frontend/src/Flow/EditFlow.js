@@ -7,6 +7,7 @@ const { AWSClientService } = require("art-aws-sdk");
 
 export default function Workflow() {
     const [flowState, setFlowState] = useState("CreateFlow1");
+    
     const [valueState, setValueState] = useState({ 
         name: "",
         resourceName: "",
@@ -40,7 +41,7 @@ export default function Workflow() {
             }),
         };
 
-        fetch("http://localhost:1337/api/create-flow", requestOptions)
+        fetch("http://localhost:1337/api/edit-flow", requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);

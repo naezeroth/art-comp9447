@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
@@ -13,13 +13,10 @@ import CardHeader from '@material-ui/core/CardHeader';
 
 import { Hidden, NativeSelect } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import CreateFlow2 from "./CreateFlow2";
-
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 400,
-        margin: "dense",
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -28,7 +25,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow1(props) {
     const classes = useStyles();
-    const [state, setState] = useState({ name: "", resourceName: "" });
+    const [state, setState] = useState({
+        name: props.defaultVals.name,
+        resourceName: props.defaultVals.resourceName,
+        context: props.defaultVals.context,
+    });
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -38,12 +39,15 @@ export default function CreateFlow1(props) {
         });
     };
 
-    React.useEffect(() => {
-        if (props.onChange) {
-            console.log("inside useEffect createFlow1", state);
-            props.onChange(state);
+    const onSubmit = () => {
+        // Test if all fields populated correctly
+        if (state.name === "" || state.resourceName === "") {
+            alert("Please fill out name and resource");
+            return;
         }
-    }, [state.name, state.resourceName]);
+        props.setState("CreateFlow2");
+        props.onChange(state);
+    };
 
     return (
         <div>
@@ -137,9 +141,24 @@ export default function CreateFlow1(props) {
                         </FormHelperText>
                     </FormControl>
                 </div>
+                <TextField
+                    value={state.context}
+                    onChange={handleChange}
+                    inputProps={{
+                        name: "context",
+                    }}
+                    style={{
+                        minWidth: 400,
+                        margin: "dense",
+                        marginTop: "10vh",
+                    }}
+                    id="standard-new-helperText"
+                    label="Context"
+                    helperText="Enter any tags you would like this flow to be associated with"
+                />
                 <Button
-                    onClick={(event) => props.setState("CreateFlow2")}
-                    style={{ marginTop: "10vh", backgroundColor: "#F9B15D", borderRadius: 10, padding: 20, }}
+                    onClick={onSubmit}
+                    style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
                 >
                     {" "}
                     Continue{" "}
