@@ -172,27 +172,6 @@ MuiVirtualizedTable.propTypes = {
 
 const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable);
 
-// ---
-
-const sample = [
-    ["ec2-12213-23232", "12-2-21", "North-America", 0, "Offline"],
-    ["definitelyNotInfected", "22-3-15", "Your-Home-PC", 37, "Normal"],
-    ["CryptoMiner", "30-2-12", "West-Europe", 2, "Critical"],
-    ["KGBHideout", "6-9-76", "Washington-DC", 13, "Remediated"],
-    ['the"Dark"Web', "2-3-04", "Sweden", 666, "Requires Attention"],
-];
-
-function createData(id, alertID, dateCreated, location, alertType, logStatus) {
-    return { id, alertID, dateCreated, location, alertType, logStatus };
-}
-
-const rows = [];
-
-for (let i = 0; i < 20; i += 1) {
-    const randomSelection = sample[Math.floor(Math.random() * sample.length)];
-    rows.push(createData(i, ...randomSelection));
-}
-// console.log(rows);
 
 class ReactVirtualizedTable extends Component{
     constructor(props){
@@ -203,6 +182,10 @@ class ReactVirtualizedTable extends Component{
         this.requestLog();
         // console.log("Constructor");
         // console.log(this.state);
+    }
+
+    createData(id, alertID, dateCreated, location, alertType, logStatus) {
+        return { id, alertID, dateCreated, location, alertType, logStatus };
     }
 
 
@@ -221,10 +204,19 @@ class ReactVirtualizedTable extends Component{
 
 
     extract(data){
-        console.log(data);
+        // console.log(data);
+        let temp = [];
+        this.mrows = [];
         for(let i=0; i < data.length; i++){
-            
+            temp.push(data[i].alert.id);
+            temp.push(data[i].alert.resource.resourceType);
+            temp.push(data[i].alert.region);
+            temp.push(data[i].alert.type);
+            temp.push("To Add");
+            this.mrows.push(this.createData(i, ...temp));
+            temp = [];
         }
+        console.log(this.mrows);
     };
 
     render(){
@@ -233,8 +225,8 @@ class ReactVirtualizedTable extends Component{
                 <Button onClick={this.requestLog}>Get</Button>
 
                 <VirtualizedTable
-                    rowCount={rows.length}
-                    rowGetter={({ index }) => rows[index]}
+                    rowCount={this.mrows.length}
+                    rowGetter={({ index }) => this.mrows[index]}
                     columns={[
                         {
                             width: 150,
