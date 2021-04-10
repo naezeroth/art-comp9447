@@ -13,9 +13,25 @@ export default function Workflow() {
         resourceName: "",
         context: "",
         findingType: "",
-        actions: []
+        actions: [],
+        requested:false
     });
+    
+    React.useEffect(() => {
+        if(valueState.requested==false){
+            fetch(' http://localhost:1337/flow?id='+editFlowId)
+            .then((res)=> res.json())
+            .then((res)=>{
+            setValueState({
+                ...res[0],
+                requested:true
+            });
+        })}
+        else{
+            console.log("Im not doing it",valueState)
+        }
 
+    });
     const service = AWSClientService();
 
     const onChange = (newState) => {
