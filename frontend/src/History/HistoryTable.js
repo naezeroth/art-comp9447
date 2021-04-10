@@ -192,12 +192,13 @@ for (let i = 0; i < 20; i += 1) {
     const randomSelection = sample[Math.floor(Math.random() * sample.length)];
     rows.push(createData(i, ...randomSelection));
 }
-
+// console.log(rows);
 
 class ReactVirtualizedTable extends Component{
     constructor(props){
         super(props);
         this.state = {logData : "test"};
+        this.mrows = [];
         this.requestLog = this.requestLog.bind(this);
         this.requestLog();
         // console.log("Constructor");
@@ -212,10 +213,19 @@ class ReactVirtualizedTable extends Component{
                 this.setState({
                     logData : data
                 })
+                this.extract(data);
                 // console.log("log");
                 // console.log(data);
             })
     }
+
+
+    extract(data){
+        console.log(data);
+        for(let i=0; i < data.length; i++){
+            
+        }
+    };
 
     render(){
         return (
