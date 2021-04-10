@@ -6,9 +6,9 @@ import { Redirect } from "react-router-dom";
 import {useParams} from "react-router";
 const { AWSClientService } = require("art-aws-sdk");
 
+
 export default function EditFlow(props) {
     const [flowState, setFlowState] = useState("CreateFlow1");
-    
     const [valueState, setValueState] = useState({ 
         name: "",
         resourceName: "",
@@ -18,10 +18,11 @@ export default function EditFlow(props) {
         requested:false
     });
     const {editFlowId} = useParams();
-
+    
+    console.log(editFlowId)
     console.log(editFlowId)
     React.useEffect(() => {
-        if(valueState.requested==false){
+        if(valueState.requested===false){
             fetch(' http://localhost:1337/flow?id='+editFlowId)
             .then((res)=> res.json())
             .then((res)=>{
@@ -29,6 +30,7 @@ export default function EditFlow(props) {
                 ...res[0],
                 requested:true
             });
+            console.log(valueState)
         })}
         else{
             console.log("Im not doing it",valueState)
