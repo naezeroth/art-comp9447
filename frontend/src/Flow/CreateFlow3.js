@@ -10,16 +10,12 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
 import BuildIcon from "@material-ui/icons/Build";
 import { NativeSelect } from "@material-ui/core";
-import CloseSharpIcon from "@material-ui/icons/CloseSharp";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import DragList from "./DraggableList";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 400,
-        margin: "dense",
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
