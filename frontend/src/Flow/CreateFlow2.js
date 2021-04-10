@@ -101,7 +101,6 @@ export default function CreateFlow2(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         findingType: "",
-        confidence: "",
     });
 
     const handleChange = (event) => {
@@ -112,13 +111,15 @@ export default function CreateFlow2(props) {
         });
     };
 
-
-    // used to pass state to parent component
-    React.useEffect(() => {
-        if (props.onChange) {
-            props.onChange(state);
+    const onSubmit = () => {
+        // Test if all fields populated correctly
+        if (state.findingType === "") {
+            alert("Please fill out findingType");
+            return;
         }
-    }, [state.findingType, state.confidence]);
+        props.setState("CreateFlow3");
+        props.onChange(state);
+    };
 
     return (
         <div>
@@ -178,42 +179,24 @@ export default function CreateFlow2(props) {
                             }}
                         >
                             <option aria-label="None" value="" />
-                            {guardDutyFindings.filter( finding => {
-                                return finding.includes(props.valueState.resourceName)
-                            }).map((finding) => {
-                                return (
-                                    <option value={finding}>{finding}</option>
-                                );
-                            })}
-                        </NativeSelect>
-                    </FormControl>
-                </div>
-                <div style={{ alignItems: "center", marginTop: "10vh" }}>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel
-                            htmlFor="findingType-native-helper"
-                            style={{ fontSize: "20px" }}
-                        >
-                            Only after 'X' confidence?
-                        </InputLabel>
-                        <NativeSelect
-                            value={state.confidence}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: "confidence",
-                            }}
-                        >
-                            <option aria-label="None" value="" />
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
-                            <option value={3}>3</option>
-                            <option value={4}>4</option>
-                            <option value={5}>5</option>
+                            {guardDutyFindings
+                                .filter((finding) => {
+                                    return finding.includes(
+                                        props.valueState.resourceName
+                                    );
+                                })
+                                .map((finding) => {
+                                    return (
+                                        <option value={finding}>
+                                            {finding}
+                                        </option>
+                                    );
+                                })}
                         </NativeSelect>
                     </FormControl>
                 </div>
                 <Button
-                    onClick={(event) => props.setState("CreateFlow3")}
+                    onClick={onSubmit}
                     style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
                 >
                     Continue{" "}

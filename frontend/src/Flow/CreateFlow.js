@@ -11,7 +11,6 @@ import ButtonAppBar from "../buttonAppBar";
 
 import { NativeSelect } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import CreateFlow2 from "./CreateFlow2";
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
@@ -25,7 +24,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow1(props) {
     const classes = useStyles();
-    const [state, setState] = useState({ name: "", resourceName: "" });
+    const [state, setState] = useState({
+        name: "",
+        resourceName: "",
+        context: "",
+    });
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -35,12 +38,15 @@ export default function CreateFlow1(props) {
         });
     };
 
-    React.useEffect(() => {
-        if (props.onChange) {
-            console.log("inside useEffect createFlow1", state);
-            props.onChange(state);
+    const onSubmit = () => {
+        // Test if all fields populated correctly
+        if (state.name === "" || state.resourceName === "") {
+            alert("Please fill out name and resource");
+            return;
         }
-    }, [state.name, state.resourceName]);
+        props.setState("CreateFlow2");
+        props.onChange(state);
+    };
 
     return (
         <div>
@@ -126,8 +132,23 @@ export default function CreateFlow1(props) {
                         </FormHelperText>
                     </FormControl>
                 </div>
+                <TextField
+                    value={state.context}
+                    onChange={handleChange}
+                    inputProps={{
+                        name: "context",
+                    }}
+                    style={{
+                        minWidth: 400,
+                        margin: "dense",
+                        marginTop: "10vh",
+                    }}
+                    id="standard-new-helperText"
+                    label="Context"
+                    helperText="Enter any tags you would like this flow to be associated with"
+                />
                 <Button
-                    onClick={(event) => props.setState("CreateFlow2")}
+                    onClick={onSubmit}
                     style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
                 >
                     {" "}
