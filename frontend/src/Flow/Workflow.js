@@ -22,11 +22,16 @@ export default function Workflow() {
         });
     };
 
-    const onSubmit = () => {
+    const onSubmit = (newState) => {
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ data: valueState }),
+            body: JSON.stringify({
+                data: {
+                    ...valueState,
+                    ...newState,
+                },
+            }),
         };
 
         fetch("http://localhost:1337/api/create-flow", requestOptions)

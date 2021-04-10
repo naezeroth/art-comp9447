@@ -10,35 +10,27 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
 import BuildIcon from "@material-ui/icons/Build";
 import { NativeSelect } from "@material-ui/core";
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import DragList from './DraggableList';
-
-
+import DragList from "./DraggableList";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(1),
         minWidth: 400,
-        margin: "dense",
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
     },
 }));
 
-
 export default function CreateFlow3(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({ actions: [] });
-    // console.log("inside createflow3", props);
 
     const handleChange = (event) => {
         console.log(event);
         const currentState = state.actions;
         // Prevents doubling up of actions
-        if(!currentState.includes(event.target.value)){
+        if (!currentState.includes(event.target.value)) {
             currentState.push(event.target.value);
         }
         setState({
@@ -46,56 +38,14 @@ export default function CreateFlow3(props) {
         });
     };
 
-    const removeAction = (name) => {
-        const currentState = state.actions;
-        const index = currentState.indexOf(name);
-        currentState.splice(index, 1);
-
-        setState({
-            actions: currentState,
-        });
-    };
-
-    const moveUp = (name) => {
-        const currentState = state.actions;
-        const index = currentState.indexOf(name);
-        if(index > 0 && currentState.length > 1){
-            const temp = currentState[index-1];
-            currentState[index-1] = name;
-            currentState[index] = temp;
-        }
-
-        setState({
-            actions: currentState,
-        });
-    }
-
-    const moveDown = (name) => {
-        const currentState = state.actions;
-        const index = currentState.indexOf(name);
-        if(index >= 0 && currentState.length > 1 && index < (currentState.length)-1){
-            const temp = currentState[index+1];
-            currentState[index+1] = name;
-            currentState[index] = temp;
-        }
-
-        setState({
-            actions: currentState,
-        });
-    }
-
-
-    // used to pass state to parent component
-    React.useEffect(() => {
-        // console.log("state.actions", state.actions);
-        if (props.onChange) {
-            props.onChange(state);
-        }
-    }, [state.actions]);
-
     const handleSubmit = () => {
+        // Test if all fields populated correctly
+        if (state.actions === []) {
+            alert("Please fill out actions");
+            return;
+        }
         props.setState("Done");
-        props.onSubmit();
+        props.onSubmit(state);
     };
 
     return (
@@ -175,13 +125,10 @@ export default function CreateFlow3(props) {
                     >
                         Selected Actions :
                         <div>
-                            <DragList pActions={state}/>
+                            <DragList pActions={state} />
                         </div>
                     </Typography>
                 </div>
-                
-
-
                 <div>
                     <IconButton style={{ textAlign: "center" }}>
                         <BuildIcon>Configure</BuildIcon>
@@ -243,7 +190,7 @@ const styles = {
         width: "200vh",
     },
 
-    selectedRem:{
+    selectedRem: {
         textAlign: "center",
     },
 };
