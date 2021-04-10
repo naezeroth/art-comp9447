@@ -5,7 +5,6 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
 const { AWSClientService } = require("art-aws-sdk");
 
 module.exports = {
@@ -17,10 +16,7 @@ module.exports = {
     inputs: {},
 
     exits: {
-        success: {
-            description:
-                "The requesting user agent has been successfully logged in.",
-        },
+        success: {},
 
         badCombo: {
             description: `Something went wrong`,
@@ -29,24 +25,41 @@ module.exports = {
     },
 
     fn: async function (inputs, exits) {
-        sails.log(AWSClientService, typeof AWSClientService);
+        //Initialise client service
         const service = AWSClientService();
 
+        //Capture request body from alert
         const obj = this.req.body;
 
-        var findEvent = await Flow.find({
+        const log = { alert: obj.detail };
+
+        const findEvent = await Flow.find({
             findingType: obj.detail.type,
         });
 
-        if (!findEvent) {
+        const checkContextWithTag = () => {
+            for (tag of obj.detail.resource.instanceDetails.tags) {
+                if (
+                    tag.key === findEvent.context ||
+                    tag.value === findEvent.context
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        if (!findEvent || !checkContextWithTag()) {
+            //set remediation to false
+            log["isRemediated"] = false;
+            await Log.create(log);
             return exits.badCombo({
                 message: "Event not found",
-                //set remediation to false
             });
         } else {
-            //Last flow with same findingType
+            const responseArray = [];
+            //If there exists multiple flows for finding type use last created flow
             for (action of findEvent[findEvent.length - 1].actions) {
-                sails.log(action, typeof action);
                 if (action === "Send Message to Slack") {
                     //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
                     //As part of the create-flow FE/BE
@@ -69,25 +82,28 @@ module.exports = {
                         "Automatically remediating with these steps: " +
                         findEvent[findEvent.length - 1].actions;
                     sails.log("Sending", formattedString);
-                    // service[action](formattedString);
-                    service[action](interactiveButtons);
+                    // service[action](interactiveButton is way to go)
+                    //service[action](interactiveButtons);
+                    responseArray.push({
+                        command: action,
+                        response: await service[action](formattedString),
+                        datetime: Date.now(),
+                    });
                 } else if (action === "Stop Instances") {
-                    service[action]([
-                        obj.detail.resource.instanceDetails.instanceId,
-                    ]);
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]([
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ]),
+                        datetime: Date.now(),
+                    });
                 }
             }
+            log["isRemediated"] = true;
+            log["response"] = responseArray;
+            console.log("Log is ", log);
+            await Log.create(log);
         }
-
-        //Parse this.req.body JSON
-        //Do logic based on event type
-        // Check if event type exists in DB
-        // If it doesn't
-        //Log that this occured, and set remediation as FALSE
-        // If it does
-        //Execute FLOW using aws-sdk
-        //Keep a log file of the output of each command
-        //Write the log to the DB so we can show in dashboard/history
 
         return exits.success({
             message: "Alert Received Sucessfully",

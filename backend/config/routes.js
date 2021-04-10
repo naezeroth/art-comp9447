@@ -39,6 +39,10 @@ module.exports.routes = {
 
   //Alert endpoints
   '/api/alert': { action: 'alert/index' },
+    
+
+  //Log endpoints
+  "/api/log": { action: "history/log" },
 
   //slack response
   'POST /slack/events': { action: 'alert/slack' },
