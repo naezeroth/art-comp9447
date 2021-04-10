@@ -37,7 +37,19 @@ module.exports = {
             findingType: obj.detail.type,
         });
 
-        if (!findEvent) {
+        const checkContextWithTag = () => {
+            for (tag of obj.detail.resource.tags) {
+                if (
+                    tag.key === findEvent.context ||
+                    tag.value === findEvent.context
+                ) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        if (!findEvent || !checkContextWithTag()) {
             //set remediation to false
             log["isRemediated"] = false;
             await Log.create(log);
