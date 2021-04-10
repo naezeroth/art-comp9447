@@ -41,7 +41,7 @@ module.exports = {
             findingType: obj.detail.type,
         });
 
-        if (!findEvent) {
+        if (findEvent.length === 0) {
             //set remediation to false
             log["isRemediated"] = false;
             await Log.create(log);
