@@ -82,7 +82,7 @@ class MuiVirtualizedTable extends React.PureComponent {
                         : "left"
                 }
             >
-                {cellData}
+            {cellData}
             </TableCell>
         );
     };
@@ -101,7 +101,7 @@ class MuiVirtualizedTable extends React.PureComponent {
                 variant="head"
                 style={{ height: headerHeight, backgroundColor: "#F1FAFF" }}
                 // align={"left"}
-                // align={columns[columnIndex].numeric || false ? "right" : "left"}
+                align={columns[columnIndex].numeric || false ? "right" : "left"}
             >
                 <span>{label}</span>
             </TableCell>
@@ -227,30 +227,34 @@ class ReactVirtualizedTable extends Component{
                     rowGetter={({ index }) => this.state.logData[index]}
                     columns={[
                         {
-                            width: 300,
+                            width: 350,
                             label: "ID",
                             dataKey: "alertID",
+                            numeric: false,
                         },
                         {
                             width: 80,
                             label: "Resource",
                             dataKey: "resourceType",
+                            numeric: false,
                         },
                         {
                             width: 120,
                             label: "Region",
                             dataKey: "location",
+                            numeric: false,
                         },
                         {
                             width: 300,
                             label: "Alert",
                             dataKey: "alertType",
-                            numeric: true,
+                            numeric: false,
                         },
                         {
                             width: 170,
                             label: "Status",
                             dataKey: "logStatus",
+                            numeric: false,
                         },
                     ]}
                 />

@@ -110,8 +110,8 @@ const styles = {
         textAlign: "center",
         whiteSpace: "nowrap",
         marginBottom: 5,
-        marginLeft: 30,
-        marginRight: 30,
+        marginLeft: 60,
+        marginRight: 60,
     },
 };
 
