@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateFlow1(props) {
     const classes = useStyles();
     const [state, setState] = useState({
-        name: "",
-        resourceName: "",
-        context: "",
+        name: props.defaultVals.name,
+        resourceName: props.defaultVals.resourceName,
+        context: props.defaultVals.context,
     });
 
     const handleChange = (event) => {

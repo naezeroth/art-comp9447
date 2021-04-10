@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CreateFlow2(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
-        findingType: "",
+        findingType: props.defaultVals.findingType,
     });
 
     const handleChange = (event) => {

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CreateFlow3(props) {
     const classes = useStyles();
-    const [state, setState] = React.useState({ actions: [] });
+    const [state, setState] = React.useState({ actions: props.defaultVals.actions });
 
     const handleChange = (event) => {
         console.log(event);
