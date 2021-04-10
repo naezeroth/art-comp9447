@@ -10,15 +10,9 @@ import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
 import BuildIcon from "@material-ui/icons/Build";
 import { NativeSelect } from "@material-ui/core";
-import CloseSharpIcon from '@material-ui/icons/CloseSharp';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import DragList from './DraggableList';
+import DragList from "./DraggableList";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-
-
-import DragList from "./DraggableList";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -141,10 +135,7 @@ export default function CreateFlow3(props) {
                     </Typography>
                 </div>
                 
-
-
                 {/* <div>
-                <div>
                     <IconButton style={{ textAlign: "center" }}>
                         <BuildIcon>Configure</BuildIcon>
                     </IconButton>

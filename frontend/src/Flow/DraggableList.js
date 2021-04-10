@@ -13,23 +13,6 @@ const getItems = (actions) =>
 const grid = 4;
 
 const QuoteItem = styled.div`
-  width: 800px;
-  border: 2px solid #084B74;
-  borderRadius: '10px!important';
-  background-color: #F1FAFF;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: ${grid}px;
-  margin-bottom: ${grid}px;
-
-  /* used for positioning the after content */
-  position: relative;
-  /* stylelint-disable  comment-empty-line-before */
-  /* add little portal indicator when in a portal */
-  ${(props) =>
-    props.inPortal
-      ? `
     // width: 400px;
     border: 1px solid grey;
     background-color: #f1faff;

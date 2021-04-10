@@ -10,14 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
-    "npm-run-all": "^4.1.5",
-    "react-fitted-image": "^1.0.1",
-    "react-fitted-img": "^2.0.0"
-=======
     "@slack/interactive-messages": "^2.0.1",
     "ngrok": "^3.4.1",
     "npm-run-all": "^4.1.5"
->>>>>>> dbcd754f7f8924072e60e435082e26dc20d0131e
   }
 }
