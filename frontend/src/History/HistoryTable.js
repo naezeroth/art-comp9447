@@ -100,7 +100,8 @@ class MuiVirtualizedTable extends React.PureComponent {
                 )}
                 variant="head"
                 style={{ height: headerHeight, backgroundColor: "#F1FAFF" }}
-                align={columns[columnIndex].numeric || false ? "right" : "left"}
+                // align={"left"}
+                // align={columns[columnIndex].numeric || false ? "right" : "left"}
             >
                 <span>{label}</span>
             </TableCell>
@@ -183,11 +184,11 @@ class ReactVirtualizedTable extends Component{
         // console.log(this.state);
     }
 
-    createData(id, alertID, dateCreated, location, alertType, logStatus) {
-        return { id, alertID, dateCreated, location, alertType, logStatus };
+    createData(id, alertID, resourceType, location, alertType, logStatus) {
+        return { id, alertID, resourceType, location, alertType, logStatus };
     }
 
-    async requestLog() {
+    async requestLog() { 
 
         const response = await fetch('http://localhost:1337/log');
         const data = await response.json();
@@ -208,7 +209,7 @@ class ReactVirtualizedTable extends Component{
             temp.push(data[i].alert.resource.resourceType);
             temp.push(data[i].alert.region);
             temp.push(data[i].alert.type);
-            temp.push("To Add");
+            temp.push("Normal");
             mrows.push(this.createData(i, ...temp));
             temp = [];
         }
@@ -218,22 +219,22 @@ class ReactVirtualizedTable extends Component{
 
     render(){
         return (
-            <Paper style={{ height: 200, width: "100%" }}>
-                <Button onClick={this.requestLog}>Get</Button>
+            <Paper style={{ height: 600, width: "100%" }}>
+                <Button onClick={this.requestLog}>Reload</Button>
 
                 <VirtualizedTable
                     rowCount={this.state.logData.length}
                     rowGetter={({ index }) => this.state.logData[index]}
                     columns={[
                         {
-                            width: 150,
+                            width: 300,
                             label: "ID",
                             dataKey: "alertID",
                         },
                         {
                             width: 80,
-                            label: "Creation",
-                            dataKey: "dateCreated",
+                            label: "Resource",
+                            dataKey: "resourceType",
                         },
                         {
                             width: 120,
@@ -241,7 +242,7 @@ class ReactVirtualizedTable extends Component{
                             dataKey: "location",
                         },
                         {
-                            width: 120,
+                            width: 300,
                             label: "Alert",
                             dataKey: "alertType",
                             numeric: true,
