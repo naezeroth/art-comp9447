@@ -17,7 +17,7 @@ export default function Workflow() {
         actions: [],
         requested:false
     });
-    
+    const {editFlowId} = useParams();
     React.useEffect(() => {
         if(valueState.requested==false){
             fetch(' http://localhost:1337/flow?id='+editFlowId)
