@@ -21,6 +21,7 @@ module.exports = {
                     _.isString(value.findingType) &&
                     _.isString(value.resourceName) &&
                     _.isString(value.name) &&
+                    _.isString(value.context) &&
                     Array.isArray(value.actions)
                 );
             },
