@@ -112,13 +112,14 @@ export default function CreateFlow1(props) {
                     // color="secondary
                 />
                 <div style={{ alignItems: "center", marginTop: "10vh" }}>
-                    <FormControl className={classes.formControl}>
+                    <FormControl variant="outlined" className={classes.formControl}>
                         <InputLabel
                             variant="outlined"
                             htmlFor="resourceName-native-helper">
                             Resource
                         </InputLabel>
                         <NativeSelect
+                            variant="filled"
                             value={state.resourceName}
                             onChange={handleChange}
                             inputProps={{
@@ -173,7 +174,6 @@ const styles = {
 
     containerS: {
         backgroundColor: "#C4C4C4",
-        Bottom: 0,
         height: "100%"
     },
     

@@ -262,5 +262,6 @@ const styles = {
     
     flowCard: {
         marginTop: "7%",
+        paddingBottom: 40
         },
 };
