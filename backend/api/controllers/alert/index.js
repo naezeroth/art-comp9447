@@ -61,6 +61,14 @@ module.exports = {
             //If there exists multiple flows for finding type use last created flow
             for (action of findEvent[findEvent.length - 1].actions) {
                 if (action === "Send Message to Slack") {
+                    //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
+                    //As part of the create-flow FE/BE
+                    const interactiveButtons = {
+                        "updatedAt": obj.detail.updatedAt,
+                        "description": obj.detail.description,
+                        "severity": obj.detail.severity,
+                        "remediation": findEvent[findEvent.length - 1].actions,
+                    }
                     const formattedString =
                         "ALERT!" +
                         "\n" +
@@ -74,6 +82,8 @@ module.exports = {
                         "Automatically remediating with these steps: " +
                         findEvent[findEvent.length - 1].actions;
                     sails.log("Sending", formattedString);
+                    // service[action](interactiveButton is way to go)
+                    //service[action](interactiveButtons);
                     responseArray.push({
                         command: action,
                         response: await service[action](formattedString),

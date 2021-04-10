@@ -46,7 +46,65 @@ const AWSClientService = () => {
         try {
             await web.chat.postMessage({
                 channel: "bot-log",
-                text: msg,
+                blocks: [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "You have a new ALERT!:\n*<fakeLink.toEmployeeProfile.com|" + msg["description"] + ">*"
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "fields": [
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Type:*\nTEXT HOLDER FOR TYPE"
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Updated At:*\n" + msg["updatedAt"]
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*severity:*\n" + msg["severity"]
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Reason:*\n" + msg["description"]
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Remediation:*\n" + msg["remediation"]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "actions",
+                        "elements": [
+                            {
+                                "type": "button",
+                                "text": {
+                                    "type": "plain_text",
+                                    "emoji": true,
+                                    "text": "Approve"
+                                },
+                                "style": "primary",
+                                "value": "click_me_123"
+                            },
+                            {
+                                "type": "button",
+                                "text": {
+                                    "type": "plain_text",
+                                    "emoji": true,
+                                    "text": "Deny"
+                                },
+                                "style": "danger",
+                                "value": "click_me_123"
+                            }
+                        ]
+                    }
+                ]
             });
         } catch (err) {
             console.log("Error", err);
