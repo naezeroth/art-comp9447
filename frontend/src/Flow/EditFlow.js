@@ -8,7 +8,7 @@ const { AWSClientService } = require("art-aws-sdk");
 
 
 export default function EditFlow(props) {
-    const [flowState, setFlowState] = useState("CreateFlow1");
+    const [flowState, setFlowState] = useState("");
     const [valueState, setValueState] = useState({ 
         name: "",
         resourceName: "",
@@ -21,7 +21,7 @@ export default function EditFlow(props) {
     
     console.log(editFlowId)
     console.log(editFlowId)
-    React.useEffect(() => {
+    // React.useEffect(() => {
         if(valueState.requested===false){
             fetch(' http://localhost:1337/flow?id='+editFlowId)
             .then((res)=> res.json())
@@ -30,13 +30,14 @@ export default function EditFlow(props) {
                 ...res[0],
                 requested:true
             });
+            setFlowState("CreateFlow1");
             console.log(valueState)
         })}
         else{
             console.log("Im not doing it",valueState)
         }
 
-    });
+    // });
     const service = AWSClientService();
 
     const onChange = (newState) => {
@@ -61,12 +62,13 @@ export default function EditFlow(props) {
                 },
             }),
         };
-
+        
         fetch("http://localhost:1337/api/edit-flow", requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);
             });
+            setFlowState("Done");
     };
 
     if (flowState === "CreateFlow1") {
@@ -91,6 +93,9 @@ export default function EditFlow(props) {
             />
         );
     }
-
-    return <Redirect to="/Home" />;
+    if(flowState==="Done"){
+        
+        return <Redirect to="/Home" />;
+    }
+    return null
 }

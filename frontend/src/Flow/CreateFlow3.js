@@ -44,8 +44,10 @@ export default function CreateFlow3(props) {
             alert("Please fill out actions");
             return;
         }
-        props.setState("Done");
+        console.log("HERERERERE")
         props.onSubmit(state);
+        // props.setState("Done");
+        
     };
 
     return (
