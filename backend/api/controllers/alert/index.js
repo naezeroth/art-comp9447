@@ -37,12 +37,11 @@ module.exports = {
             findingType: obj.detail.type,
         });
 
-<<<<<<< HEAD
         const checkContextWithTag = () => {
             for (tag of obj.detail.resource.instanceDetails.tags) {
                 if (
-                    tag.key === findEvent.context ||
-                    tag.value === findEvent.context
+                    tag.key === findEvent[findEvent.length - 1].context ||
+                    tag.value === findEvent[findEvent.length - 1].context
                 ) {
                     return true;
                 }
@@ -51,12 +50,10 @@ module.exports = {
         };
 
         if (
-            !findEvent ||
-            (findEvent.context !== "" && !checkContextWithTag())
+            findEvent.length === 0 ||
+            (findEvent[findEvent.length - 1].context !== "" &&
+                !checkContextWithTag())
         ) {
-=======
-        if (findEvent.length === 0) {
->>>>>>> historyUI
             //set remediation to false
             log["isRemediated"] = false;
             await Log.create(log);
