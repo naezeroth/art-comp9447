@@ -1,11 +1,21 @@
 import React, { Component } from "react";
+import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import "../Overview.css";
 import ButtonAppBar from "../buttonAppBar";
-import CSSGrid from "../mainGrid";
+import Paper from "@material-ui/core/Paper";
+import HisTable from "./HistoryTable";
 
-class Overview extends Component {
+class History extends Component {
+    // constructor(props){
+    //     super(props);
+    //     this.requestLog();
+    //     this.state = {logData : undefined};
+    // }
+
+
+
     render() {
         return (
             <div>
@@ -21,10 +31,10 @@ class Overview extends Component {
                             <a href="./">Services</a>
                         </li>
                         <li>
-                            <a style={{backgroundColor: "#F9B15D",}} href="./Overview">Overview</a>
+                            <a href="./Overview">Overview</a>
                         </li>
                         <li>
-                            <a href="./">History</a>
+                            <a href="./History">History</a>
                         </li>
                     </ul>
                 </div>
@@ -41,7 +51,17 @@ class Overview extends Component {
                                     height: "100vh",
                                 }}
                             >
-                                <CSSGrid />
+                                <Typography
+                                    style={{ "font-size": "40px" , "color": "#12293B"}}
+                                    gutterBottom
+                                >
+                                    History
+                                </Typography>
+                                <Paper style={styles.paper}>
+                                    <HisTable data={this.state}/>
+
+
+                                </Paper>
                             </Typography>
                         </Container>
                     </Typography>
@@ -84,6 +104,15 @@ const styles = {
     menuList: {
         float: "right",
     },
+
+    paper:{
+        padding: 5,
+        textAlign: "center",
+        whiteSpace: "nowrap",
+        marginBottom: 5,
+        marginLeft: 60,
+        marginRight: 60,
+    },
 };
 
-export default Overview;
+export default History;

@@ -45,6 +45,7 @@ export default function Workflow() {
             .then((response) => {
                 console.log(response);
             });
+        setFlowState("Done")
     };
 
     if (flowState === "CreateFlow1") {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -10,7 +9,7 @@ import ButtonAppBar from "../buttonAppBar";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 
-import { Hidden, NativeSelect } from "@material-ui/core";
+import { NativeSelect } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -23,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CreateFlow1(props) {
+    console.log("HEREEEE",props.defaultVals.name)
     const classes = useStyles();
     const [state, setState] = useState({
         name: props.defaultVals.name,
         resourceName: props.defaultVals.resourceName,
         context: props.defaultVals.context,
     });
-
+    console.log("HERE 2 ",state)
     const handleChange = (event) => {
         const name = event.target.name;
         setState({

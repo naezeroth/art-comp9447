@@ -3,19 +3,41 @@ import CreateFlow1 from "./CreateFlow";
 import CreateFlow2 from "./CreateFlow2";
 import CreateFlow3 from "./CreateFlow3";
 import { Redirect } from "react-router-dom";
+import {useParams} from "react-router";
 const { AWSClientService } = require("art-aws-sdk");
 
-export default function Workflow() {
-    const [flowState, setFlowState] = useState("CreateFlow1");
-    
+
+export default function EditFlow(props) {
+    const [flowState, setFlowState] = useState("");
     const [valueState, setValueState] = useState({ 
         name: "",
         resourceName: "",
         context: "",
         findingType: "",
-        actions: []
+        actions: [],
+        requested:false
     });
+    const {editFlowId} = useParams();
+    
+    console.log(editFlowId)
+    console.log(editFlowId)
+    // React.useEffect(() => {
+        if(valueState.requested===false){
+            fetch(' http://localhost:1337/flow?id='+editFlowId)
+            .then((res)=> res.json())
+            .then((res)=>{
+            setValueState({
+                ...res[0],
+                requested:true
+            });
+            setFlowState("CreateFlow1");
+            console.log(valueState)
+        })}
+        else{
+            console.log("Im not doing it",valueState)
+        }
 
+    // });
     const service = AWSClientService();
 
     const onChange = (newState) => {
@@ -40,12 +62,13 @@ export default function Workflow() {
                 },
             }),
         };
-
+        
         fetch("http://localhost:1337/api/edit-flow", requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);
             });
+            setFlowState("Done");
     };
 
     if (flowState === "CreateFlow1") {
@@ -70,6 +93,9 @@ export default function Workflow() {
             />
         );
     }
-
-    return <Redirect to="/Home" />;
+    if(flowState==="Done"){
+        
+        return <Redirect to="/Home" />;
+    }
+    return null
 }

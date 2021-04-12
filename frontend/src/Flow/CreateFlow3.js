@@ -2,18 +2,15 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import "../Overview.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
-import BuildIcon from "@material-ui/icons/Build";
 import { NativeSelect } from "@material-ui/core";
 import DragList from "./DraggableList";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import FormHelperText from "@material-ui/core/FormHelperText"
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,8 +45,10 @@ export default function CreateFlow3(props) {
             alert("Please fill out actions");
             return;
         }
-        props.setState("Done");
+        console.log("HERERERERE")
         props.onSubmit(state);
+        // props.setState("Done");
+        
     };
 
     return (

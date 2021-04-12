@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component , useState, useEffect }from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -10,15 +10,63 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 
+function EditFlow1 (props) {
+const [state, setState] = useState({ id: "", resourceName: "" });
+
+    const handleChange = (event) => {
+        const id = event.target.id;
+        setState({
+            ...state,
+            [id]: event.target.value,
+        });
+    };
+    React.useEffect(() => {
+        if (props.onChange) {
+            console.log("inside useEffect createFlow1", state);
+            props.onChange(state);
+        }
+    }, [state.id, state.resourceName]);
+}
 class Home extends Component {
-    render() {
+    constructor() {
+    super();
+
+        this.state = {
+            flow: []
+        }
+    }
+        componentDidMount() {
+            fetch(' http://localhost:1337/api/display-flows') //the api to hit request
+            .then((response) => { console.log("we've fetched", response); return response.json()})
+            .then((response) => {
+                console.log(response);
+                const flow = response.flows.map((flows) => ({
+                    id: flows.id,
+                    name: flows.name,
+                    resourceName: flows.resourceName,
+                    findingType: flows.findingType,
+                    createdAt: flows.createdAt
+
+                }));
+                // console.log(response);
+                this.setState({
+                    flow: flow
+                });
+            })
+                
+        
+    }
+    
+    render() 
+    {
+        console.log("this is current state",this.state)
         return (
             <div>
                 <div>
                     <ButtonAppBar />
                 </div>
                 <div style={styles.dropDown}>
-                    <ul class="navBar">
+                    <ul className="navBar">
                         <li>
                             <a style={{backgroundColor: "#F9B15D",}}href="./Home">Home</a>
                         </li>
@@ -33,7 +81,7 @@ class Home extends Component {
                         </li>
                     </ul>
                 </div>
-                <Container disableGutters="true" maxWidth="false">
+                <Container disableGutters = {true} maxWidth={false}>
                     <Typography
                         component="div"
                         style={{ backgroundColor: "#C4C4C4", height: "100vh", paddingTop: 80 }}
@@ -62,56 +110,40 @@ class Home extends Component {
                                             />                                                
                                             </Card>
                                         </Grid>
-
-                                        <Grid item xs={5}>
-                                            <Card style={styles.Flows}>
+                                        <Grid item xl={5}>
+                                        <Card style={styles.Flows}>
                                             <CardHeader style={{color: "white", backgroundColor:"#12293B" ,borderRadius: 10,margin: 2 }}
                                                 title="Flows"
                                             />     
-                                                <a href="./WorkFlow">
+                                            {/* <Container style={styles.Flows}> */}
+                                            <a href="./WorkFlow">
                                                     <AddCircleIcon
                                                         style={{
-                                                            color: "#084B74",
-                                                            fontSize: 85,
-                                                            paddingRight: "20%",
-                                                            marginTop: 25,
-                                                            flexDirection: 'column',
+                                                            color: "#0A4A74",
+                                                            fontSize: 45,
+                                                            marginLeft: "28vw",
+                                                            marginTop: 10,
                                                         }}
                                                     />
-                                                </a>
-                                                <a href="./EditFlow">
-                                                    <EditIcon
-                                                        style={{
-                                                            color: "#084B74",
-                                                            fontSize: 85,
-                                                            marginTop: "7%",
-                                                            flexDirection: 'column'
-                                                        }}
-                                                    />
-                                                </a>
-                                                <div style={styles.IconText}>
-                                                    {/* <Typography
-                                                        style={{
-                                                            textAlign: "left",
-                                                            "font-size": "20px",
-                                                            marginTop: "5vh",
-                                                            flexDirection: 'column',
-                                                        }}
-                                                    >
-                                                        {" "}
-                                                        Create Flow{" "}
-                                                    </Typography> */}
-                                                    {/* <Typography
-                                                        style={{
-                                                            "font-size": "20px",
-                                                            marginLeft: "10vh",
-                                                            marginTop: "5vh",
-                                                        }}
-                                                    >
-                                                        {" "}
-                                                        Edit Flow{" "}
-                                                    </Typography> */}
-                                                </div>
+                                            </a>
+                                                <ul>
+                                                     {
+                                                     this.state.flow.map((eachFlow) => {
+                                                         console.log(eachFlow)
+                                                         let url = "./EditFlow/"+eachFlow.id
+                                                     return <ul key={eachFlow.id}>{eachFlow.name}&nbsp;{eachFlow.resourceName}&nbsp;{eachFlow.findingType}&nbsp;<a href={url}>
+                                                     <EditIcon
+                                                         style={{
+                                                             color: "#0A4A74",
+                                                             fontSize: 45,
+                                                             marginTop: 60,
+                                                         }}
+                                                     />
+                                                 </a></ul>
+                                                     })
+                                                     }
+                                                 </ul>
+                                            {/* </Container> */}
                                             </Card>
                                         </Grid>
                                     </Grid>
