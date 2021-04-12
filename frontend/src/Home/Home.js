@@ -86,14 +86,6 @@ class Home extends Component {
                         component="div"
                         style={{ backgroundColor: "#C4C4C4", height: "100vh", paddingTop: 80 }}
                     >
-                        <Container maxWidth="xl">
-                            <Typography
-                                component="div"
-                                style={{
-                                    backgroundColor: "#C4C4C4",
-                                    height: "100vh",
-                                }}
-                            >
                                 <Grid container spacing={0}>
                                     <Grid
                                         container
@@ -112,20 +104,26 @@ class Home extends Component {
                                         </Grid>
                                         <Grid item xl={5}>
                                         <Card style={styles.Flows}>
-                                            <CardHeader style={{color: "white", backgroundColor:"#12293B" ,borderRadius: 10,margin: 2 }}
+                                            <CardHeader style={{color: "white", backgroundColor:"#12293B" ,borderRadius: 10,margin: 2, }}
                                                 title="Flows"
                                             />     
                                             {/* <Container style={styles.Flows}> */}
+                                            <div style={{flexDirection: "row", display: "block"}}>
+                                            <Typography style={{textAlign: "left", paddingLeft: 10, fontSize: 20, fontWeight: "bold",marginTop: 30 }}> Add a Flow : </Typography>
                                             <a href="./WorkFlow">
                                                     <AddCircleIcon
                                                         style={{
                                                             color: "#0A4A74",
-                                                            fontSize: 45,
-                                                            marginLeft: "28vw",
-                                                            marginTop: 10,
+                                                            fontSize: 75,
+                                                            marginLeft: "85%",
+                                                            marginTop: -50,
+                                                            marginBottom: 10,
+                                                            
                                                         }}
                                                     />
                                             </a>
+                                            </div>
+                                            <Typography style={{textAlign: "left", paddingLeft: 10, fontSize: 20, fontWeight: "bold", marginTop: 25}}> Current Flows : </Typography>
                                                 <ul>
                                                      {
                                                      this.state.flow.map((eachFlow) => {
@@ -135,8 +133,8 @@ class Home extends Component {
                                                      <EditIcon
                                                          style={{
                                                              color: "#0A4A74",
-                                                             fontSize: 45,
-                                                             marginTop: 60,
+                                                             fontSize: 20,
+                                                             marginTop: 25,
                                                          }}
                                                      />
                                                  </a></ul>
@@ -188,8 +186,6 @@ class Home extends Component {
                                 </Card>
                             </Typography>
                         </Container>
-                    </Typography>
-                </Container>
             </div>
         );
     }
@@ -206,12 +202,13 @@ const styles = {
     },
 
     Flows: {
-        marginLeft: "15%",
+        marginLeft: "5%",
         backgroundColor: "#FFFFFF",
         height: "35vh",
         width: "60vh",
-        left: "80%",
         borderRadius: 10,
+        overflowY: 'scroll',
+        "white-space": "nowrap",
     },
 
     Resources: {
