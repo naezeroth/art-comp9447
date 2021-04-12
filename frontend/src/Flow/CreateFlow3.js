@@ -13,6 +13,8 @@ import { NativeSelect } from "@material-ui/core";
 import DragList from "./DraggableList";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import FormHelperText from "@material-ui/core/FormHelperText"
+
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -51,7 +53,7 @@ export default function CreateFlow3(props) {
     };
 
     return (
-        <div>
+        <div style={styles.containerS}>
             <div>
                 <ButtonAppBar />
             </div>
@@ -71,38 +73,18 @@ export default function CreateFlow3(props) {
                     </li>
                 </ul>
             </div>
-            {/* <Typography
-                style={{
-                    textAlign: "left",
-                    fontFamily: "sans-serif",
-                    fontSize: "25px",
-                    marginLeft: "18vh",
-                    marginTop: "4vh",
-                }}
-            >
-                Add a new Flow:
-            </Typography> */}
             <Container style={styles.flowCard}>
-            <Card variant="filled" style={{backgroundColor: "#C4C4C4",borderRadius: 10, paddingBottom: 25}}>
-            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
-            title="Select an Action/(s)"
+            <Card variant="filled" style={{backgroundColor: "white",borderRadius: 10, paddingBottom: 25}}>
+            <CardHeader style={{color: "white", backgroundColor:"#084B74" ,borderRadius: 10,margin: 2 }}
+            title="Step 3 : Select an Action/(s)"
             />   
-                {/* <Typography
-                    style={{
-                        textAlign: "center",
-                        fontFamily: "sans-serif",
-                        fontSize: "35px",
-                    }}
-                >
-                    List of Actions
-                </Typography> */}
                 <div style={{ alignItems: "center", marginTop: "15vh" }}>
                     <FormControl className={classes.formControl}>
                         <InputLabel
                             htmlFor="findingtype-native-helper"
                             style={{ fontSize: "20px"}}
                         >
-                            Selected Action
+                            List of Actions
                         </InputLabel>
                         <NativeSelect
                             value={state.actions}
@@ -143,12 +125,8 @@ export default function CreateFlow3(props) {
                 <div>
                     <Button
                         onClick={handleSubmit}
-                        style={{
-                            marginTop: "10vh",
-                            backgroundColor: "#F9B15D",
-                            borderRadius: 10,
-                             padding: 20,
-                        }}
+                        style={{ marginTop: "10vh", backgroundColor: "#F9B15D", padding: 10, width: 150}}
+
                     >
                         Continue
                     </Button>
@@ -204,12 +182,11 @@ const styles = {
     },
     containerS: {
         backgroundColor: "#C4C4C4",
-        Bottom: 0,
         height: "100%"
     },
     
     flowCard: {
         marginTop: "7%",
-        paddingBottom: 40
+        paddingBottom: 100
         },
 };

@@ -95,6 +95,8 @@ const styles = {
         margin: "0",
         height: "100vh",
         backgroundRepeat: "no-repeat",
+        backgroundColor: "white",
+
     },
 
     container: {
@@ -116,6 +118,8 @@ const styles = {
         marginRight: "45px",
         textAlign: "center",
         position: "relative",
+        backgroundColor: "white",
+
     },
 
     FormSection: {
@@ -123,6 +127,8 @@ const styles = {
         textAlign: "center",
         position: "relative",
         Top: "50%",
+        backgroundColor: "white",
+
     },
 
     logoDim: {

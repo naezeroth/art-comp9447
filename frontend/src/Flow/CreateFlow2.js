@@ -2,10 +2,10 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
-import "../Overview.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText"
 import ButtonAppBar from "../buttonAppBar";
 import { NativeSelect } from "@material-ui/core";
 import Card from '@material-ui/core/Card';
@@ -123,7 +123,7 @@ export default function CreateFlow2(props) {
     };
 
     return (
-        <div>
+        <div style={styles.containerS}>
             <div>
                 <ButtonAppBar />
             </div>
@@ -143,32 +143,13 @@ export default function CreateFlow2(props) {
                     </li>
                 </ul>
             </div>
-            {/* <Typography
-                style={{
-                    textAlign: "left",
-                    fontFamily: "sans-serif",
-                    fontSize: "25px",
-                    marginLeft: "18vh",
-                    marginTop: "4vh",
-                }}
-            >
-                Add a new Flow:
-            </Typography> */}
+            <Container>
             <Container style={styles.flowCard}>
-            <Card variant="filled" style={{backgroundColor: "#C4C4C4",borderRadius: 10, paddingBottom: 25}}>
-            <CardHeader style={{color: "white", backgroundColor:"#4D4D4D" ,borderRadius: 10, }}
-            title="Add a Flow"
+            <Card variant="filled" style={{backgroundColor: "white",borderRadius: 10, paddingBottom: 25}}>
+            <CardHeader style={{color: "white",fontWeight: 'bold', backgroundColor:"#084B74" ,borderRadius: 10,margin: 2 }}
+            title="Step 2 : Select Finding Type"
             />                         
-                {/* <Typography
-                    style={{
-                        textAlign: "center",
-                        fontFamily: "sans-serif",
-                        fontSize: "35px",
-                    }}
-                >
-                    Finding Type
-                </Typography> */}
-                <div style={{ alignItems: "center", marginTop: "15vh" }}>
+                <div style={{marginTop: "15vh" }}>
                     <FormControl className={classes.formControl}>
                         <InputLabel
                             margin='dense'
@@ -199,15 +180,19 @@ export default function CreateFlow2(props) {
                                     );
                                 })}
                         </NativeSelect>
+                        <FormHelperText>
+                            Select the finding type
+                        </FormHelperText>
                     </FormControl>
                 </div>
                 <Button
                     onClick={onSubmit}
-                    style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
+                    style={{ marginTop: "10vh", backgroundColor: "#F9B15D", padding: 10, width: 150}}
                 >
                     Continue{" "}
                 </Button>
                 </Card>
+            </Container>
             </Container>
         </div>
     );
@@ -225,33 +210,22 @@ const styles = {
         // flexFlow: "row wrap",
     },
 
-    leftBlock: {
-        paddingRight: 10,
-        // flexGrow: 1,
-    },
-
-    rightBlock: {
-        // flex : 2,
-    },
-
     acName: {
         color: "inherit",
         float: "right",
-    },
-
-    mainBody: {
-        backgroundColor: "#C4C4C4",
     },
 
     menuList: {
         float: "right",
     },
 
-    container: {
+    containerS: {
         backgroundColor: "#C4C4C4",
+        height: "100%",
     },
 
     flowCard: {
-        marginTop: "5%",
+        marginTop: "12%",
+        
         },
 };
