@@ -12,6 +12,7 @@
     "@slack/events-api": "^3.0.0",
     "@slack/interactive-messages": "^2.0.1",
     "art-aws-sdk": "file:../art-aws-sdk",
+    "charset": "^1.0.1",
     "dotenv": "^8.2.0",
     "grunt": "1.0.4",
     "jsonwebtoken": "^8.5.1",
