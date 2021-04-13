@@ -84,7 +84,7 @@ class Home extends Component {
                 <Container disableGutters = {true} maxWidth={false}>
                     <Typography
                         component="div"
-                        style={{ backgroundColor: "#C4C4C4", height: "100vh", paddingTop: 80 }}
+                        style={{ backgroundColor: "#C4C4C4", height: "100vh", paddingTop: 100 }}
                     >
                                 <Grid container spacing={0}>
                                     <Grid
@@ -108,7 +108,6 @@ class Home extends Component {
                                                 title="Flows"
                                             />     
                                             {/* <Container style={styles.Flows}> */}
-                                            <div style={{flexDirection: "row", display: "block"}}>
                                             <Typography style={{textAlign: "left", paddingLeft: 10, fontSize: 20, fontWeight: "bold",marginTop: 30 }}> Add a Flow : </Typography>
                                             <a href="./WorkFlow">
                                                     <AddCircleIcon
@@ -122,7 +121,6 @@ class Home extends Component {
                                                         }}
                                                     />
                                             </a>
-                                            </div>
                                             <Typography style={{textAlign: "left", paddingLeft: 10, fontSize: 20, fontWeight: "bold", marginTop: 25}}> Current Flows : </Typography>
                                                 <ul>
                                                      {
@@ -146,17 +144,6 @@ class Home extends Component {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                <Typography
-                                    style={{
-                                        textAlign: "left",
-                                        marginLeft: "5vh",
-                                        "font-size": "25px",
-                                        paddingTop: "5vh",
-                                    }}
-                                >
-                                    {" "}
-                                    {/* Resources{" "} */}
-                                </Typography>
                                 <Card style={styles.Resources}>
                                     <CardHeader style={{color: "white", backgroundColor:"#12293B" ,borderRadius: 10,margin: 2 }}
                                         title="Resources"
@@ -193,7 +180,7 @@ class Home extends Component {
 
 const styles = {
     currentAlerts: {
-        marginLeft: "5vh",
+        marginLeft: "10vh",
         backgroundColor: "#FFFFFF",
         height: "35vh",
         width: "100vh",
@@ -212,11 +199,12 @@ const styles = {
     },
 
     Resources: {
-        marginLeft: "5vh",
+        marginLeft: "10vh",
         backgroundColor: "#FFFFFF",
         height: "40%",
         width: "100vh",
         borderRadius: 10,
+        marginTop: "10vh"
     },
 
     ResourceButton: {
