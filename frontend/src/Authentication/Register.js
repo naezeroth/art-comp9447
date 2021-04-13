@@ -1,13 +1,17 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import Button from '@material-ui/core/Button';
 import bgImg from "../assets/bg.jpg";
 import logo from "../assets/Logo.png";
 import Form from "react-bootstrap/Form";
+import FittedImg from 'react-fitted-img';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 export default class Register extends React.Component {
     render() {
         return (
             <div className="register" style={styles.background}>
+                <FittedImg  src={bgImg} fit="auto" alt="Cloud computing Image" position="0 100%" />                
                 <div className="container" style={styles.container}>
                     <div
                         className="registerContent"
@@ -21,26 +25,29 @@ export default class Register extends React.Component {
                             className="registerContent"
                             style={styles.FormSection}
                         >
-                            <h2> Register </h2>
-                            <Form onSubmit={this.handleSubmit}>
+                            <Card style={{backgroundColor: "#4D4D4D", padding: 20, borderRadius: 30}}>
+                            <CardHeader style={{color: "#000000", backgroundColor:"white" ,borderRadius: 30, }}
+                            title="Register"
+                            />
+                            <Form style={{paddingTop: 70}} onSubmit={this.handleSubmit}>
                                 <Form.Group>
-                                    <Form.Label>Email Address : </Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>Email Address : </Form.Label>
                                     <Form.Control
                                         type="email"
                                         placeholder="Enter your email"
                                     />
                                 </Form.Group>
-                                &nbsp;
+                                <div className="break" style={styles.break}/>
                                 <Form.Group>
-                                    <Form.Label>Password : </Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>Password : </Form.Label>
                                     <Form.Control
                                         type="password"
                                         placeholder="Your Password"
                                     />
                                 </Form.Group>
-                                &nbsp;
+                                <div className="break" style={styles.break}/>
                                 <Form.Group>
-                                    <Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>
                                         {" "}
                                         Confirm Password :{" "}
                                     </Form.Label>
@@ -49,20 +56,24 @@ export default class Register extends React.Component {
                                         placeholder="Re-enter Your Password"
                                     />
                                 </Form.Group>
-                                &nbsp;
+                                <div className="break" style={styles.break}/>
                                 <Form.Group>
-                                    <Form.Label>Create Username : </Form.Label>
+                                    <Form.Label style={{color: "#FFFFFF"}}>Create Username : </Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Enter a Username"
                                     />
                                 </Form.Group>
-                                <Button>Submit</Button>
+                                <div className="break" style={styles.break}/>
+                                <Button style={{marginTop: 20, backgroundColor: "white"}} onClick={event =>  window.location.href='../Home'} type="submit">
+                                    Submit
+                                </Button>
                             </Form>
-                            <h5>
+                            <h5 style={{color: "#FFFFFF"}}>
                                 {" "}
-                                Already a User? <a href="./"> Login </a>
+                                Already a User? <a style={{color: "#45b6fe"}} href="./"> Login </a>
                             </h5>
+                            </Card>
                         </div>
                     </div>
                 </div>
@@ -75,10 +86,8 @@ const styles = {
     background: {
         margin: "0",
         height: "100vh",
-        width: "auto", // "100%"
-        backgroundImage: `url(${bgImg})`,
-        backgroundPosition: "left",
         backgroundRepeat: "no-repeat",
+        backgroundPosition: "left",
     },
 
     container: {
@@ -87,8 +96,9 @@ const styles = {
         height: "auto",
         width: "auto",
         float: "right",
-        padding: "10px",
+        padding: "20px",
         backgroundColor: "white",
+        paddingLeft: 30
     },
 
     registerContent: {
@@ -101,7 +111,7 @@ const styles = {
         margin: "0",
         textAlign: "center",
         position: "relative",
-        top: "5%",
+        Top: "50%",
     },
 
     logoDim: {
@@ -109,5 +119,8 @@ const styles = {
         textAlign: "center",
         marginRight: "5px",
         paddingBottom: "4px",
+    },
+    break:{
+        padding: 12,
     },
 };
