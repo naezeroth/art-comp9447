@@ -23,10 +23,18 @@ const {
     UpdateSecurityGroupRuleDescriptionsEgressCommand,
 } = require("@aws-sdk/client-ec2");
 
+const {
+    IAMClient, 
+    DeleteLoginProfileCommand,
+} = require("@aws=sdk/client-iam")
+
+
 const { WebClient } = require("@slack/web-api");
 
 const AWSClientService = () => {
     const ec2Client = new EC2Client({ region: "ap-southeast-2" });
+    const client = new IAMClient({ region: "ap-southeast-2" });
+
     const stopInstance = async (instanceIds) => {
         try {
             console.log("Stop command");
@@ -368,6 +376,24 @@ const AWSClientService = () => {
         }
     };
 
+    const hardRemoveUser = async (arguements) => {
+
+        // need to remove their access key as well. 
+        try {
+            console.log("Deleting user");
+            const data = await IAMClient.send(
+                new DeleteLoginProfileCommand(arguements)
+            );
+            console.log("Success", JSON.stringify(data));
+            return data;
+        } catch (err) {
+            console.log("Error", err);
+            return err["Code"];
+        }
+    }
+
+
+
     //Dictionary or list
     const functionToDict = {
         "Stop Instances": stopInstance,
@@ -393,6 +419,7 @@ const AWSClientService = () => {
         Debug: (var1, var2) => console.log("hello", var1, var2),
         "Send Message to Slack": sendMessage,
         "Test Slack": testSlack,
+        "Delete user": hardRemoveUser,
     };
 
     return functionToDict;
