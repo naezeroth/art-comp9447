@@ -67,11 +67,15 @@ const AWSClientService = () => {
                             },
                             {
                                 "type": "mrkdwn",
-                                "text": "*Instance ID:*\n" + msg["instanceId"]
+                                "text": "*Instance ID:*\n"
                             },
                             {
                                 "type": "mrkdwn",
-                                "text": "*Type:*\n" + msg["severity"]
+                                "text": msg["instanceId"]
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Type:*\n" + msg["type"]
                             },
                             {
                                 "type": "mrkdwn",

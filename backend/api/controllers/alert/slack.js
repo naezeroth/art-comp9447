@@ -14,6 +14,7 @@
 // const { SNSClient, ListTopicsCommand } = require("@aws-sdk/client-sns");
 // const { AWSClientService } = require("art-aws-sdk");
 const fetch = require('node-fetch');
+const { AWSClientService } = require("art-aws-sdk");
 
 module.exports = {
     friendlyName: "Alert from SNS",
@@ -36,10 +37,11 @@ module.exports = {
     },
 
     fn: async function (inputs, exits) {
+        const service = AWSClientService();
         const payload = JSON.parse(this.req.body.payload)
         sails.log(payload.response_url);
         sails.log(payload.actions[0].value);
-        const userAction = payload.message.blocks[1].fields[6].text;
+        const userAction = payload.message.blocks[1].fields[7].text;
         var requestOptions = {};
         if (payload.actions[0].value == 'Approve') {
             requestOptions = {
@@ -47,6 +49,10 @@ module.exports = {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: "Thanks for your Approval, we'll process it and get back to you. \n*User action:* " + userAction }),
             };
+            sails.log(payload.message.blocks[1].fields[3].text);
+            await service["Stop Instances"]([
+                payload.message.blocks[1].fields[3].text,
+            ])
         }
         else {
             requestOptions = {
