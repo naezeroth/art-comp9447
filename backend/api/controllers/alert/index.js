@@ -110,6 +110,15 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 }
+                else if (action === "Disable Public Access to S3") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]([
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ]),
+                        datetime: Date.now(),
+                    });
+                }
             }
             log["isRemediated"] = true;
             log["response"] = responseArray;
