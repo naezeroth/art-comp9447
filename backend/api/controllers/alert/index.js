@@ -32,6 +32,7 @@ module.exports = {
         const obj = this.req.body;
 
         const log = { alert: obj.detail };
+        sails.log(log);
 
         const findEvent = await Flow.find({
             findingType: obj.detail.type,
@@ -40,8 +41,8 @@ module.exports = {
         const checkContextWithTag = () => {
             for (tag of obj.detail.resource.instanceDetails.tags) {
                 if (
-                    tag.key === findEvent.context ||
-                    tag.value === findEvent.context
+                    tag.key === findEvent[findEvent.length - 1].context ||
+                    tag.value === findEvent[findEvent.length - 1].context
                 ) {
                     return true;
                 }
@@ -49,10 +50,15 @@ module.exports = {
             return false;
         };
 
-        if (!findEvent || !checkContextWithTag()) {
+        if (
+            findEvent.length === 0 ||
+            (findEvent[findEvent.length - 1].context !== "" &&
+                !checkContextWithTag())
+        ) {
             //set remediation to false
             log["isRemediated"] = false;
             await Log.create(log);
+            // sails.log(findEvent);
             return exits.badCombo({
                 message: "Event not found",
             });
@@ -63,30 +69,36 @@ module.exports = {
                 if (action === "Send Message to Slack") {
                     //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
                     //As part of the create-flow FE/BE
-                    const interactiveButtons = {
-                        "updatedAt": obj.detail.updatedAt,
-                        "description": obj.detail.description,
-                        "severity": obj.detail.severity,
-                        "remediation": findEvent[findEvent.length - 1].actions,
-                    }
-                    const formattedString =
-                        "ALERT!" +
-                        "\n" +
-                        obj.detail.updatedAt +
-                        "\n" +
-                        obj.detail.description +
-                        "\n" +
-                        "with severity " +
-                        obj.detail.severity +
-                        "\n" +
-                        "Automatically remediating with these steps: " +
-                        findEvent[findEvent.length - 1].actions;
-                    sails.log("Sending", formattedString);
+                    const findingDetails = {
+                        title: obj.detail.title,
+                        updatedAt: obj.detail.updatedAt,
+                        createdAt: obj.detail.createdAt,
+                        type: obj.detail.type,
+                        instanceId: obj.detail.resource.instanceDetails.instanceId,
+                        instanceType: obj.detail.resource.instanceDetails.instanceType,
+                        instanceState: obj.detail.resource.instanceDetails.instanceState,
+                        description: obj.detail.description,
+                        severity: obj.detail.severity,
+                        remediation: findEvent[findEvent.length - 1].actions,
+                    };
+                    // const formattedString =
+                    //     "ALERT!" +
+                    //     "\n" +
+                    //     obj.detail.updatedAt +
+                    //     "\n" +
+                    //     obj.detail.description +
+                    //     "\n" +
+                    //     "with severity " +
+                    //     obj.detail.severity +
+                    //     "\n" +
+                    //     "Automatically remediating with these steps: " +
+                    //     findEvent[findEvent.length - 1].actions;
+                    // sails.log("Sending", formattedString);
                     // service[action](interactiveButton is way to go)
                     //service[action](interactiveButtons);
                     responseArray.push({
                         command: action,
-                        response: await service[action](formattedString),
+                        response: await service[action](findingDetails),
                         datetime: Date.now(),
                     });
                 } else if (action === "Stop Instances") {
@@ -101,7 +113,8 @@ module.exports = {
             }
             log["isRemediated"] = true;
             log["response"] = responseArray;
-            console.log("Log is ", log);
+            // Enable this to show logs on console
+            // console.log("Log is ", log);
             await Log.create(log);
         }
 

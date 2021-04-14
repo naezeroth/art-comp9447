@@ -68,7 +68,7 @@ const AWSClientService = () => {
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "You have a new ALERT!:\n*<fakeLink.toEmployeeProfile.com|" + msg["description"] + ">*"
+                            "text": "*" + msg["title"] + "*"
                         }
                     },
                     {
@@ -76,11 +76,23 @@ const AWSClientService = () => {
                         "fields": [
                             {
                                 "type": "mrkdwn",
-                                "text": "*Type:*\nTEXT HOLDER FOR TYPE"
+                                "text": "*Created At:*\n" + msg["createdAt"]
                             },
                             {
                                 "type": "mrkdwn",
                                 "text": "*Updated At:*\n" + msg["updatedAt"]
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Instance ID:*\n"
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": msg["instanceId"]
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Type:*\n" + msg["type"]
                             },
                             {
                                 "type": "mrkdwn",
@@ -107,7 +119,7 @@ const AWSClientService = () => {
                                     "text": "Approve"
                                 },
                                 "style": "primary",
-                                "value": "click_me_123"
+                                "value": "Approve"
                             },
                             {
                                 "type": "button",
@@ -117,7 +129,7 @@ const AWSClientService = () => {
                                     "text": "Deny"
                                 },
                                 "style": "danger",
-                                "value": "click_me_123"
+                                "value": "Deny"
                             }
                         ]
                     }
