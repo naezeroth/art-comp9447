@@ -23,10 +23,27 @@ const {
     UpdateSecurityGroupRuleDescriptionsEgressCommand,
 } = require("@aws-sdk/client-ec2");
 
+const { S3Client,PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3")
+
 const { WebClient } = require("@slack/web-api");
 
 const AWSClientService = () => {
     const ec2Client = new EC2Client({ region: "ap-southeast-2" });
+    const s3Client = new S3Client({region: "ap-southeast-2"});
+
+    const disablePublicAccessS3 = async (bucketName) =>{
+        try {
+            console.log("Disable Public Access command");
+            const data = await s3Client.send(
+                new PutPublicAccessBlockCommand({ Bucket: bucketName })
+            );
+            console.log("Success", JSON.stringify(data));
+            return data;
+        } catch (err) {
+            console.log("Error", err);
+            return err["Code"];
+        }
+    }
     const stopInstance = async (instanceIds) => {
         try {
             console.log("Stop command");
@@ -370,29 +387,31 @@ const AWSClientService = () => {
 
     //Dictionary or list
     const functionToDict = {
-        "Stop Instances": stopInstance,
-        "Apply Security Groups To Client Vpn Target Network": applySecurityGroupToTarget,
-        "Create a fleet of EC2 instance(s)": createFleet,
-        "Export EC2 instance to S3 Bucket": exportInstance,
-        "Delete a security group asociated with an instance": deleteSecurityGroup,
-        "Get the attributes of the AWS account": getAccAttributes,
-        "Get the profile associations of the IAM instance": getAccAssociations,
-        "Get the specific attribute of an instance": getInstAttribute,
-        "Get information on the specified instance(s)": getInstInfo,
-        "Get status of a specified instance": getInstStatus,
-        "Get security group info given a instance": getSecurityGroupInfo,
-        "Set the attribute of a given instance": setInstAttribute,
-        "Set the metadata of a given instance": setInstMetadata,
-        "Set the level of monitoring for an instance": setInstMonitorLevel,
-        "Reboot a given instance": rebootInst,
-        "Run a given instance": runInst,
-        "Start a given EBS instance": startEBSInst,
-        "Stop a given EBS instance": stopEBSInst,
-        "Terminate given EBS instance(s)": terminateEBSInst,
-        "Set the security group descriptions": setSecurityGroupDesc,
-        Debug: (var1, var2) => console.log("hello", var1, var2),
-        "Send Message to Slack": sendMessage,
-        "Test Slack": testSlack,
+            "Stop Instances": stopInstance,
+            "Apply Security Groups To Client Vpn Target Network": applySecurityGroupToTarget,
+            "Create a fleet of EC2 instance(s)": createFleet,
+            "Export EC2 instance to S3 Bucket": exportInstance,
+            "Delete a security group asociated with an instance": deleteSecurityGroup,
+            "Get the attributes of the AWS account": getAccAttributes,
+            "Get the profile associations of the IAM instance": getAccAssociations,
+            "Get the specific attribute of an instance": getInstAttribute,
+            "Get information on the specified instance(s)": getInstInfo,
+            "Get status of a specified instance": getInstStatus,
+            "Get security group info given a instance": getSecurityGroupInfo,
+            "Set the attribute of a given instance": setInstAttribute,
+            "Set the metadata of a given instance": setInstMetadata,
+            "Set the level of monitoring for an instance": setInstMonitorLevel,
+            "Reboot a given instance": rebootInst,
+            "Run a given instance": runInst,
+            "Start a given EBS instance": startEBSInst,
+            "Stop a given EBS instance": stopEBSInst,
+            "Terminate given EBS instance(s)": terminateEBSInst,
+            "Set the security group descriptions": setSecurityGroupDesc,
+            Debug: (var1, var2) => console.log("hello", var1, var2),
+            "Send Message to Slack": sendMessage,
+            "Test Slack": testSlack,
+            "Disable Public Access to S3": disablePublicAccessS3
+        
     };
 
     return functionToDict;
