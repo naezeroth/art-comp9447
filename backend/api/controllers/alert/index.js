@@ -33,7 +33,7 @@ module.exports = {
 
         const log = { alert: obj.detail };
         sails.log(log);
-
+        
         const findEvent = await Flow.find({
             findingType: obj.detail.type,
         });
@@ -114,7 +114,7 @@ module.exports = {
                     responseArray.push({
                         command: action,
                         response: await service[action]([
-                            obj[0].resource.s3BucketDetails[0].name,
+                            obj.detail.resource.s3BucketDetails[0].name,
                         ]),
                         datetime: Date.now(),
                     });

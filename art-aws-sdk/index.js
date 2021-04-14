@@ -23,7 +23,7 @@ const {
     UpdateSecurityGroupRuleDescriptionsEgressCommand,
 } = require("@aws-sdk/client-ec2");
 
-const { S3Client,PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3")
+const { S3Client,DeletePublicAccessBlockCommand } = require("@aws-sdk/client-s3")
 
 const { WebClient } = require("@slack/web-api");
 
@@ -35,7 +35,7 @@ const AWSClientService = () => {
         try {
             console.log("Disable Public Access command");
             const data = await s3Client.send(
-                new PutPublicAccessBlockCommand({ Bucket: bucketName })
+                new DeletePublicAccessBlockCommand({ Bucket: bucketName })
             );
             console.log("Success", JSON.stringify(data));
             return data;
