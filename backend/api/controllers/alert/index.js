@@ -114,7 +114,7 @@ module.exports = {
                     responseArray.push({
                         command: action,
                         response: await service[action]([
-                            obj.detail.resource.instanceDetails.instanceId,
+                            obj[0].resource.s3BucketDetails[0].name,
                         ]),
                         datetime: Date.now(),
                     });
