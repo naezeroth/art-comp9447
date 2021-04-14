@@ -44,6 +44,8 @@ const {
     ListGroupsForUserCommand,
     RemoveUserFromGroupCommand,
     DeleteUserCommand,
+    ListGroupsForUserCommand,
+    AddUserToGroupCommand,
 } = require("@aws=sdk/client-iam");
 
 
@@ -493,6 +495,30 @@ const AWSClientService = () => {
         }
     }
 
+    const quarantineUser = async(arguments) => {
+        try {
+            console.log("Deleting a user from all their groups and putting them into a quarantine group");
+            
+            const keys = await iamClient.send(
+                new ListGroupsForUserCommand(arguments.username)
+            );
+            for(let i=0; i < keys.length; i++){
+                data = await iamClient.send(
+                    new RemoveUserFromGroupCommand(keys[i], arguments.username)
+                );
+            }
+            const data = await iamClient.send(
+                new AddUserToGroupCommand(arguments.username,'Quarantine')
+            );
+            console.log("Success", JSON.stringify(data));
+            return data;
+            }
+        catch (err) {
+            console.log("Error", err);
+            return err["Code"];
+        }
+
+    }
 
 
     //Dictionary or list
@@ -521,6 +547,7 @@ const AWSClientService = () => {
         "Send Message to Slack": sendMessage,
         "Test Slack": testSlack,
         "Delete user": hardRemoveUser,
+        "Quarantine a User": quarantineUser,
     };
 
     return functionToDict;
