@@ -34,9 +34,18 @@ const AWSClientService = () => {
     const disablePublicAccessS3 = async (bucketName) =>{
         try {
             console.log("Disable Public Access command");
-            const data = await s3Client.send(
-                new PutPublicAccessBlockCommand({ Bucket: bucketName })
-            );
+            var params = {
+                // ACL: "public-read",
+                Bucket: bucketName,
+                PublicAccessBlockConfiguration: {
+                    BlockPublicAcls: true,
+                    IgnorePublicAcls: true,
+                    BlockPublicPolicy: true,
+                    RestrictPublicBuckets: true,
+                }
+            }
+            const command = new PutPublicAccessBlockCommand(params);
+            const data = await s3Client.send( command);
             console.log("Success", JSON.stringify(data));
             return data;
         } catch (err) {
