@@ -113,9 +113,9 @@ module.exports = {
                 else if (action === "Disable Public Access to S3") {
                     responseArray.push({
                         command: action,
-                        response: await service[action]([
+                        response: await service[action](
                             obj.detail.resource.s3BucketDetails[0].name,
-                        ]),
+                        ),
                         datetime: Date.now(),
                     });
                 }
@@ -124,7 +124,7 @@ module.exports = {
             log["response"] = responseArray;
             // Enable this to show logs on console
             // console.log("Log is ", log);
-            await Log.create(log);
+            // await Log.create(log);
         }
 
         return exits.success({
