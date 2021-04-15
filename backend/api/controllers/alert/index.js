@@ -28,8 +28,13 @@ module.exports = {
         //Initialise client service
         const service = AWSClientService();
 
+        var obj = {};
         //Capture request body from alert
-        const obj = this.req.body;
+        if (typeof this.req.body["Message"] === "string") {
+            obj = JSON.parse(this.req.body["Message"]);
+        } else {
+            obj = this.req.body["Message"];
+        }
 
         const log = { alert: obj.detail };
         sails.log(log);
