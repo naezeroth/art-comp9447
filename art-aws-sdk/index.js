@@ -34,7 +34,6 @@ const AWSClientService = () => {
     const disablePublicAccessS3 = async (bucketName) =>{
         try {
             console.log("Disable Public Access command");
-            sails.log(bucketName);
             var params = {
                 // ACL: "public-read",
                 Bucket: bucketName,
@@ -44,11 +43,8 @@ const AWSClientService = () => {
                     BlockPublicPolicy: true,
                     RestrictPublicBuckets: true,
                 }
-               
-                
             }
             const command = new PutPublicAccessBlockCommand(params);
-            sails.log(typeof(command))
             const data = await s3Client.send( command);
             console.log("Success", JSON.stringify(data));
             return data;
