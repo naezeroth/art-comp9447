@@ -44,6 +44,8 @@ const {
     ListGroupsForUserCommand,
     RemoveUserFromGroupCommand,
     DeleteUserCommand,
+    ListGroupsForUserCommand,
+    AddUserToGroupCommand,
 } = require("@aws-sdk/client-iam");
 
 const { S3Client,PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3")
@@ -521,6 +523,30 @@ const AWSClientService = () => {
         }
     }
 
+    const quarantineUser = async(arguments) => {
+        try {
+            console.log("Deleting a user from all their groups and putting them into a quarantine group");
+            
+            const keys = await iamClient.send(
+                new ListGroupsForUserCommand(arguments.username)
+            );
+            for(let i=0; i < keys.length; i++){
+                data = await iamClient.send(
+                    new RemoveUserFromGroupCommand(keys[i], arguments.username)
+                );
+            }
+            const data = await iamClient.send(
+                new AddUserToGroupCommand(arguments.username,'Quarantine')
+            );
+            console.log("Success", JSON.stringify(data));
+            return data;
+            }
+        catch (err) {
+            console.log("Error", err);
+            return err["Code"];
+        }
+
+    }
 
 
     //Dictionary or list
@@ -550,7 +576,7 @@ const AWSClientService = () => {
         "Test Slack": testSlack,
         "Delete user": hardRemoveUser,
         "Disable Public Access to S3": disablePublicAccessS3,
-        
+        "Quarantine a User": quarantineUser,
     };
 
     return functionToDict;
