@@ -29,7 +29,7 @@ module.exports = {
         const service = AWSClientService();
 
         //Capture request body from alert
-        const obj = this.req.body;
+        const obj = JSON.parse(this.req.body["Message"]);
 
         const log = { alert: obj.detail };
 
