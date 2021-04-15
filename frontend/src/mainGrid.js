@@ -99,7 +99,6 @@ export default function CSSGrid() {
                 style={{ "font-size": "40px" }}
                 gutterBottom
             >
-                Overview
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={8}>

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
-import "../Overview.css";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import ButtonAppBar from "../buttonAppBar";
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
 import { NativeSelect } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -49,7 +49,7 @@ export default function CreateFlow1(props) {
     };
 
     return (
-        <div>
+        <div style={styles.containerS}>
             <div>
                 <ButtonAppBar />
             </div>
@@ -69,29 +69,14 @@ export default function CreateFlow1(props) {
                     </li>
                 </ul>
             </div>
-            <Typography
-                style={{
-                    textAlign: "left",
-                    fontFamily: "sans-serif",
-                    fontSize: "25px",
-                    marginLeft: "18vh",
-                    marginTop: "4vh",
-                }}
-            >
-                Create a Flow:
-            </Typography>
-            <Container style={styles.container}>
-                <Typography
-                    style={{
-                        textAlign: "center",
-                        fontFamily: "sans-serif",
-                        fontSize: "35px",
-                    }}
-                >
-                    Select resource
-                </Typography>
-
+            <Container>
+            <Container style={styles.flowCard}>
+            <Card variant="filled" style={{backgroundColor: "white",borderRadius: 10, paddingBottom: 25,}}>
+            <CardHeader style={{color: "white",fontWeight: 'bold', backgroundColor:"#084B74" ,borderRadius: 10,margin: 4 }}
+            title="Step 1 : Create a Flow"
+            />                                                   
                 <TextField
+                    asterisk
                     value={state.name}
                     onChange={handleChange}
                     inputProps={{
@@ -101,20 +86,23 @@ export default function CreateFlow1(props) {
                         minWidth: 400,
                         margin: "dense",
                         marginTop: "10vh",
+                        fontSize: "20px",
                     }}
                     id="standard-helperText"
                     label="Name"
+                    variant="filled"
                     helperText="Enter a name for your flow"
+                    // color="secondary
                 />
-                <div style={{ alignItems: "center", marginTop: "10vh" }}>
-                    <FormControl className={classes.formControl}>
+                <div style={{ marginTop: "10vh" }}>
+                    <FormControl variant="filled" className={classes.formControl}>
                         <InputLabel
-                            htmlFor="resourceName-native-helper"
-                            style={{ fontSize: "20px" }}
-                        >
+                            variant="filled"
+                            htmlFor="resourceName-native-helper">
                             Resource
                         </InputLabel>
                         <NativeSelect
+                            variant="filled"
                             value={state.resourceName}
                             onChange={handleChange}
                             inputProps={{
@@ -132,7 +120,9 @@ export default function CreateFlow1(props) {
                         </FormHelperText>
                     </FormControl>
                 </div>
+                <div style={{ marginTop: "10vh" }}>
                 <TextField
+                    variant="filled"
                     value={state.context}
                     onChange={handleChange}
                     inputProps={{
@@ -141,19 +131,21 @@ export default function CreateFlow1(props) {
                     style={{
                         minWidth: 400,
                         margin: "dense",
-                        marginTop: "10vh",
                     }}
                     id="standard-new-helperText"
                     label="Context"
                     helperText="Enter any tags you would like this flow to be associated with"
                 />
+                </div>
                 <Button
                     onClick={onSubmit}
-                    style={{ marginTop: "20vh", backgroundColor: "#F9B15D" }}
+                    style={{ marginTop: "10vh", backgroundColor: "#F9B15D", padding: 10, width: 150}}
                 >
                     {" "}
                     Continue{" "}
                 </Button>
+                </Card> 
+            </Container>
             </Container>
         </div>
     );
@@ -171,31 +163,22 @@ const styles = {
         // flexFlow: "row wrap",
     },
 
-    leftBlock: {
-        paddingRight: 10,
-        // flexGrow: 1,
-    },
-
-    rightBlock: {
-        // flex : 2,
-    },
-
     acName: {
         color: "inherit",
         float: "right",
-    },
-
-    mainBody: {
-        backgroundColor: "#C4C4C4",
     },
 
     menuList: {
         float: "right",
     },
 
-    container: {
+    containerS: {
         backgroundColor: "#C4C4C4",
-        height: "70vh",
-        width: "200vh",
+        height: "100%"
     },
+    
+    flowCard: {
+        marginTop: "10%",
+        paddingBottom: 100, 
+        },
 };
