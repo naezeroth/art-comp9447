@@ -4,11 +4,11 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText"
+import FormHelperText from "@material-ui/core/FormHelperText";
 import ButtonAppBar from "../buttonAppBar";
 import { NativeSelect } from "@material-ui/core";
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 
 const guardDutyFindings = [
     "Backdoor:EC2/C&CActivity.B",
@@ -132,66 +132,82 @@ export default function CreateFlow2(props) {
                         <a href="./Home">Home</a>
                     </li>
                     <li>
-                        <a href="./">Services</a>
-                    </li>
-                    <li>
                         <a href="./Overview">Overview</a>
                     </li>
                     <li>
-                        <a href="./">History</a>
+                        <a href="./History">History</a>
                     </li>
                 </ul>
             </div>
             <Container>
-            <Container style={styles.flowCard}>
-            <Card variant="filled" style={{backgroundColor: "white",borderRadius: 10, paddingBottom: 25}}>
-            <CardHeader style={{color: "white",fontWeight: 'bold', backgroundColor:"#084B74" ,borderRadius: 10,margin: 2 }}
-            title="Step 2 : Select Finding Type"
-            />                         
-                <div style={{marginTop: "15vh" }}>
-                    <FormControl className={classes.formControl}>
-                        <InputLabel
-                            margin='dense'
-                            htmlFor="findingType-native-helper"
-                            style={{ fontSize: "20px" }}
-                        >
-                            Finding Type
-                        </InputLabel>
-                        <NativeSelect
-                            value={state.findingType}
-                            onChange={handleChange}
-                            inputProps={{
-                                name: "findingType",
+                <Container style={styles.flowCard}>
+                    <Card
+                        variant="filled"
+                        style={{
+                            backgroundColor: "white",
+                            borderRadius: 10,
+                            paddingBottom: 25,
+                        }}
+                    >
+                        <CardHeader
+                            style={{
+                                color: "white",
+                                fontWeight: "bold",
+                                backgroundColor: "#084B74",
+                                borderRadius: 10,
+                                margin: 2,
+                            }}
+                            title="Step 2 : Select Finding Type"
+                        />
+                        <div style={{ marginTop: "15vh" }}>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel
+                                    margin="dense"
+                                    htmlFor="findingType-native-helper"
+                                    style={{ fontSize: "20px" }}
+                                >
+                                    Finding Type
+                                </InputLabel>
+                                <NativeSelect
+                                    value={state.findingType}
+                                    onChange={handleChange}
+                                    inputProps={{
+                                        name: "findingType",
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    {guardDutyFindings
+                                        .filter((finding) => {
+                                            return finding.includes(
+                                                props.valueState.resourceName
+                                            );
+                                        })
+                                        .map((finding) => {
+                                            return (
+                                                <option value={finding}>
+                                                    {finding}
+                                                </option>
+                                            );
+                                        })}
+                                </NativeSelect>
+                                <FormHelperText>
+                                    Select the finding type
+                                </FormHelperText>
+                            </FormControl>
+                        </div>
+                        <Button
+                            onClick={onSubmit}
+                            style={{
+                                marginTop: "10vh",
+                                backgroundColor: "#F9B15D",
+                                padding: 10,
+                                width: 150,
                             }}
                         >
-                            <option aria-label="None" value="" />
-                            {guardDutyFindings
-                                .filter((finding) => {
-                                    return finding.includes(
-                                        props.valueState.resourceName
-                                    );
-                                })
-                                .map((finding) => {
-                                    return (
-                                        <option value={finding}>
-                                            {finding}
-                                        </option>
-                                    );
-                                })}
-                        </NativeSelect>
-                        <FormHelperText>
-                            Select the finding type
-                        </FormHelperText>
-                    </FormControl>
-                </div>
-                <Button
-                    onClick={onSubmit}
-                    style={{ marginTop: "10vh", backgroundColor: "#F9B15D", padding: 10, width: 150}}
-                >
-                    Continue{" "}
-                </Button>
-                </Card>
-            </Container>
+                            Continue{" "}
+                        </Button>
+                    </Card>
+                </Container>
             </Container>
         </div>
     );
@@ -225,6 +241,5 @@ const styles = {
 
     flowCard: {
         marginTop: "12%",
-        
-        },
+    },
 };
