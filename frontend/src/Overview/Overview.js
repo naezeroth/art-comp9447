@@ -18,13 +18,15 @@ class Overview extends Component {
                             <a href="./Home">Home</a>
                         </li>
                         <li>
-                            <a href="./">Services</a>
+                            <a
+                                style={{ backgroundColor: "#F9B15D" }}
+                                href="./Overview"
+                            >
+                                Overview
+                            </a>
                         </li>
                         <li>
-                            <a style={{backgroundColor: "#F9B15D",}} href="./Overview">Overview</a>
-                        </li>
-                        <li>
-                            <a href="./">History</a>
+                            <a href="./History">History</a>
                         </li>
                     </ul>
                 </div>

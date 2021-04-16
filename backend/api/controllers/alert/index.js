@@ -38,7 +38,7 @@ module.exports = {
 
         const log = { alert: obj.detail };
         sails.log(log);
-        
+
         const findEvent = await Flow.find({
             findingType: obj.detail.type,
         });
@@ -79,9 +79,12 @@ module.exports = {
                         updatedAt: obj.detail.updatedAt,
                         createdAt: obj.detail.createdAt,
                         type: obj.detail.type,
-                        instanceId: obj.detail.resource.instanceDetails.instanceId,
-                        instanceType: obj.detail.resource.instanceDetails.instanceType,
-                        instanceState: obj.detail.resource.instanceDetails.instanceState,
+                        instanceId:
+                            obj.detail.resource.instanceDetails.instanceId,
+                        instanceType:
+                            obj.detail.resource.instanceDetails.instanceType,
+                        instanceState:
+                            obj.detail.resource.instanceDetails.instanceState,
                         description: obj.detail.description,
                         severity: obj.detail.severity,
                         remediation: findEvent[findEvent.length - 1].actions,
@@ -114,13 +117,75 @@ module.exports = {
                         ]),
                         datetime: Date.now(),
                     });
-                }
-                else if (action === "Disable Public Access to S3") {
+                } else if (action === "Disable Public Access to S3") {
                     responseArray.push({
                         command: action,
                         response: await service[action](
-                            obj.detail.resource.s3BucketDetails[0].name,
+                            obj.detail.resource.s3BucketDetails[0].name
                         ),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "Reboot a given instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "Stop a given instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "Create snapshot of an instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceSpecification: {
+                                InstanceId:
+                                    obj.detail.resource.instanceDetails
+                                        .instanceId,
+                            },
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "Terminate a given instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (
+                    action ===
+                    "Remove all ingress and egress routes to given instance"
+                ) {
+                    sails.log(
+                        obj.detail.resource.instanceDetails.networkInterfaces
+                    );
+                    sails.log(
+                        obj.detail.resource.instanceDetails.networkInterfaces[0]
+                            .securityGroups[0].groupId
+                    );
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            groupId:
+                                obj.detail.resource.instanceDetails
+                                    .networkInterfaces[0].securityGroups[0]
+                                    .groupId,
+                        }),
                         datetime: Date.now(),
                     });
                 }

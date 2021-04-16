@@ -7,12 +7,12 @@ const { AWSClientService } = require("art-aws-sdk");
 
 export default function Workflow() {
     const [flowState, setFlowState] = useState("CreateFlow1");
-    const [valueState, setValueState] = useState({ 
+    const [valueState, setValueState] = useState({
         name: "",
         resourceName: "",
         context: "",
         findingType: "",
-        actions: []
+        actions: [],
     });
 
     const service = AWSClientService();
@@ -45,11 +45,17 @@ export default function Workflow() {
             .then((response) => {
                 console.log(response);
             });
-        setFlowState("Done")
+        setFlowState("Done");
     };
 
     if (flowState === "CreateFlow1") {
-        return <CreateFlow1 defaultVals={valueState} setState={setFlowState} onChange={onChange} />;
+        return (
+            <CreateFlow1
+                defaultVals={valueState}
+                setState={setFlowState}
+                onChange={onChange}
+            />
+        );
     } else if (flowState === "CreateFlow2") {
         return (
             <CreateFlow2
