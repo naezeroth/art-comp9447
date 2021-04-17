@@ -41,7 +41,6 @@ const {
     DeleteUserPolicyCommand,
     ListAttachedUserPoliciesCommand,
     DetachUserPolicyCommand,
-    ListGroupsForUserCommand,
     RemoveUserFromGroupCommand,
     DeleteUserCommand,
     ListGroupsForUserCommand,
@@ -427,57 +426,61 @@ const AWSClientService = () => {
     const hardRemoveUser = async (arguments) => {
         // arguments:
             // username: username
+        console.log("1");
+
 
         try {
-            console.log("Deleting user");
+            console.log("Deleting user: ", arguments);
 
             // 1. Delete password
             const data = await iamClient.send(
-                new DeleteLoginProfileCommand(arguments.username)
+                new DeleteLoginProfileCommand(arguments)
             );
+            console.log("2");
+
             // 2. list keys and delete them all
             const keys = await iamClient.send(
-                new ListAccessKeysCommand(arguments.username)
+                new ListAccessKeysCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteAccessKeyCommand(keys[i], arguments.username)
+                    new DeleteAccessKeyCommand(keys[i], arguments)
                 );
             }
             // 3. Delete signing certificate
             keys = await iamClient.send(
-                new ListSigningCertificatesCommand(arguments.username)
+                new ListSigningCertificatesCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteSigningCertificateCommand(keys[i], arguments.username)
+                    new DeleteSigningCertificateCommand(keys[i], arguments)
                 );
             }
             // 4. Delete ssh keys
             keys = await iamClient.send(
-                new ListSSHPublicKeysCommand(arguments.username)
+                new ListSSHPublicKeysCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteSSHPublicKeyCommand(keys[i], arguments.username)
+                    new DeleteSSHPublicKeyCommand(keys[i], arguments)
                 );
             }
             // 5. Delete git credentials
             keys = await iamClient.send(
-                new ListServiceSpecificCredentialsCommand(arguments.username)
+                new ListServiceSpecificCredentialsCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteServiceSpecificCredentialCommand(keys[i], arguments.username)
+                    new DeleteServiceSpecificCredentialCommand(keys[i], arguments)
                 );
             }
             // 6. deactivate MFA devices
             keys = await iamClient.send(
-                new ListMFADevicesCommand(arguments.username)
+                new ListMFADevicesCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeactivateMFADeviceCommand(keys[i], arguments.username)
+                    new DeactivateMFADeviceCommand(keys[i], arguments)
                 );
                 data = await iamClient.send(
                     new DeleteVirtualMFADeviceCommand(keys[i])
@@ -485,34 +488,34 @@ const AWSClientService = () => {
             }
             // 7. Delete inline policies
             keys = await iamClient.send(
-                new ListUserPoliciesCommand(arguments.username)
+                new ListUserPoliciesCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteUserPolicyCommand(keys[i], arguments.username)
+                    new DeleteUserPolicyCommand(keys[i], arguments)
                 );
             }
             // 8. Detach policies
             keys = await iamClient.send(
-                new ListAttachedUserPoliciesCommand(arguments.username)
+                new ListAttachedUserPoliciesCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DetachUserPolicyCommand(keys[i], arguments.username)
+                    new DetachUserPolicyCommand(keys[i], arguments)
                 );
             }
             // 9. remove user from groups
             keys = await iamClient.send(
-                new ListGroupsForUserCommand(arguments.username)
+                new ListGroupsForUserCommand(arguments)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new RemoveUserFromGroupCommand(keys[i], arguments.username)
+                    new RemoveUserFromGroupCommand(keys[i], arguments)
                 );
             }
             // 10. delete user
             data = await iamClient.send(
-                new DeleteUserCommand(arguments.username)
+                new DeleteUserCommand(arguments)
             );
 
             console.log("Success", JSON.stringify(data));

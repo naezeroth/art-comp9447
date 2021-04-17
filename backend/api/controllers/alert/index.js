@@ -37,7 +37,7 @@ module.exports = {
         }
 
         const log = { alert: obj.detail };
-        sails.log(log);
+        // sails.log(log);
 
         const findEvent = await Flow.find({
             findingType: obj.detail.type,
@@ -54,7 +54,7 @@ module.exports = {
             }
             return false;
         };
-
+        // sails.log("this is find event", findEvent);
         if (
             findEvent.length === 0 ||
             (findEvent[findEvent.length - 1].context !== "" &&
@@ -124,6 +124,26 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 }
+                // else if (action === "Get information on the specified instance(s)") {
+                //     sails.log("inside get user: ", obj);
+                //     responseArray.push({
+                //         command: action,
+                //         response: await service[action]([
+                //         ]),
+                //         datetime: Date.now(),
+                //     });
+                // }
+                else if (action === "Delete user") {
+                    sails.log("inside del user: ", obj.detail.resource.accessKeyDetails.userName);
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]([
+                            obj.detail.resource.accessKeyDetails.userName,
+                        ]),
+                        datetime: Date.now(),
+                    });
+                }
+
             }
             log["isRemediated"] = true;
             log["response"] = responseArray;
