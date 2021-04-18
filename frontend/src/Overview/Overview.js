@@ -53,39 +53,39 @@ class Overview extends Component {
     }
 }
 
-const styles = {
-    title: {
-        backgroundColor: "#12293B",
-        position: "static",
-    },
+// const styles = {
+//     title: {
+//         backgroundColor: "#12293B",
+//         position: "static",
+//     },
 
-    headerBar: {
-        display: "flex",
-        // justifyContent: "space-between",
-        // flexFlow: "row wrap",
-    },
+//     headerBar: {
+//         display: "flex",
+//         // justifyContent: "space-between",
+//         // flexFlow: "row wrap",
+//     },
 
-    leftBlock: {
-        paddingRight: 10,
-        // flexGrow: 1,
-    },
+//     leftBlock: {
+//         paddingRight: 10,
+//         // flexGrow: 1,
+//     },
 
-    rightBlock: {
-        // flex : 2,
-    },
+//     rightBlock: {
+//         // flex : 2,
+//     },
 
-    acName: {
-        color: "inherit",
-        float: "right",
-    },
+//     acName: {
+//         color: "inherit",
+//         float: "right",
+//     },
 
-    mainBody: {
-        backgroundColor: "#C4C4C4",
-    },
+//     mainBody: {
+//         backgroundColor: "#C4C4C4",
+//     },
 
-    menuList: {
-        float: "right",
-    },
-};
+//     menuList: {
+//         float: "right",
+//     },
+// };
 
 export default Overview;
