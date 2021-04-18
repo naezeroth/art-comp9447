@@ -5,7 +5,17 @@
     "start": "run-p start:*",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm start",
-    "postinstall": "(cd art-aws-sdk && npm install); (cd backend && npm install); (cd frontend && npm install);"
+    "postinstall": "(cd art-aws-sdk && npm install); (cd backend && npm install); (cd frontend && npm install);",
+    "test": "run-p test:*",
+    "test:backend": "cd backend && npm run test",
+    "test:frontend": "cd frontend && npm run test",
+    "test:sdk": "cd art-aws-sdk && npm run test",
+    "sns-setup": "cd backend && NODE_ENV=production INSTALLATION='true' node app.js",
+    "build": "run-p build:*",
+    "build:frontend": "cd frontend && npm run build",
+    "production": "run-p production:*",
+    "production:backend": "cd backend && npm run production",
+    "production:frontend": "cd frontend && ./node_modules/serve/bin/serve.js -s build -l 3000"
   },
   "author": "",
   "license": "ISC",

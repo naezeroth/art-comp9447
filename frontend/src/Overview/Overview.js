@@ -18,13 +18,15 @@ class Overview extends Component {
                             <a href="./Home">Home</a>
                         </li>
                         <li>
-                            <a href="./">Services</a>
+                            <a
+                                style={{ backgroundColor: "#F9B15D" }}
+                                href="./Overview"
+                            >
+                                Overview
+                            </a>
                         </li>
                         <li>
-                            <a style={{backgroundColor: "#F9B15D",}} href="./Overview">Overview</a>
-                        </li>
-                        <li>
-                            <a href="./">History</a>
+                            <a href="./History">History</a>
                         </li>
                     </ul>
                 </div>
@@ -51,39 +53,39 @@ class Overview extends Component {
     }
 }
 
-const styles = {
-    title: {
-        backgroundColor: "#12293B",
-        position: "static",
-    },
+// const styles = {
+//     title: {
+//         backgroundColor: "#12293B",
+//         position: "static",
+//     },
 
-    headerBar: {
-        display: "flex",
-        // justifyContent: "space-between",
-        // flexFlow: "row wrap",
-    },
+//     headerBar: {
+//         display: "flex",
+//         // justifyContent: "space-between",
+//         // flexFlow: "row wrap",
+//     },
 
-    leftBlock: {
-        paddingRight: 10,
-        // flexGrow: 1,
-    },
+//     leftBlock: {
+//         paddingRight: 10,
+//         // flexGrow: 1,
+//     },
 
-    rightBlock: {
-        // flex : 2,
-    },
+//     rightBlock: {
+//         // flex : 2,
+//     },
 
-    acName: {
-        color: "inherit",
-        float: "right",
-    },
+//     acName: {
+//         color: "inherit",
+//         float: "right",
+//     },
 
-    mainBody: {
-        backgroundColor: "#C4C4C4",
-    },
+//     mainBody: {
+//         backgroundColor: "#C4C4C4",
+//     },
 
-    menuList: {
-        float: "right",
-    },
-};
+//     menuList: {
+//         float: "right",
+//     },
+// };
 
 export default Overview;

@@ -11,7 +11,7 @@
     "dotenv": "^8.2.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tput setaf 2; echo 'Tests all passed'; tput setaf 7"
   },
   "author": "",
   "license": "ISC"

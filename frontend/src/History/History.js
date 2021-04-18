@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import "../Overview.css";
@@ -14,8 +14,6 @@ class History extends Component {
     //     this.state = {logData : undefined};
     // }
 
-
-
     render() {
         return (
             <div>
@@ -26,9 +24,6 @@ class History extends Component {
                     <ul class="navBar">
                         <li>
                             <a href="./Home">Home</a>
-                        </li>
-                        <li>
-                            <a href="./">Services</a>
                         </li>
                         <li>
                             <a href="./Overview">Overview</a>
@@ -52,15 +47,16 @@ class History extends Component {
                                 }}
                             >
                                 <Typography
-                                    style={{ "font-size": "40px" , "color": "#12293B"}}
+                                    style={{
+                                        "font-size": "40px",
+                                        color: "#12293B",
+                                    }}
                                     gutterBottom
                                 >
                                     History
                                 </Typography>
                                 <Paper style={styles.paper}>
-                                    <HisTable data={this.state}/>
-
-
+                                    <HisTable data={this.state} />
                                 </Paper>
                             </Typography>
                         </Container>
@@ -105,7 +101,7 @@ const styles = {
         float: "right",
     },
 
-    paper:{
+    paper: {
         padding: 5,
         textAlign: "center",
         whiteSpace: "nowrap",

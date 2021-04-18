@@ -25,6 +25,13 @@ module.exports = {
     },
 
     fn: async function (inputs, exits) {
+        if (process.env.INSTALLATION === "true") {
+            sails.log("Welcome to ART");
+            sails.log(
+                "Please copy and paste the token provided in the message to SNS"
+            );
+            sails.log(this.req.body["Message"]);
+        }
         //Initialise client service
         const service = AWSClientService();
 
@@ -37,7 +44,6 @@ module.exports = {
         }
 
         const log = { alert: obj.detail };
-        // sails.log(log);
 
         const findEvent = await Flow.find({
             findingType: obj.detail.type,
@@ -71,56 +77,105 @@ module.exports = {
             const responseArray = [];
             //If there exists multiple flows for finding type use last created flow
             for (action of findEvent[findEvent.length - 1].actions) {
-                if (action === "Send Message to Slack") {
-                    //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
-                    //As part of the create-flow FE/BE
+                if (
+                    action === "EC2: Send Message to Slack" ||
+                    action === "S3: Send Message to Slack" ||
+                    action === "IAM: Send Message to Slack"
+                ) {
                     const findingDetails = {
                         title: obj.detail.title,
                         updatedAt: obj.detail.updatedAt,
                         createdAt: obj.detail.createdAt,
                         type: obj.detail.type,
-                        instanceId: obj.detail.resource.instanceDetails.instanceId,
-                        instanceType: obj.detail.resource.instanceDetails.instanceType,
-                        instanceState: obj.detail.resource.instanceDetails.instanceState,
+                        instanceId:
+                            obj.detail.resource.instanceDetails.instanceId,
+                        instanceType:
+                            obj.detail.resource.instanceDetails.instanceType,
+                        instanceState:
+                            obj.detail.resource.instanceDetails.instanceState,
                         description: obj.detail.description,
                         severity: obj.detail.severity,
                         remediation: findEvent[findEvent.length - 1].actions,
                     };
-                    // const formattedString =
-                    //     "ALERT!" +
-                    //     "\n" +
-                    //     obj.detail.updatedAt +
-                    //     "\n" +
-                    //     obj.detail.description +
-                    //     "\n" +
-                    //     "with severity " +
-                    //     obj.detail.severity +
-                    //     "\n" +
-                    //     "Automatically remediating with these steps: " +
-                    //     findEvent[findEvent.length - 1].actions;
-                    // sails.log("Sending", formattedString);
-                    // service[action](interactiveButton is way to go)
-                    //service[action](interactiveButtons);
                     responseArray.push({
                         command: action,
                         response: await service[action](findingDetails),
                         datetime: Date.now(),
                     });
-                } else if (action === "Stop Instances") {
+                } else if (action === "S3: Disable Public Access to S3") {
                     responseArray.push({
                         command: action,
-                        response: await service[action]([
-                            obj.detail.resource.instanceDetails.instanceId,
-                        ]),
+                        response: await service[action](
+                            obj.detail.resource.s3BucketDetails[0].name
+                        ),
                         datetime: Date.now(),
                     });
-                }
-                else if (action === "Disable Public Access to S3") {
+                } else if (action === "EC2: Reboot a given instance") {
                     responseArray.push({
                         command: action,
-                        response: await service[action]([
-                            obj[0].resource.s3BucketDetails[0].name,
-                        ]),
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "EC2: Stop a given instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "EC2: Create snapshot of an instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceSpecification: {
+                                InstanceId:
+                                    obj.detail.resource.instanceDetails
+                                        .instanceId,
+                            },
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (action === "EC2: Terminate a given instance") {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (
+                    action ===
+                    "EC2: Remove all ingress and egress routes to given instance"
+                ) {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            groupId:
+                                obj.detail.resource.instanceDetails
+                                    .networkInterfaces[0].securityGroups[0]
+                                    .groupId,
+                        }),
+                        datetime: Date.now(),
+                    });
+                } else if (
+                    action === "EC2: Get information on the specified instance"
+                ) {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
                         datetime: Date.now(),
                     });
                 }
@@ -162,7 +217,7 @@ module.exports = {
             log["response"] = responseArray;
             // Enable this to show logs on console
             // console.log("Log is ", log);
-            await Log.create(log);
+            // await Log.create(log);
         }
 
         return exits.success({
