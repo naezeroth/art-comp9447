@@ -5,7 +5,10 @@ import Typography from "@material-ui/core/Typography";
 import "../Overview.css";
 import ButtonAppBar from "../buttonAppBar";
 import Paper from "@material-ui/core/Paper";
-import HisTable from "./HistoryTable";
+// import HisTable from "./HistoryTable";
+import HisTable from "./NewHistoryTable";
+
+
 
 class History extends Component {
     // constructor(props){
