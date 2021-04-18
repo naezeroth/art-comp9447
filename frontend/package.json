@@ -28,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "echo 'testing frontend'",
+    "test": "eslint src/**/*.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
