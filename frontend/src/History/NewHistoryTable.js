@@ -46,10 +46,19 @@ const columns = [
   },
 ];
 
-function createData(id, alertID, resource, region, alert, status, save) {
-  return { id, alertID, resource, region, alert, status, save};
+function createData(id, alertID, resource, region, alert, status, save, isRem) {
+  return { id, alertID, resource, region, alert, status, save, isRem};
 }
 
+const cellColors = {
+  true: "#aaeda8",
+  false: "#F04242",
+  Critical: "#F04242",
+  "Requires Attention": "#FAB15C",
+  Offline: "#D9D9D9",
+  Normal: "white",
+  Remediated: "white",
+};
 
 const useStyles = makeStyles({
   root: {
@@ -58,27 +67,31 @@ const useStyles = makeStyles({
   container: {
     maxHeight: 440,
   },
+  coloredCell:{
+    fontSize: 14,
+    // backgroundColor: cellColors[props=>props.isRem],
+    backgroundColor: "white",
+    color: "black",
+  }
 });
 
-const cellColors = {
-  "true": "blue",
-  "false": "red",
-  Critical: "#F04242",
-  "Requires Attention": "#FAB15C",
-  Offline: "#D9D9D9",
-  Normal: "white",
-  Remediated: "white",
-};
 
-const StyledTableCell = makeStyles((isrem)=>({
-  body: {
-    fontSize: 14,
-    // backgroundColor: cellColors[isRem],
-    backgroundColor: "black",
-    color: "black",
-  },
-}))(TableCell);
 
+// const StyledTableCell = props => withStyles( (theme)=> ({
+//   body: {
+//     fontSize: 14,
+//     // backgroundColor: cellColors[isRem],
+//     backgroundColor: "black",
+//     color: "black",
+//   },
+// }))(TableCell);
+
+
+
+// function StyledTableCell(props) {
+//   const classes = useStyles(props);
+//   return <TableCell className={classes.coloredCell} classes={{label:classes.label}}/>
+// }
 
 
 export default function StickyHeadTable(props) {
@@ -87,6 +100,7 @@ export default function StickyHeadTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [logData, setLogData] = React.useState([]);
   const [refresh, setRefresh] = React.useState([false]);
+
 
   function downloadObjectAsJson(exportObj, exportName){
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
@@ -126,7 +140,7 @@ export default function StickyHeadTable(props) {
 
 
   const extract = (data) =>{
-    console.log(data);
+    // console.log(data);
     let temp = [];
     let mrows = [];
     for(let i=0; i < data.length; i++){
@@ -170,7 +184,7 @@ export default function StickyHeadTable(props) {
 
   return (
     <Paper className={classes.root}>
-      <Button onClick={refreshHandler}>Reload</Button>
+      <Button onClick={refreshHandler}>Refresh</Button>
       <TableContainer className={classes.container}>
         <Table stickyHeader size="small" aria-label="sticky table">
           <TableHead>
@@ -201,10 +215,11 @@ export default function StickyHeadTable(props) {
                     }
                     else{
                       if(column.id == "status"){
+                        // console.log("ISREM: ", logData);
                         return (
-                          <StyledTableCell isrem={logData.isRemediated} key={column.id} align={column.align}>
+                          <TableCell style={{backgroundColor:cellColors[logData.isRem]}} key={column.id} align={column.align}>
                             {column.format && typeof value === 'number' ? column.format(value) : value}
-                          </StyledTableCell >
+                          </TableCell >
                         );
                       }
                       else{
