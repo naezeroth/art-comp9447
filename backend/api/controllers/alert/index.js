@@ -135,11 +135,12 @@ module.exports = {
                 // }
                 else if (action === "Delete user") {
                     sails.log("inside del user: ", obj.detail.resource.accessKeyDetails.userName);
+                    const responseData = await service[action]([
+                        obj.detail.resource.accessKeyDetails.userName,
+                    ]);
                     responseArray.push({
                         command: action,
-                        response: await service[action]([
-                            obj.detail.resource.accessKeyDetails.userName,
-                        ]),
+                        response: responseData['$metadata'],
                         datetime: Date.now(),
                     });
                 }
