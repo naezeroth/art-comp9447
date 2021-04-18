@@ -72,8 +72,6 @@ module.exports = {
             //If there exists multiple flows for finding type use last created flow
             for (action of findEvent[findEvent.length - 1].actions) {
                 if (action === "Send Message to Slack") {
-                    //Ideally we'd want to store where the parameters for these fn calls in the Flow DB object
-                    //As part of the create-flow FE/BE
                     const findingDetails = {
                         title: obj.detail.title,
                         updatedAt: obj.detail.updatedAt,
@@ -89,35 +87,12 @@ module.exports = {
                         severity: obj.detail.severity,
                         remediation: findEvent[findEvent.length - 1].actions,
                     };
-                    // const formattedString =
-                    //     "ALERT!" +
-                    //     "\n" +
-                    //     obj.detail.updatedAt +
-                    //     "\n" +
-                    //     obj.detail.description +
-                    //     "\n" +
-                    //     "with severity " +
-                    //     obj.detail.severity +
-                    //     "\n" +
-                    //     "Automatically remediating with these steps: " +
-                    //     findEvent[findEvent.length - 1].actions;
-                    // sails.log("Sending", formattedString);
-                    // service[action](interactiveButton is way to go)
-                    //service[action](interactiveButtons);
                     responseArray.push({
                         command: action,
                         response: await service[action](findingDetails),
                         datetime: Date.now(),
                     });
-                } else if (action === "Stop Instances") {
-                    responseArray.push({
-                        command: action,
-                        response: await service[action]([
-                            obj.detail.resource.instanceDetails.instanceId,
-                        ]),
-                        datetime: Date.now(),
-                    });
-                } else if (action === "Disable Public Access to S3") {
+                } else if (action === "S3: Disable Public Access to S3") {
                     responseArray.push({
                         command: action,
                         response: await service[action](
@@ -125,7 +100,7 @@ module.exports = {
                         ),
                         datetime: Date.now(),
                     });
-                } else if (action === "Reboot a given instance") {
+                } else if (action === "EC2: Reboot a given instance") {
                     responseArray.push({
                         command: action,
                         response: await service[action]({
@@ -135,7 +110,7 @@ module.exports = {
                         }),
                         datetime: Date.now(),
                     });
-                } else if (action === "Stop a given instance") {
+                } else if (action === "EC2: Stop a given instance") {
                     responseArray.push({
                         command: action,
                         response: await service[action]({
@@ -145,7 +120,7 @@ module.exports = {
                         }),
                         datetime: Date.now(),
                     });
-                } else if (action === "Create snapshot of an instance") {
+                } else if (action === "EC2: Create snapshot of an instance") {
                     responseArray.push({
                         command: action,
                         response: await service[action]({
@@ -157,7 +132,7 @@ module.exports = {
                         }),
                         datetime: Date.now(),
                     });
-                } else if (action === "Terminate a given instance") {
+                } else if (action === "EC2: Terminate a given instance") {
                     responseArray.push({
                         command: action,
                         response: await service[action]({
@@ -169,15 +144,8 @@ module.exports = {
                     });
                 } else if (
                     action ===
-                    "Remove all ingress and egress routes to given instance"
+                    "EC2: Remove all ingress and egress routes to given instance"
                 ) {
-                    sails.log(
-                        obj.detail.resource.instanceDetails.networkInterfaces
-                    );
-                    sails.log(
-                        obj.detail.resource.instanceDetails.networkInterfaces[0]
-                            .securityGroups[0].groupId
-                    );
                     responseArray.push({
                         command: action,
                         response: await service[action]({
@@ -190,6 +158,21 @@ module.exports = {
                     });
                 }
             }
+            else if (
+                action ===
+                "EC2: Get information on the specified instance"
+            ) {
+                responseArray.push({
+                    command: action,
+                    response: await service[action]({
+                        InstanceIds: [
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ],
+                    }),
+                    datetime: Date.now(),
+                });
+            }
+        }
             log["isRemediated"] = true;
             log["response"] = responseArray;
             // Enable this to show logs on console
