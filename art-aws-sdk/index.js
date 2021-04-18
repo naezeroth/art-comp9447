@@ -463,7 +463,9 @@ const AWSClientService = () => {
         "EC2: Terminate a given instance": terminateEBSInst,
         "EC2: Create snapshot of an instance": createSnapshot,
         "EC2: Remove all ingress and egress routes to given instance": quarantineEc2,
-        "Send Message to Slack": sendMessage,
+        "EC2: Send Message to Slack": sendMessage,
+        "S3: Send Message to Slack": sendMessage,
+        "IAM: Send Message to Slack": sendMessage,
         "S3: Disable Public Access to S3": disablePublicAccessS3,
     };
 

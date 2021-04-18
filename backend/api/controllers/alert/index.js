@@ -71,7 +71,7 @@ module.exports = {
             const responseArray = [];
             //If there exists multiple flows for finding type use last created flow
             for (action of findEvent[findEvent.length - 1].actions) {
-                if (action === "Send Message to Slack") {
+                if (action === "EC2: Send Message to Slack" || action === "S3: Send Message to Slack" ||action === "IAM: Send Message to Slack") {
                     const findingDetails = {
                         title: obj.detail.title,
                         updatedAt: obj.detail.updatedAt,
