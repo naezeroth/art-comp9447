@@ -156,10 +156,8 @@ module.exports = {
                         }),
                         datetime: Date.now(),
                     });
-                }
-                else if (
-                    action ===
-                    "EC2: Get information on the specified instance"
+                } else if (
+                    action === "EC2: Get information on the specified instance"
                 ) {
                     responseArray.push({
                         command: action,
@@ -172,7 +170,6 @@ module.exports = {
                     });
                 }
             }
-        }
             log["isRemediated"] = true;
             log["response"] = responseArray;
             // Enable this to show logs on console
