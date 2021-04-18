@@ -25,6 +25,7 @@ const {
 
 const {
     IAMClient, 
+    GetUserCommand,
     DeleteLoginProfileCommand,
     ListAccessKeysCommand,
     DeleteAccessKeyCommand,
@@ -45,6 +46,7 @@ const {
     DeleteUserCommand,
     ListGroupsForUserCommand,
     AddUserToGroupCommand,
+    GetContextKeysForPrincipalPolicyRequest,
 } = require("@aws-sdk/client-iam");
 
 const { S3Client,PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3")
@@ -54,7 +56,6 @@ const { WebClient } = require("@slack/web-api");
 const AWSClientService = () => {
     const ec2Client = new EC2Client({ region: "ap-southeast-2" });
     const iamClient = new IAMClient({ region: "ap-southeast-2" });
-
     const s3Client = new S3Client({region: "ap-southeast-2"});
 
     const disablePublicAccessS3 = async (bucketName) =>{
@@ -427,33 +428,43 @@ const AWSClientService = () => {
         // arguments:
             // username: username
         console.log("1");
-
+        const params = {
+            UserName: arguments[0],
+        }
 
         try {
             console.log("Deleting user: ", arguments);
-
+            const params = {
+                UserName: arguments[0],
+            }
+            const user1233 = await iamClient.send(
+                new GetUserCommand(params),
+            );
+            console.log("user is ", user1233);
             // 1. Delete password
             const data = await iamClient.send(
-                new DeleteLoginProfileCommand(arguments)
+                new DeleteLoginProfileCommand(params)
             );
             console.log("2");
 
             // 2. list keys and delete them all
-            const keys = await iamClient.send(
-                new ListAccessKeysCommand(arguments)
+            var keys = await iamClient.send(
+                new ListAccessKeysCommand(params)
             );
             for(let i=0; i < keys.length; i++){
+                
                 data = await iamClient.send(
-                    new DeleteAccessKeyCommand(keys[i], arguments)
+                    
+                    new DeleteAccessKeyCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 3. Delete signing certificate
             keys = await iamClient.send(
-                new ListSigningCertificatesCommand(arguments)
+                new ListSigningCertificatesCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteSigningCertificateCommand(keys[i], arguments)
+                    new DeleteSigningCertificateCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 4. Delete ssh keys
@@ -462,60 +473,60 @@ const AWSClientService = () => {
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteSSHPublicKeyCommand(keys[i], arguments)
+                    new DeleteSSHPublicKeyCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 5. Delete git credentials
             keys = await iamClient.send(
-                new ListServiceSpecificCredentialsCommand(arguments)
+                new ListServiceSpecificCredentialsCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteServiceSpecificCredentialCommand(keys[i], arguments)
+                    new DeleteServiceSpecificCredentialCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 6. deactivate MFA devices
             keys = await iamClient.send(
-                new ListMFADevicesCommand(arguments)
+                new ListMFADevicesCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeactivateMFADeviceCommand(keys[i], arguments)
+                    new DeactivateMFADeviceCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
                 data = await iamClient.send(
-                    new DeleteVirtualMFADeviceCommand(keys[i])
+                    new DeleteVirtualMFADeviceCommand({AccessKeyId:keys[i]})
                 );
             }
             // 7. Delete inline policies
             keys = await iamClient.send(
-                new ListUserPoliciesCommand(arguments)
+                new ListUserPoliciesCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DeleteUserPolicyCommand(keys[i], arguments)
+                    new DeleteUserPolicyCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 8. Detach policies
             keys = await iamClient.send(
-                new ListAttachedUserPoliciesCommand(arguments)
+                new ListAttachedUserPoliciesCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new DetachUserPolicyCommand(keys[i], arguments)
+                    new DetachUserPolicyCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 9. remove user from groups
             keys = await iamClient.send(
-                new ListGroupsForUserCommand(arguments)
+                new ListGroupsForUserCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new RemoveUserFromGroupCommand(keys[i], arguments)
+                    new RemoveUserFromGroupCommand({AccessKeyId:keys[i],UserName:arguments[0]})
                 );
             }
             // 10. delete user
             data = await iamClient.send(
-                new DeleteUserCommand(arguments)
+                new DeleteUserCommand(params)
             );
 
             console.log("Success", JSON.stringify(data));
@@ -533,6 +544,9 @@ const AWSClientService = () => {
             const params = {
                 UserName: arguments[0],
             }
+            const user = await iamClient.send(
+                new GetUserCommand(params),
+            );
             const keys = await iamClient.send(
                 new ListGroupsForUserCommand(params)
             );
