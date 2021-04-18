@@ -40,7 +40,7 @@ export default function Workflow() {
             }),
         };
 
-        fetch("http://localhost:1337/api/create-flow", requestOptions)
+        fetch(`${window.location.protocol}//${window.location.hostname}:1337/api/create-flow`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);

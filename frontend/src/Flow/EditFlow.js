@@ -23,7 +23,7 @@ export default function EditFlow(props) {
     console.log(editFlowId)
     // React.useEffect(() => {
         if(valueState.requested===false){
-            fetch(' http://localhost:1337/flow?id='+editFlowId)
+            fetch(`${window.location.protocol}//${window.location.hostname}/flow?id=`+editFlowId)
             .then((res)=> res.json())
             .then((res)=>{
             setValueState({

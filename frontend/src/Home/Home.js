@@ -36,7 +36,7 @@ class Home extends Component {
         };
     }
     componentDidMount() {
-        fetch(" http://localhost:1337/api/display-flows") //the api to hit request
+        fetch(`${window.location.protocol}//${window.location.hostname}:1337/api/display-flows`) //the api to hit request
             .then((response) => {
                 console.log("we've fetched", response);
                 return response.json();
