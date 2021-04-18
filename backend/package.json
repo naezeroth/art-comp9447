@@ -32,7 +32,7 @@
     "start": "node app.js",
     "production": "NODE_ENV=production node app.js",
     "clean": "rm -rf node_modules && npm install",
-    "test": "tput setaf 2; echo 'Tests all passed'; tput setaf 7;"
+    "test": "echo 'Tests all passed'"
   },
   "main": "app.js",
   "repository": {
