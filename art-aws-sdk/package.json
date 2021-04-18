@@ -10,7 +10,7 @@
     "dotenv": "^8.2.0"
   },
   "scripts": {
-    "test": "tput setaf 2; echo 'Tests all passed'; tput setaf 7"
+    "test": "echo 'Tests all passed'"
   },
   "author": "",
   "license": "ISC"
