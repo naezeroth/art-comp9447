@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  gateway:
+    image: artsoar/art
+    environment: 
+      SLACK_TOKEN: xoxb---
+      AWS_ACCESS_KEY_ID: change-me
+      AWS_SECRET_ACCESS_KEY: change-me
+      JWT_SECRET: change-me
+    volumes:
+      - type: volume
+        source: db
+        target: /app/backend/.tmp
+    ports:
+      - target: 1337
+        published: 1337
+        protocol: tcp
+      - target: 3000
+        published: 3000
+        protocol: tcp
+
+volumes:
+  db:

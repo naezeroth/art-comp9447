@@ -188,9 +188,8 @@ class ReactVirtualizedTable extends Component{
         return { id, alertID, resourceType, location, alertType, logStatus };
     }
 
-    async requestLog() { 
-
-        const response = await fetch('http://localhost:1337/log');
+    async requestLog() {
+        const response = await fetch(`${window.location.protocol}//${window.location.hostname}:1337/log`);
         const data = await response.json();
         this.setState({
             logData : this.extract(data),

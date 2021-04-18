@@ -1,0 +1,16 @@
+# root
+node_modules
+docs
+.github
+.env.template
+.eslintrc.js
+.gitignore
+.prettierignore
+.prettierrc.js
+README.md
+
+# backend
+backend/node_modules
+
+# frontend
+frontend/node_modules
