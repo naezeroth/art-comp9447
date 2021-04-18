@@ -9,36 +9,45 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Button from "@material-ui/core/Button";
+// import { TIMEOUT } from 'node:dns';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import IconButton from "@material-ui/core/IconButton";
 
 const columns = [
   
-  { id: 'alertID', label: 'Alert ID', minWidth: 170 },
+  { id: 'alertID', label: 'ID', minWidth: 50 },
   { id: 'resource', label: 'Resource', minWidth: 100 },
   {
     id: 'region',
     label: 'Region',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 120,
+    // align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'alert',
     label: 'Alert',
     minWidth: 170,
-    align: 'right',
+    // align: 'right',
     format: (value) => value.toLocaleString('en-US'),
   },
   {
     id: 'status',
     label: 'Status',
-    minWidth: 170,
-    align: 'right',
+    minWidth: 150,
+    // align: 'right',
     format: (value) => value.toFixed(2),
+  },
+  {
+    id: 'save',
+    label: '',
+    minWidth: 50,
+    align: 'right',
   },
 ];
 
-function createData(id, alertID, resource, region, alert, status) {
-  return { id, alertID, resource, region, alert, status };
+function createData(id, alertID, resource, region, alert, status, save) {
+  return { id, alertID, resource, region, alert, status, save};
 }
 
 
@@ -60,16 +69,54 @@ export default function StickyHeadTable(props) {
   const [logData, setLogData] = React.useState([]);
   const [refresh, setRefresh] = React.useState([false]);
 
+  function downloadObjectAsJson(exportObj, exportName){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
+
+  const handleLogRequest = (id) =>{
+    var requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ "logId": id }),
+    };
+
+    const response = fetch('http://localhost:1337/api/log', requestOptions)
+      .then((res)=> res.json())
+      .then((res)=> downloadObjectAsJson(res, "file"));
+    // console.log(response);
+    return response;
+  }
+
+
+  const saveButton = (id) =>{
+    // console.log("ID: ", id);
+    return(
+      <IconButton onClick={() => { handleLogRequest(id)}} color="inherit" size="small">
+        <SaveAltIcon />
+      </IconButton>
+    );
+  }
+
+  const testVal = "save";
+
+
   const extract = (data) =>{
     // console.log(data);
     let temp = [];
     let mrows = [];
     for(let i=0; i < data.length; i++){
-        temp.push(data[i].alert.id);
+        temp.push(data[i].id);
         temp.push(data[i].alert.resource.resourceType);
         temp.push(data[i].alert.region);
         temp.push(data[i].alert.type);
         temp.push("Normal");
+        temp.push(testVal);
         mrows.push(createData(i, ...temp));
         temp = [];
     }
@@ -125,12 +172,22 @@ export default function StickyHeadTable(props) {
                 <TableRow hover role="checkbox" tabIndex={-1} key={logData.code}>
                   {columns.map((column) => {
                     const value = logData[column.id];
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                      </TableCell>
-                    );
+                    if(value == "save"){
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : saveButton(logData.alertID)}
+                        </TableCell>  
+                      )
+                    }
+                    else{
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {column.format && typeof value === 'number' ? column.format(value) : value}
+                        </TableCell>
+                      );
+                    }
                   })}
+
                 </TableRow>
               );
             })}
