@@ -143,6 +143,16 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 }
+                else if (action === "Quarantine a User") {
+                    sails.log("inside quarantine a user: ", obj.detail.resource.accessKeyDetails.userName);
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]([
+                            obj.detail.resource.accessKeyDetails.userName,
+                        ]),
+                        datetime: Date.now(),
+                    });
+                }
 
             }
             log["isRemediated"] = true;

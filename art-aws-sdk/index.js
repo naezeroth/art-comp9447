@@ -529,17 +529,20 @@ const AWSClientService = () => {
     const quarantineUser = async(arguments) => {
         try {
             console.log("Deleting a user from all their groups and putting them into a quarantine group");
-            
+            console.log(arguments[0]);
+            const params = {
+                UserName: arguments[0],
+            }
             const keys = await iamClient.send(
-                new ListGroupsForUserCommand(arguments.username)
+                new ListGroupsForUserCommand(params)
             );
             for(let i=0; i < keys.length; i++){
                 data = await iamClient.send(
-                    new RemoveUserFromGroupCommand(keys[i], arguments.username)
+                    new RemoveUserFromGroupCommand(keys[i], arguments[0])
                 );
             }
             const data = await iamClient.send(
-                new AddUserToGroupCommand(arguments.username,'Quarantine')
+                new AddUserToGroupCommand({GroupName:'Quarantine',UserName:arguments[0]})
             );
             console.log("Success", JSON.stringify(data));
             return data;
