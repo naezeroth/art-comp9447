@@ -9,7 +9,10 @@
     "test": "run-p test:*",
     "test:backend": "cd backend && npm run test",
     "test:frontend": "cd frontend && npm run test",
-    "test:sdk": "cd art-aws-sdk && npm run test"
+    "test:sdk": "cd art-aws-sdk && npm run test",
+    "production": "run-p production:*",
+    "production:backend": "cd backend && npm run production",
+    "production:frontend": "cd frontend && npm run build && ./node_modules/serve/bin/serve.js -s build -l 3000"
   },
   "author": "",
   "license": "ISC",
