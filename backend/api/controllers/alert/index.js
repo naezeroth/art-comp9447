@@ -25,6 +25,13 @@ module.exports = {
     },
 
     fn: async function (inputs, exits) {
+        if (process.env.INSTALLATION === "true") {
+            sails.log("Welcome to ART");
+            sails.log(
+                "Please copy and paste the token provided in the message to SNS"
+            );
+            sails.log(this.req.body["Message"]);
+        }
         //Initialise client service
         const service = AWSClientService();
 
@@ -37,7 +44,6 @@ module.exports = {
         }
 
         const log = { alert: obj.detail };
-        sails.log(log);
 
         const findEvent = await Flow.find({
             findingType: obj.detail.type,
@@ -71,7 +77,11 @@ module.exports = {
             const responseArray = [];
             //If there exists multiple flows for finding type use last created flow
             for (action of findEvent[findEvent.length - 1].actions) {
-                if (action === "EC2: Send Message to Slack" || action === "S3: Send Message to Slack" ||action === "IAM: Send Message to Slack") {
+                if (
+                    action === "EC2: Send Message to Slack" ||
+                    action === "S3: Send Message to Slack" ||
+                    action === "IAM: Send Message to Slack"
+                ) {
                     const findingDetails = {
                         title: obj.detail.title,
                         updatedAt: obj.detail.updatedAt,
