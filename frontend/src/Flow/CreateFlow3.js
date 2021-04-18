@@ -104,9 +104,11 @@ export default function CreateFlow3(props) {
                                 }}
                             >
                                 <option aria-label="None" value="" />
-                                {props.commands.map((command) => (
+                                {props.commands.filter(
+                                    (command) => command.includes(`${props.defaultVals.resourceName}: `))
+                                .map((command) => (
                                     <option key={command} value={command}>
-                                        {command}
+                                        {command.replace(`${props.defaultVals.resourceName}: `,'')}
                                     </option>
                                 ))}
                             </NativeSelect>
