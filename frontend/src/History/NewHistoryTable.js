@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -60,6 +60,25 @@ const useStyles = makeStyles({
   },
 });
 
+const cellColors = {
+  "true": "blue",
+  "false": "red",
+  Critical: "#F04242",
+  "Requires Attention": "#FAB15C",
+  Offline: "#D9D9D9",
+  Normal: "white",
+  Remediated: "white",
+};
+
+const StyledTableCell = makeStyles((isrem)=>({
+  body: {
+    fontSize: 14,
+    // backgroundColor: cellColors[isRem],
+    backgroundColor: "black",
+    color: "black",
+  },
+}))(TableCell);
+
 
 
 export default function StickyHeadTable(props) {
@@ -107,7 +126,7 @@ export default function StickyHeadTable(props) {
 
 
   const extract = (data) =>{
-    // console.log(data);
+    console.log(data);
     let temp = [];
     let mrows = [];
     for(let i=0; i < data.length; i++){
@@ -117,6 +136,7 @@ export default function StickyHeadTable(props) {
         temp.push(data[i].alert.type);
         temp.push("Normal");
         temp.push(testVal);
+        temp.push(data[i].isRemediated);
         mrows.push(createData(i, ...temp));
         temp = [];
     }
@@ -180,11 +200,22 @@ export default function StickyHeadTable(props) {
                       )
                     }
                     else{
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number' ? column.format(value) : value}
-                        </TableCell>
-                      );
+                      if(column.id == "status"){
+                        return (
+                          <StyledTableCell isrem={logData.isRemediated} key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                          </StyledTableCell >
+                        );
+                      }
+                      else{
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                          </TableCell >
+                        );
+                      }
+
+                      
                     }
                   })}
 
