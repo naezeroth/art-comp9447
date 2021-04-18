@@ -1,6 +1,4 @@
 import React from "react";
-import Login from "./Authentication/Login";
-import Register from "./Authentication/Register";
 import Overview from "./Overview/Overview";
 import Home from "./Home/Home";
 import Workflow from "./Flow/Workflow";
@@ -14,7 +12,6 @@ const App = () => (
         <div className="App">
             <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/Register" exact component={Register} />
                 <Route path="/Overview" exact component={Overview} />
                 <Route path="/Home" exact component={Home} />
                 <Route path="/Workflow" exact component={Workflow} />

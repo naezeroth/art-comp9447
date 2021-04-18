@@ -157,20 +157,20 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 }
-            }
-            else if (
-                action ===
-                "EC2: Get information on the specified instance"
-            ) {
-                responseArray.push({
-                    command: action,
-                    response: await service[action]({
-                        InstanceIds: [
-                            obj.detail.resource.instanceDetails.instanceId,
-                        ],
-                    }),
-                    datetime: Date.now(),
-                });
+                else if (
+                    action ===
+                    "EC2: Get information on the specified instance"
+                ) {
+                    responseArray.push({
+                        command: action,
+                        response: await service[action]({
+                            InstanceIds: [
+                                obj.detail.resource.instanceDetails.instanceId,
+                            ],
+                        }),
+                        datetime: Date.now(),
+                    });
+                }
             }
         }
             log["isRemediated"] = true;
