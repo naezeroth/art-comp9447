@@ -23,7 +23,7 @@ export default function EditFlow(props) {
     console.log(editFlowId)
     // React.useEffect(() => {
         if(valueState.requested===false){
-            fetch(`${window.location.protocol}//${window.location.hostname}/flow?id=`+editFlowId)
+            fetch(`${window.location.protocol}//${window.location.hostname}:1337/flow?id=${editFlowId}`)
             .then((res)=> res.json())
             .then((res)=>{
             setValueState({
@@ -62,8 +62,8 @@ export default function EditFlow(props) {
                 },
             }),
         };
-        
-        fetch("http://localhost:1337/api/edit-flow", requestOptions)
+
+        fetch(`${window.location.protocol}//${window.location.hostname}:1337/api/edit-flow`, requestOptions)
             .then((response) => response.json())
             .then((response) => {
                 console.log(response);
