@@ -36,7 +36,9 @@ class Home extends Component {
         };
     }
     componentDidMount() {
-        fetch(`${window.location.protocol}//${window.location.hostname}:1337/api/display-flows`) //the api to hit request
+        fetch(
+            `${window.location.protocol}//${window.location.hostname}:1337/api/display-flows`
+        ) //the api to hit request
             .then((response) => {
                 console.log("we've fetched", response);
                 return response.json();
@@ -98,7 +100,7 @@ class Home extends Component {
                                 justify="space-between"
                                 alignItems="center"
                             >
-                                <Grid item xs={6}>
+                                {/* <Grid item xs={6}>
                                     <Card style={styles.currentAlerts}>
                                         <CardHeader
                                             style={{
@@ -110,7 +112,7 @@ class Home extends Component {
                                             title="Current Alerts"
                                         />
                                     </Card>
-                                </Grid>
+                                </Grid> */}
                                 <Grid item xl={5}>
                                     <Card style={styles.Flows}>
                                         <CardHeader
@@ -242,19 +244,19 @@ const styles = {
     },
 
     Flows: {
-        marginLeft: "5%",
+        marginLeft: "45vh",
         backgroundColor: "#FFFFFF",
         height: "35vh",
-        width: "60vh",
+        width: "100vh",
         borderRadius: 10,
         overflowY: "scroll",
         "white-space": "nowrap",
     },
 
     Resources: {
-        marginLeft: "10vh",
+        marginLeft: "45vh",
         backgroundColor: "#FFFFFF",
-        height: "40%",
+        height: "30%",
         width: "100vh",
         borderRadius: 10,
         marginTop: "10vh",
