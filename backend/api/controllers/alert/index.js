@@ -60,7 +60,7 @@ module.exports = {
             }
             return false;
         };
-
+        // sails.log("this is find event", findEvent);
         if (
             findEvent.length === 0 ||
             (findEvent[findEvent.length - 1].context !== "" &&
@@ -179,6 +179,39 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 }
+                // else if (action === "Get information on the specified instance(s)") {
+                //     sails.log("inside get user: ", obj);
+                //     responseArray.push({
+                //         command: action,
+                //         response: await service[action]([
+                //         ]),
+                //         datetime: Date.now(),
+                //     });
+                // }
+                else if (action === "IAM: Delete user") {
+                    sails.log("inside del user: ", obj.detail.resource.accessKeyDetails.userName);
+                    const responseData = await service[action]([
+                        obj.detail.resource.accessKeyDetails.userName,
+                    ]);
+                    responseArray.push({
+                        command: action,
+                        response: responseData['$metadata'],
+                        datetime: Date.now(),
+                    });
+                }
+                else if (action === "IAM: Quarantine a User") {
+                    sails.log("inside quarantine a user: ", obj.detail.resource.accessKeyDetails.userName);
+                    const responseData = await service[action]([
+                        obj.detail.resource.accessKeyDetails.userName,
+                    ]);
+                   
+                    responseArray.push({
+                        command: action,
+                        response: responseData['$metadata'],
+                        datetime: Date.now(),
+                    });
+                }
+
             }
             log["isRemediated"] = true;
             log["response"] = responseArray;

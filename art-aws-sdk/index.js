@@ -27,13 +27,40 @@ const {
     CreateSnapshotsCommand,
 } = require("@aws-sdk/client-ec2");
 
-const { S3Client, PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3");
+const {
+    IAMClient, 
+    GetUserCommand,
+    DeleteLoginProfileCommand,
+    ListAccessKeysCommand,
+    DeleteAccessKeyCommand,
+    ListSigningCertificatesCommand,
+    DeleteSigningCertificateCommand,
+    ListSSHPublicKeysCommand,
+    DeleteSSHPublicKeyCommand,
+    ListServiceSpecificCredentialsCommand,
+    DeleteServiceSpecificCredentialCommand,
+    ListMFADevicesCommand,
+    DeactivateMFADeviceCommand,
+    DeleteVirtualMFADeviceCommand,
+    ListUserPoliciesCommand,
+    DeleteUserPolicyCommand,
+    ListAttachedUserPoliciesCommand,
+    DetachUserPolicyCommand,
+    RemoveUserFromGroupCommand,
+    DeleteUserCommand,
+    ListGroupsForUserCommand,
+    AddUserToGroupCommand,
+    GetContextKeysForPrincipalPolicyRequest,
+} = require("@aws-sdk/client-iam");
+
+const { S3Client,PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3")
 
 const { WebClient } = require("@slack/web-api");
 
 const AWSClientService = () => {
     const ec2Client = new EC2Client({ region: "ap-southeast-2" });
-    const s3Client = new S3Client({ region: "ap-southeast-2" });
+    const iamClient = new IAMClient({ region: "ap-southeast-2" });
+    const s3Client = new S3Client({region: "ap-southeast-2"});
 
     const disablePublicAccessS3 = async (bucketName) => {
         try {
@@ -454,8 +481,181 @@ const AWSClientService = () => {
         }
     };
 
+    const hardRemoveUser = async (arguments) => {
+        // arguments:
+            // username: username
+        console.log("1, result is");
+        const params = {
+            UserName: arguments[0],
+        }
+
+        try {
+            console.log("Deleting user: ", arguments);
+            const params = {
+                UserName: arguments[0],
+            }
+          
+            // 1. Delete password
+            var data = await iamClient.send(
+                new DeleteLoginProfileCommand(params)
+            ).then(res => {console.log(res)}).catch(err => {console.error("Error", err)});
+            console.log("result for step 1 is:", data);
+       
+        
+            // 2. list keys and delete them all
+     
+            var keys = await iamClient.send(
+                new ListAccessKeysCommand(params)
+            ).catch(err => {console.error("Error", err)});
+          
+        
+            for(let i=0; i < keys.AccessKeyMetadata.length; i++){
+          
+                data = await iamClient.send(
+                    new DeleteAccessKeyCommand({AccessKeyId:keys.AccessKeyMetadata[i].AccessKeyId,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+       
+      
+            console.log("result for step 2 is:", data);
+       
+            // 3. Delete signing certificate
+        
+            keys = await iamClient.send(
+                new ListSigningCertificatesCommand(params)
+            ).catch(err => {console.error("Error", err)});
+            for(let i=0; i < keys.Certificates.length; i++){
+                data = await iamClient.send(
+                    new DeleteSigningCertificateCommand({CertificateId:keys.Certificates[i].CertificateId,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+
+             console.log("result for step 3 is:", data);
+       
+            // 4. Delete ssh keys
+            keys = await iamClient.send(
+                new ListSSHPublicKeysCommand(params)
+            ).catch(err => {console.error("Error", err)});
+            console.log(keys);
+            for(let i=0; i < keys.SSHPublicKeys.length; i++){
+                data = await iamClient.send(
+                    new DeleteSSHPublicKeyCommand({SSHPublicKeyId:keys.SSHPublicKeys[i].SSHPublicKeyId,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+
+            console.log("result for step 4 is:", data);
+            // 5. Delete git credentials
+            keys = await iamClient.send(
+                new ListServiceSpecificCredentialsCommand(params)
+            ).catch(err => {console.error("Error", err)});
+            console.log(keys);
+            for(let i=0; i < keys.ServiceSpecificCredentials.length; i++){
+                data = await iamClient.send(
+                    new DeleteServiceSpecificCredentialCommand({ServiceSpecificCredentialId:keys.ServiceSpecificCredentials[i].ServiceSpecificCredentialId,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+            console.log("result for step 5 is:", data);
+            // 6. deactivate MFA devices
+            keys = await iamClient.send(
+                new ListMFADevicesCommand(params)
+            ).catch(err => {console.error("Error", err)});
+            console.log(keys);
+            for(let i=0; i < keys.MFADevices.length; i++){
+                data = await iamClient.send(
+                    new DeactivateMFADeviceCommand({SerialNumber:keys.MFADevices[i].SerialNumber,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+                data = await iamClient.send(
+                    new DeleteVirtualMFADeviceCommand({SerialNumber:keys.MFADevices[i].SerialNumber})
+                ).catch(err => {console.error("Error", err)});
+            }
+            console.log("result for step 6 is:", data);
+            // 7. Delete inline policies
+            keys = await iamClient.send(
+                new ListUserPoliciesCommand(params)
+            ).catch(err => {console.error("Error", err)});
+            console.log(keys);
+            for(let i=0; i < keys.PolicyNames.length; i++){
+                data = await iamClient.send(
+                    new DeleteUserPolicyCommand({PolicyName: keys.PolicyNames[i],UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+            console.log("result for step 7 is:", data);
+            // 8. Detach policies
+            keys = await iamClient.send(
+                new ListAttachedUserPoliciesCommand(params)
+            ).catch(err => {console.error("Error", err)});
+          
+            for(let i=0; i < keys.AttachedPolicies.length; i++){
+                
+                data = await iamClient.send(
+                    new DetachUserPolicyCommand({PolicyArn:keys.AttachedPolicies[i].PolicyArn,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+            
+            console.log("result for step 8 is:", data);
+            // 9. remove user from groups
+            keys = await iamClient.send(
+                new ListGroupsForUserCommand(params)
+            ).catch(err => {console.error("Error", err)});
+         
+          
+            for(let i=0; i < keys.Groups.length; i++){
+                data = await iamClient.send(
+                    new RemoveUserFromGroupCommand({GroupName:keys.Groups[i].GroupName,UserName:arguments[0]})
+                ).catch(err => {console.error("Error", err)});
+            }
+            console.log("result for step 9 is:", data);
+            // 10. delete user
+            data = await iamClient.send(
+                new DeleteUserCommand(params)
+            ).catch(err => {console.error("Error", err)});
+
+            console.log("Success", JSON.stringify(data));
+            return data;
+        } catch (err) {
+            console.log("Error", err);
+            return err["Code"];
+        }
+    }
+
+    const quarantineUser = async(arguments) => {
+        try {
+            console.log("Deleting a user from all their groups and putting them into a quarantine group");
+            console.log(arguments[0]);
+            const params = {
+                UserName: arguments[0],
+            }
+            const user = await iamClient.send(
+                new GetUserCommand(params),
+            );
+            const keys = await iamClient.send(
+                new ListGroupsForUserCommand(params)
+            );
+            console.log(keys);
+            for(let i=0; i < keys.Groups.length; i++){
+                data = await iamClient.send(
+                    new RemoveUserFromGroupCommand({GroupName:keys.Groups[i].GroupName,UserName:arguments[0]})
+                );
+            }
+            const data = await iamClient.send(
+                new AddUserToGroupCommand({GroupName:'Quarantine',UserName:arguments[0]})
+            );
+            console.log("Success", JSON.stringify(data));
+            return data;
+            }
+        catch (err) {
+            console.log("Error", err);
+            return err["Code"];
+        }
+
+    }
+
+
     //Dictionary or list
     const functionToDict = {
+        Debug: (var1, var2) => console.log("hello", var1, var2),
+        "IAM: Delete user": hardRemoveUser,
+        "IAM: Quarantine a User": quarantineUser,
         "EC2: Get information on the specified instance": getInstInfo,
         "EC2: Get security group info given a instance": getSecurityGroupInfo,
         "EC2: Reboot a given instance": rebootInst,
