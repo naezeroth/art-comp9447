@@ -1,0 +1,36 @@
+name: Docker CI
+
+on:
+    push:
+        branches:
+            - "**"
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check Out Repo 
+              uses: actions/checkout@v2
+
+            - name: Login to Docker Hub
+              uses: docker/login-action@v1
+              with:
+                username: thetthacker # ${{ secrets.DOCKER_HUB_USERNAME }}
+                password: b66e6c1d-2d6c-4d81-ae8a-4e77c6648603 #${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+            - name: Set up Docker Buildx
+              id: buildx
+              uses: docker/setup-buildx-action@v1
+
+            - name: Build and push
+              id: docker_build
+              uses: docker/build-push-action@v2
+              with:
+                context: ./
+                file: ./Dockerfile
+                push: true
+                tags: artsoar/art:develop
+
+            - name: Image digest
+              run: echo ${{ steps.docker_build.outputs.digest }}
