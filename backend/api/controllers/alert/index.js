@@ -188,7 +188,7 @@ module.exports = {
                 //         datetime: Date.now(),
                 //     });
                 // }
-                else if (action === "Delete user") {
+                else if (action === "IAM: Delete user") {
                     sails.log("inside del user: ", obj.detail.resource.accessKeyDetails.userName);
                     const responseData = await service[action]([
                         obj.detail.resource.accessKeyDetails.userName,
@@ -199,7 +199,7 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 }
-                else if (action === "Quarantine a User") {
+                else if (action === "IAM: Quarantine a User") {
                     sails.log("inside quarantine a user: ", obj.detail.resource.accessKeyDetails.userName);
                     const responseData = await service[action]([
                         obj.detail.resource.accessKeyDetails.userName,
