@@ -32,9 +32,7 @@
     "start": "node app.js",
     "production": "NODE_ENV=production node app.js",
     "clean": "rm -rf node_modules && npm install",
-
     "test": "echo 'Tests all passed'"
-
   },
   "main": "app.js",
   "repository": {
