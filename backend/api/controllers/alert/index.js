@@ -103,121 +103,114 @@ module.exports = {
                         datetime: Date.now(),
                     });
                 } else if (action === "S3: Disable Public Access to S3") {
+                    const responseData = await service[action](
+                        obj.detail.resource.s3BucketDetails[0].name
+                    );
                     responseArray.push({
                         command: action,
-                        response: await service[action](
-                            obj.detail.resource.s3BucketDetails[0].name
-                        ),
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
                 } else if (action === "EC2: Reboot a given instance") {
+                    const responseData = await service[action]({
+                        InstanceIds: [
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ],
+                    });
                     responseArray.push({
                         command: action,
-                        response: await service[action]({
-                            InstanceIds: [
-                                obj.detail.resource.instanceDetails.instanceId,
-                            ],
-                        }),
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
                 } else if (action === "EC2: Stop a given instance") {
+                    const responseData = await service[action]({
+                        InstanceIds: [
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ],
+                    });
                     responseArray.push({
                         command: action,
-                        response: await service[action]({
-                            InstanceIds: [
-                                obj.detail.resource.instanceDetails.instanceId,
-                            ],
-                        }),
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
                 } else if (action === "EC2: Create snapshot of an instance") {
+                    const responseData = await service[action]({
+                        InstanceSpecification: {
+                            InstanceId:
+                                obj.detail.resource.instanceDetails.instanceId,
+                        },
+                    });
                     responseArray.push({
                         command: action,
-                        response: await service[action]({
-                            InstanceSpecification: {
-                                InstanceId:
-                                    obj.detail.resource.instanceDetails
-                                        .instanceId,
-                            },
-                        }),
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
                 } else if (action === "EC2: Terminate a given instance") {
+                    const responseData = await service[action]({
+                        InstanceIds: [
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ],
+                    });
                     responseArray.push({
                         command: action,
-                        response: await service[action]({
-                            InstanceIds: [
-                                obj.detail.resource.instanceDetails.instanceId,
-                            ],
-                        }),
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
                 } else if (
                     action ===
                     "EC2: Remove all ingress and egress routes to given instance"
                 ) {
+                    const responseData = await service[action]({
+                        groupId:
+                            obj.detail.resource.instanceDetails
+                                .networkInterfaces[0].securityGroups[0].groupId,
+                    });
                     responseArray.push({
                         command: action,
-                        response: await service[action]({
-                            groupId:
-                                obj.detail.resource.instanceDetails
-                                    .networkInterfaces[0].securityGroups[0]
-                                    .groupId,
-                        }),
+                        response: responseData,
                         datetime: Date.now(),
                     });
                 } else if (
                     action === "EC2: Get information on the specified instance"
                 ) {
+                    const responseData = await service[action]({
+                        InstanceIds: [
+                            obj.detail.resource.instanceDetails.instanceId,
+                        ],
+                    });
                     responseArray.push({
                         command: action,
-                        response: await service[action]({
-                            InstanceIds: [
-                                obj.detail.resource.instanceDetails.instanceId,
-                            ],
-                        }),
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
-                }
-                // else if (action === "Get information on the specified instance(s)") {
-                //     sails.log("inside get user: ", obj);
-                //     responseArray.push({
-                //         command: action,
-                //         response: await service[action]([
-                //         ]),
-                //         datetime: Date.now(),
-                //     });
-                // }
-                else if (action === "IAM: Delete user") {
-                    sails.log("inside del user: ", obj.detail.resource.accessKeyDetails.userName);
+                } else if (action === "IAM: Delete user") {
                     const responseData = await service[action]([
                         obj.detail.resource.accessKeyDetails.userName,
                     ]);
                     responseArray.push({
                         command: action,
-                        response: responseData['$metadata'],
+                        response: responseData["$metadata"],
                         datetime: Date.now(),
                     });
-                }
-                else if (action === "IAM: Quarantine a User") {
-                    sails.log("inside quarantine a user: ", obj.detail.resource.accessKeyDetails.userName);
+                } else if (action === "IAM: Quarantine a User") {
                     const responseData = await service[action]([
                         obj.detail.resource.accessKeyDetails.userName,
                     ]);
-                   
-                    responseArray.push({
-                        command: action,
-                        response: responseData['$metadata'],
-                        datetime: Date.now(),
-                    });
-                }
 
+                    sails.log(responseData);
+
+                    responseArray.push({
+                        command: action,
+                        response: responseData["$metadata"],
+                        datetime: Date.now(),
+                    });
+                }
             }
             log["isRemediated"] = true;
             log["response"] = responseArray;
             // Enable this to show logs on console
             // console.log("Log is ", log);
-            // await Log.create(log);
+            await Log.create(log);
         }
 
         return exits.success({
