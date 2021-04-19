@@ -50,3 +50,9 @@ Run npm run build and then npm run production to deploy the backend and frontend
 Navigate to the ‘ip address:3000’ and you should see the application working.
 
 Slack Installation
+
+## Docker build:
+
+```
+docker build -t artsoar/art .
+```
