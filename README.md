@@ -51,7 +51,52 @@ Run npm run build and then npm run production to deploy the backend and frontend
 
 Navigate to the ‘ip address:3000’ and you should see the application working.
 
-Slack Installation
+## Slack Installation
+
+Firstly, navigate to https://api.slack.com/apps 
+![image](https://user-images.githubusercontent.com/43486117/115948817-c69be800-a513-11eb-802e-986f211239a2.png)
+
+![image](https://user-images.githubusercontent.com/43486117/115948821-cbf93280-a513-11eb-8a9b-efc2dea49d08.png)
+
+Complete the form, in my case I will use “test_app” for the App Name and choose “COMP9447 21T1” Channel for Development Slack Workspace. (You will see your own channel)
+
+Then click “Create App”
+
+![image](https://user-images.githubusercontent.com/43486117/115948824-d9aeb800-a513-11eb-9243-4a20f7687910.png)
+
+Click “OAuth & Permissions” on the left NavBar, scroll down to the Scopes section.
+
+![image](https://user-images.githubusercontent.com/43486117/115948832-e4694d00-a513-11eb-8eb6-778545f3038c.png)
+
+Click on “Add an OAuth Scope” for Bot Token Scopes and add chat:write permission
+
+![image](https://user-images.githubusercontent.com/43486117/115948840-ef23e200-a513-11eb-8494-e896c9c9a201.png)
+
+Scroll up and click Install to Workspace
+
+![image](https://user-images.githubusercontent.com/43486117/115948852-fd71fe00-a513-11eb-96ad-db260e69b58b.png)
+
+![image](https://user-images.githubusercontent.com/43486117/115948856-019e1b80-a514-11eb-9e39-ed4f67f749a4.png)
+
+Click Allow
+
+![image](https://user-images.githubusercontent.com/43486117/115948859-0793fc80-a514-11eb-9934-6626c2157060.png)
+
+You will be able to get Bot User OAuth Token from “OAuth & Permissions” page, copy the Token and goto .env file in the root directory.
+
+![image](https://user-images.githubusercontent.com/43486117/115948868-124e9180-a514-11eb-95c8-dd3f168db31a.png)
+
+Paste the token starting with xoxb into SLACK_TOKEN & now navigate to Interactivity & Shortcuts page on Slack API Settings
+
+![image](https://user-images.githubusercontent.com/43486117/115948873-1b3f6300-a514-11eb-919d-40ff80775b25.png)
+
+Turn on Interactivity settings
+
+![image](https://user-images.githubusercontent.com/43486117/115948877-22667100-a514-11eb-9903-d24ab79ac7a1.png)
+
+You will require to provide an HTTPS url to receive a response from an interactive message.
+If you don’t have url with ssl, refer to this document and follow the instruction (where it mentions about ngrok)
+https://slack.dev/node-slack-sdk/tutorials/local-development
 
 ## Docker build:
 
